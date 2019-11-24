@@ -15,4 +15,6 @@ public interface UserService {
 	public User saveUser(User user);
 	
 	public long countUser();
+	
+	public void removeUser(long id);
 }
