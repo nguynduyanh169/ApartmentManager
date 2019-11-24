@@ -15,5 +15,6 @@ public interface HouseService {
 	public Optional<House> getHouseById(long id);
 	public House save(House house);
 	public long countHouse();
+	public void removeHouse(long id);
 
 }

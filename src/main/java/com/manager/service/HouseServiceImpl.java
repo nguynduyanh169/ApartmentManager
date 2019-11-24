@@ -39,6 +39,11 @@ public class HouseServiceImpl implements HouseService{
 		// TODO Auto-generated method stub
 		return houseRepo.count();
 	}
+
+	@Override
+	public void removeHouse(long id) {
+		houseRepo.deleteById(id);
+	}
 	
 	
 

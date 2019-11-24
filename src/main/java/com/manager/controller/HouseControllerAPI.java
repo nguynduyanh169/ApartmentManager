@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,7 +38,7 @@ public class HouseControllerAPI {
 	@GetMapping("/houses/{id}")
 	public ResponseEntity<House> getHouseById(@PathVariable(value = "id") long id) throws Exception{
 		Optional<House> house = houseService.getHouseById(id);
-		if(house == null) {
+		if(!house.isPresent()) {
 			return new ResponseEntity<House>(house.get(), HttpStatus.NO_CONTENT);
 		}
 		
@@ -81,5 +82,10 @@ public class HouseControllerAPI {
 		return houseService.countHouse();
 	}
 	
-
+	
+	@DeleteMapping("/houses/{id}")
+	public ResponseEntity<String> removeHouse(@PathVariable(value = "id") long id) throws Exception{
+		houseService.removeHouse(id);
+		return new ResponseEntity<String>("Deleted!", HttpStatus.OK);
+	}
 }
