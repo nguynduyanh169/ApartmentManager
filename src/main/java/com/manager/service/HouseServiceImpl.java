@@ -18,8 +18,7 @@ public class HouseServiceImpl implements HouseService{
 
 	@Override
 	public List<House> getAllHouse() {
-		List<House> listHouse = houseRepo.findAll();
-		System.out.println(listHouse.size());
+		List<House> listHouse = houseRepo.findAllActiveHouse();
 		return listHouse;
 	}
 
