@@ -3,6 +3,7 @@ package com.manager.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.sound.midi.Soundbank;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.manager.entity.House;
+import com.manager.entity.HouseLite;
 import com.manager.repository.HouseRepository;
 import com.manager.service.HouseService;
 
@@ -33,6 +35,12 @@ public class HouseControllerAPI {
 	@GetMapping("/houses")
 	public List<House> getAllHouse(){
 		return houseService.getAllHouse();
+	}
+	
+	@GetMapping("/houseslite")
+	public List<House> getHouseLite(){
+		System.out.println(houseService.getHouseLite().size());
+		return houseService.getHouseLite();
 	}
 	
 	@GetMapping("/houses/{id}")

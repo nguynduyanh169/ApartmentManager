@@ -8,6 +8,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
 import com.manager.entity.House;
+import com.manager.entity.HouseLite;
+import com.manager.repository.HouseLiteRepository;
 import com.manager.repository.HouseRepository;
 @Service
 @ComponentScan(basePackages = "com.manager.repository")
@@ -15,6 +17,7 @@ public class HouseServiceImpl implements HouseService{
 	
 	@Autowired
 	HouseRepository houseRepo;
+	HouseLiteRepository houseLiteRepo;
 
 	@Override
 	public List<House> getAllHouse() {
@@ -42,6 +45,14 @@ public class HouseServiceImpl implements HouseService{
 	@Override
 	public void removeHouse(long id) {
 		houseRepo.deleteById(id);
+	}
+
+	@Override
+	public List<House> getHouseLite() {
+		// TODO Auto-generated method stub
+		List<House> listHouseLite = houseRepo.findAllHouseLite();
+		System.out.println(listHouseLite.size());
+		return listHouseLite;
 	}
 	
 	

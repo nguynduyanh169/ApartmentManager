@@ -15,6 +15,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
@@ -25,11 +26,15 @@ public class User implements Serializable{
 	private long id;
 	private String username;
 	private String password;
+	@JsonIgnore
 	private int roleId;
+	@JsonIgnore
 	private int houseId;
+	@JsonIgnore
 	private int creator;
 	private String profileImage;
 	private Date dateOfBirth;
+	@JsonIgnore
 	private String idNumber;
 	private int gender;
 	private String fullName;

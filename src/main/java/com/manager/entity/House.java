@@ -17,24 +17,88 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 public class House implements Serializable{
 	
-	private long id;
-	private int blockId;
-	private String floor;
-	private String houseName;
-	private String description;
-	private float area;
-	private int ownerId;
-	private String profileImage;
-	private String coverImage;
-	private boolean displayMember;
-	private boolean allowOtherView;
-	private int typeId;
-	private int status;
-	private int waterMeter;
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "Id")
+	private long id;
+	
+	@Column(name = "BlockId")
+	private int blockId;
+	
+	@Column(name = "Floor")
+	private String floor;
+	
+	@Column(name = "HouseName")
+	private String houseName;
+	
+	@Column(name = "Description")
+	private String description;
+	
+	@Column(name = "Area")
+	private float area;
+	
+	@Column(name = "OwnerId")
+	private int ownerId;
+	
+	@Column(name = "ProfileImage")
+	private String profileImage;
+	
+	@Column(name = "CoverImage")
+	private String coverImage;
+	
+	@Column(name = "DisplayMember")
+	private boolean displayMember;
+	
+	@Column(name = "AllowOtherView")
+	private boolean allowOtherView;
+	
+	@Column(name = "TypeId")
+	private int typeId;
+	
+	@Column(name = "Status")
+	private int status;
+	
+	@Column(name = "WaterMeter")
+	private int waterMeter;
+	
+	public House(long id, int blockId, String floor, String houseName, String description, float area, int ownerId,
+			String profileImage, String coverImage, boolean displayMember, boolean allowOtherView, int typeId,
+			int status, int waterMeter) {
+		super();
+		this.id = id;
+		this.blockId = blockId;
+		this.floor = floor;
+		this.houseName = houseName;
+		this.description = description;
+		this.area = area;
+		this.ownerId = ownerId;
+		this.profileImage = profileImage;
+		this.coverImage = coverImage;
+		this.displayMember = displayMember;
+		this.allowOtherView = allowOtherView;
+		this.typeId = typeId;
+		this.status = status;
+		this.waterMeter = waterMeter;
+	}
+	
+	
+	
+	public House() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
+
+	public House(long id, String description, String profileImage) {
+		super();
+		this.id = id;
+		this.description = description;
+		this.profileImage = profileImage;
+	}
+
+
+
 	public long getId() {
 		return id;
 	}
@@ -42,7 +106,7 @@ public class House implements Serializable{
 		this.id = id;
 	}
 	
-	@Column(name = "BlockId")
+	
 	public int getBlockId() {
 		return blockId;
 	}
@@ -50,7 +114,6 @@ public class House implements Serializable{
 		this.blockId = blockId;
 	}
 	
-	@Column(name = "Floor")
 	public String getFloor() {
 		return floor;
 	}
@@ -58,7 +121,6 @@ public class House implements Serializable{
 		this.floor = floor;
 	}
 	
-	@Column(name = "HouseName")
 	public String getHouseName() {
 		return houseName;
 	}
@@ -66,7 +128,7 @@ public class House implements Serializable{
 		this.houseName = houseName;
 	}
 	
-	@Column(name = "Description")
+	
 	public String getDescription() {
 		return description;
 	}
@@ -74,84 +136,61 @@ public class House implements Serializable{
 		this.description = description;
 	}
 	
-	@Column(name = "Area")
 	public float getArea() {
 		return area;
 	}
 	public void setArea(float area) {
 		this.area = area;
 	}
-	
-	@Column(name = "OwnerId")
 	public int getOwnerId() {
 		return ownerId;
 	}
 	public void setOwnerId(int ownerId) {
 		this.ownerId = ownerId;
 	}
-	
-	@Column(name = "ProfileImage")
 	public String getProfileImage() {
 		return profileImage;
 	}
 	public void setProfileImage(String profileImage) {
 		this.profileImage = profileImage;
 	}
-	
-	@Column(name = "CoverImage")
 	public String getCoverImage() {
 		return coverImage;
 	}
 	public void setCoverImage(String coverImage) {
 		this.coverImage = coverImage;
 	}
-	
-	@Column(name = "DisplayMember")
 	public boolean isDisplayMember() {
 		return displayMember;
 	}
 	public void setDisplayMember(boolean displayMember) {
 		this.displayMember = displayMember;
 	}
-	
-	@Column(name = "AllowOtherView")
 	public boolean isAllowOtherView() {
 		return allowOtherView;
 	}
 	public void setAllowOtherView(boolean allowOtherView) {
 		this.allowOtherView = allowOtherView;
 	}
-	
-	@Column(name = "TypeId")
 	public int getTypeId() {
 		return typeId;
 	}
 	public void setTypeId(int typeId) {
 		this.typeId = typeId;
 	}
-	
-	@Column(name = "Status")
 	public int getStatus() {
 		return status;
 	}
 	public void setStatus(int status) {
 		this.status = status;
 	}
-	
-	@Column(name = "WaterMeter")
 	public int getWaterMeter() {
 		return waterMeter;
 	}
 	public void setWaterMeter(int waterMeter) {
 		this.waterMeter = waterMeter;
 	}
-	@Override
-	public String toString() {
-		return "House [id=" + id + ", blockId=" + blockId + ", floor=" + floor + ", houseName=" + houseName
-				+ ", description=" + description + ", area=" + area + ", ownerId=" + ownerId + ", profileImage="
-				+ profileImage + ", coverImage=" + coverImage + ", displayMember=" + displayMember + ", allowOtherView="
-				+ allowOtherView + ", typeId=" + typeId + ", status=" + status + ", waterMeter=" + waterMeter + "]";
-	}
+	
 	
 	
 	
