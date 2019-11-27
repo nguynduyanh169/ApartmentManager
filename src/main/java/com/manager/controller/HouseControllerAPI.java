@@ -1,5 +1,6 @@
 package com.manager.controller;
 
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,6 +10,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.manager.entity.House;
-import com.manager.entity.HouseLite;
 import com.manager.repository.HouseRepository;
 import com.manager.service.HouseService;
 
@@ -32,6 +33,14 @@ public class HouseControllerAPI {
 	@Autowired
 	HouseService houseService;
 	
+	
+	@GetMapping("/image/{id}")
+	public ResponseEntity<byte[]> getImage(@PathVariable(value = "id") long id) throws Exception{
+		String imgPath = houseService.getHouseImage(id);
+		File img = new File(imgPath);
+		return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG.IMAGE_JPEG).body(java.nio.file.Files.readAllBytes(img.toPath()));
+	}
+	 
 	@GetMapping("/houses")
 	public List<House> getAllHouse(){
 		return houseService.getAllHouse();
@@ -67,7 +76,7 @@ public class HouseControllerAPI {
 		}
 		House house = opHouse.get();
 		System.out.println(house.getHouseName());
-		house.setBlockId(updateHouse.getBlockId());
+		house.setBlock(updateHouse.getBlock());
 		house.setFloor(updateHouse.getFloor());
 		house.setHouseName(updateHouse.getHouseName());
 		house.setDescription(updateHouse.getDescription());
@@ -76,8 +85,8 @@ public class HouseControllerAPI {
 		house.setProfileImage(updateHouse.getProfileImage());
 		house.setCoverImage(updateHouse.getCoverImage());
 		house.setDisplayMember(updateHouse.isDisplayMember());
-		house.setAllowOtherView(updateHouse.isAllowOtherView());
-		house.setTypeId(updateHouse.getTypeId());
+//		house.setAllowOtherView(updateHouse.isAllowOtherView());
+		house.setType(updateHouse.getType());
 		house.setStatus(updateHouse.getStatus());
 		house.setWaterMeter(updateHouse.getWaterMeter());
 		House updatedHouse = houseService.save(house);

@@ -5,12 +5,17 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.fasterxml.jackson.core.sym.Name;
 
 @Entity
 @Table(name = "House")
@@ -20,10 +25,11 @@ public class House implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "Id")
-	private long id;
+	private Long id;
 	
-	@Column(name = "BlockId")
-	private int blockId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "BlockId", nullable = false)
+	private Block block;
 	
 	@Column(name = "Floor")
 	private String floor;
@@ -49,71 +55,47 @@ public class House implements Serializable{
 	@Column(name = "DisplayMember")
 	private boolean displayMember;
 	
-	@Column(name = "AllowOtherView")
-	private boolean allowOtherView;
 	
-	@Column(name = "TypeId")
-	private int typeId;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "TypeId", nullable = false)
+	private HouseCategory type;
 	
 	@Column(name = "Status")
 	private int status;
 	
 	@Column(name = "WaterMeter")
 	private int waterMeter;
-	
-	public House(long id, int blockId, String floor, String houseName, String description, float area, int ownerId,
-			String profileImage, String coverImage, boolean displayMember, boolean allowOtherView, int typeId,
-			int status, int waterMeter) {
-		super();
-		this.id = id;
-		this.blockId = blockId;
-		this.floor = floor;
-		this.houseName = houseName;
-		this.description = description;
-		this.area = area;
-		this.ownerId = ownerId;
-		this.profileImage = profileImage;
-		this.coverImage = coverImage;
-		this.displayMember = displayMember;
-		this.allowOtherView = allowOtherView;
-		this.typeId = typeId;
-		this.status = status;
-		this.waterMeter = waterMeter;
-	}
-	
-	
-	
+
 	public House() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-
-
-	public House(long id, String description, String profileImage) {
+	public House(Long id, String description, String profileImage) {
 		super();
 		this.id = id;
 		this.description = description;
 		this.profileImage = profileImage;
 	}
-
-
-
-	public long getId() {
+	
+	
+	
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
-	
-	
-	public int getBlockId() {
-		return blockId;
+	public Block getBlock() {
+		return block;
 	}
-	public void setBlockId(int blockId) {
-		this.blockId = blockId;
+
+	public void setBlock(Block block) {
+		this.block = block;
 	}
-	
+
+
+
 	public String getFloor() {
 		return floor;
 	}
@@ -166,17 +148,13 @@ public class House implements Serializable{
 	public void setDisplayMember(boolean displayMember) {
 		this.displayMember = displayMember;
 	}
-	public boolean isAllowOtherView() {
-		return allowOtherView;
+	
+	
+	public HouseCategory getType() {
+		return type;
 	}
-	public void setAllowOtherView(boolean allowOtherView) {
-		this.allowOtherView = allowOtherView;
-	}
-	public int getTypeId() {
-		return typeId;
-	}
-	public void setTypeId(int typeId) {
-		this.typeId = typeId;
+	public void setType(HouseCategory type) {
+		this.type = type;
 	}
 	public int getStatus() {
 		return status;

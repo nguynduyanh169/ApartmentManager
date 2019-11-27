@@ -2,13 +2,17 @@ package com.manager.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
@@ -16,25 +20,26 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
 @Table(name = "Users")
 @EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User implements Serializable{
+	
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+    private Post post;
 	
 	private long id;
 	private String username;
 	private String password;
-	@JsonIgnore
 	private int roleId;
-	@JsonIgnore
 	private int houseId;
-	@JsonIgnore
 	private int creator;
 	private String profileImage;
 	private Date dateOfBirth;
-	@JsonIgnore
 	private String idNumber;
 	private int gender;
 	private String fullName;

@@ -1,6 +1,7 @@
 package com.manager.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -19,6 +20,16 @@ public class PostServiceImpl implements PostService{
 	public List<Post> getAllPost() {
 		// TODO Auto-generated method stub
 		return postRepo.findAll();
+	}
+	@Override
+	public Optional<Post> findPostById(long id) {
+		// TODO Auto-generated method stub
+		return postRepo.findById(id);
+	}
+	@Override
+	public Post savePost(Post post) {
+		// TODO Auto-generated method stub
+		return postRepo.save(post);
 	}
 
 }
