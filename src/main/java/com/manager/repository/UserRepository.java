@@ -12,4 +12,5 @@ import com.manager.entity.User;
 public interface UserRepository extends JpaRepository<User, Long>{
 	@Query("SELECT u from User u where u.status = 1")
 	List<User> findAllActiveUser();
+	
 }

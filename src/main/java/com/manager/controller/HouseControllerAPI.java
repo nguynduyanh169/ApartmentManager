@@ -85,7 +85,6 @@ public class HouseControllerAPI {
 		house.setProfileImage(updateHouse.getProfileImage());
 		house.setCoverImage(updateHouse.getCoverImage());
 		house.setDisplayMember(updateHouse.isDisplayMember());
-//		house.setAllowOtherView(updateHouse.isAllowOtherView());
 		house.setType(updateHouse.getType());
 		house.setStatus(updateHouse.getStatus());
 		house.setWaterMeter(updateHouse.getWaterMeter());

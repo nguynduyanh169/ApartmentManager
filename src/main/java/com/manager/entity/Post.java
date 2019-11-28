@@ -2,7 +2,9 @@ package com.manager.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -12,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -20,28 +23,44 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "Post")
 @EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Post implements Serializable{
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "postId")
+    private List<Comment> listComments;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
+	private List<PostImage> listPostImage;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "Id")
-	private long id;
+	@Column(name = "PostId")
+	private long postId;
 	
 	@Column(name = "Body")
 	private String body;
 	
 	@Column(name = "CreateDate")
+	@CreatedDate
+	@JsonIgnore
 	private Date createDate;
 	
 	@Column(name = "UpdateDate")
+	@JsonIgnore
+	@LastModifiedDate
 	private Date updateDate;
 	
 	@Column(name = "Status")
+	@JsonIgnore
 	private int status;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "UserId", nullable = false)
 	private User user;
 	
@@ -49,14 +68,15 @@ public class Post implements Serializable{
 	private String embedCode;
 	
 	@Column(name = "Disable")
+	@JsonIgnore
 	private int disable;
 
-	public long getId() {
-		return id;
+	public long getPostId() {
+		return postId;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setPostId(long postId) {
+		this.postId = postId;
 	}
 
 	public String getBody() {

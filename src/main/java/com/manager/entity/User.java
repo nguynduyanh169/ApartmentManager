@@ -8,9 +8,12 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -29,167 +32,214 @@ import com.fasterxml.jackson.annotation.JsonView;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User implements Serializable{
 	
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
-    private Post post;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Post> postList;
 	
-	private long id;
-	private String username;
-	private String password;
-	private int roleId;
-	private int houseId;
-	private int creator;
-	private String profileImage;
-	private Date dateOfBirth;
-	private String idNumber;
-	private int gender;
-	private String fullName;
-	private Date createDate;
-	private Date lastModified;
-	private int familyLevel;
-	private Date idCreatedDate;
-	private int status;
-	private String sendPasswordTo;
-	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private List<Comment> listComments;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "Id")
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
+	@Column(name = "UserId")
+	private long id;
 	
 	@Column(name = "Username")
-	@JsonView()
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
+	private String username;
 	
 	@Column(name = "Password")
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
+	private String password;
 	
-	@Column(name = "RoleId")
-	public int getRoleId() {
-		return roleId;
-	}
-	public void setRoleId(int roleId) {
-		this.roleId = roleId;
-	}
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "RoleId", nullable = false)
+	private Role role;
 	
-	@Column(name = "HouseId")
-	public int getHouseId() {
-		return houseId;
-	}
-	public void setHouseId(int houseId) {
-		this.houseId = houseId;
-	}
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "HouseId", nullable = false)
+	private House house;
 	
 	@Column(name = "Creator")
-	public int getCreator() {
-		return creator;
-	}
-	public void setCreator(int creator) {
-		this.creator = creator;
-	}
+	@JsonIgnore
+	private int creator;
 	
 	@Column(name = "ProfileImage")
-	public String getProfileImage() {
-		return profileImage;
-	}
-	public void setProfileImage(String profileImage) {
-		this.profileImage = profileImage;
-	}
+	private String profileImage;
 	
 	@Column(name = "DateOfBirth")
-	public Date getDateOfBirth() {
-		return dateOfBirth;
-	}
-	public void setDateOfBirth(Date dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
-	@Column(name = "IDNumber")
-	public String getIdNumber() {
-		return idNumber;
-	}
-	public void setIdNumber(String idNumber) {
-		this.idNumber = idNumber;
-	}
+	private Date dateOfBirth;
+	
+	@Column(name = "IdNumber")
+	@JsonIgnore
+	private String idNumber;
 	
 	@Column(name = "Gender")
-	public int getGender() {
-		return gender;
-	}
-	public void setGender(int gender) {
-		this.gender = gender;
-	}
+	private int gender;
 	
 	@Column(name = "Fullname")
-	public String getFullName() {
-		return fullName;
-	}
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
-	}
+	private String fullName;
 	
 	@Column(name = "CreateDate")
 	@CreatedDate
-	public Date getCreateDate() {
-		return createDate;
-	}
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
+	@JsonIgnore
+	private Date createDate;
 	
 	@Column(name = "LastModified")
 	@LastModifiedDate
+	@JsonIgnore
+	private Date lastModified;
+	
+	@Column(name = "FamilyLevel")
+	private int familyLevel;
+	
+	@Column(name = "IdCreatedDate")
+	@CreatedDate
+	@JsonIgnore
+	private Date idCreatedDate;
+	
+	@Column(name = "Status")
+	@JsonIgnore
+	private int status;
+	
+	@Column(name = "SendPasswordTo")
+	@JsonIgnore
+	private String sendPasswordTo;
+
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	public House getHouse() {
+		return house;
+	}
+
+	public void setHouse(House house) {
+		this.house = house;
+	}
+
+	public int getCreator() {
+		return creator;
+	}
+
+	public void setCreator(int creator) {
+		this.creator = creator;
+	}
+
+	public String getProfileImage() {
+		return profileImage;
+	}
+
+	public void setProfileImage(String profileImage) {
+		this.profileImage = profileImage;
+	}
+
+	public Date getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+	public String getIdNumber() {
+		return idNumber;
+	}
+
+	public void setIdNumber(String idNumber) {
+		this.idNumber = idNumber;
+	}
+
+	public int getGender() {
+		return gender;
+	}
+
+	public void setGender(int gender) {
+		this.gender = gender;
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
 	public Date getLastModified() {
 		return lastModified;
 	}
+
 	public void setLastModified(Date lastModified) {
 		this.lastModified = lastModified;
 	}
-	
-	@Column(name = "FamilyLevel")
+
 	public int getFamilyLevel() {
 		return familyLevel;
 	}
+
 	public void setFamilyLevel(int familyLevel) {
 		this.familyLevel = familyLevel;
 	}
-	
-	@Column(name = "IDCreatedDate")
-	@CreatedDate
+
 	public Date getIdCreatedDate() {
 		return idCreatedDate;
 	}
+
 	public void setIdCreatedDate(Date idCreatedDate) {
 		this.idCreatedDate = idCreatedDate;
 	}
-	
-	@Column(name = "Status")
+
 	public int getStatus() {
 		return status;
 	}
+
 	public void setStatus(int status) {
 		this.status = status;
 	}
-	
-	@Column(name = "SendPasswordTo")
+
 	public String getSendPasswordTo() {
 		return sendPasswordTo;
 	}
+
 	public void setSendPasswordTo(String sendPasswordTo) {
 		this.sendPasswordTo = sendPasswordTo;
 	}
+	
 	
 	
 

@@ -61,8 +61,8 @@ public class UserControllerAPI {
 		}
 		User user = opUser.get();
 		user.setUsername(editUser.getUsername());
-		user.setRoleId(editUser.getRoleId());
-		user.setHouseId(editUser.getHouseId());
+		user.setRole(editUser.getRole());
+		user.setHouse(editUser.getHouse());
 		user.setCreator(editUser.getCreator());
 		user.setProfileImage(editUser.getProfileImage());
 		user.setDateOfBirth(editUser.getDateOfBirth());
@@ -75,6 +75,18 @@ public class UserControllerAPI {
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 		
 		
+	}
+	
+	@PutMapping("/users/{id}/password/{password}")
+	public ResponseEntity<User> changePassword(@PathVariable(value = "id") long id, @PathVariable(name = "password") String password) throws Exception{
+		Optional<User> opUser = userService.findUserById(id);
+		if(!opUser.isPresent()) {
+			return new ResponseEntity<User>(opUser.get(), HttpStatus.NO_CONTENT);
+		}
+		User user = opUser.get();
+		user.setPassword(password);
+		final User updatedUser = userService.saveUser(user);
+		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/users/{id}")
