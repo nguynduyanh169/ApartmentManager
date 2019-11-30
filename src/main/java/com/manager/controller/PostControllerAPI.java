@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.manager.dto.APIResponse;
 import com.manager.entity.Post;
 import com.manager.service.PostService;
 
@@ -33,18 +34,22 @@ public class PostControllerAPI {
 	}
 	
 	@GetMapping("/posts/{id}")
-	public ResponseEntity<Post> findPostById(@PathVariable(value = "id") long id) throws Exception{
+	public ResponseEntity<?> findPostById(@PathVariable(value = "id") long id) throws Exception{
 		Optional<Post> post = postService.findPostById(id);
 		if(!post.isPresent()) {
-			return new ResponseEntity<Post>(post.get(), HttpStatus.NO_CONTENT);
+			return new ResponseEntity<APIResponse>(new APIResponse(false, "Not found"), HttpStatus.NO_CONTENT);
 		}
-		
 		return new ResponseEntity<Post>(post.get(), HttpStatus.OK);
 	}
 	
 	@PostMapping("/posts")
-	public Post savePost(@Valid @RequestBody Post post) {
-		return postService.savePost(post);
+	public ResponseEntity<?> savePost(@Valid @RequestBody Post post) {
+		boolean flag = postService.savePost(post);
+		if (flag == false) {
+			return new ResponseEntity<APIResponse>(new APIResponse(false, "Save failed!"), HttpStatus.BAD_REQUEST);
+		} else {
+			return new ResponseEntity<APIResponse>(new APIResponse(true, "Save successful!"), HttpStatus.OK);
+		}
 	}
 	
 

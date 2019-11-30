@@ -13,6 +13,6 @@ import com.manager.entity.Comment;
 public interface CommentService {
 	
 	public List<Comment> getCommentsByPostId(long id);
-	public Comment saveComment(Comment comment);
+	public boolean saveComment(Comment comment);
 
 }

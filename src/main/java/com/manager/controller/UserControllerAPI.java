@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.manager.dto.APIResponse;
 import com.manager.entity.User;
 import com.manager.service.UserService;
 
@@ -25,38 +26,51 @@ import com.manager.service.UserService;
 @RequestMapping("api/v1")
 @ComponentScan(basePackages = "com.manager.service")
 public class UserControllerAPI {
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	@GetMapping("/users")
-	public List<User> getAllUser(){
+	public List<User> getAllUser() {
 		return userService.getAllUser();
 	}
-	
+
 	@GetMapping("/users/{id}")
-	public ResponseEntity<User> findUserById(@PathVariable(value = "id") long id) throws Exception{
+	public ResponseEntity<?> findUserById(@PathVariable(value = "id") long id) throws Exception {
 		Optional<User> user = userService.findUserById(id);
-		if(!user.isPresent()) {
-			return new ResponseEntity<User>(user.get(), HttpStatus.NO_CONTENT);
+		if (!user.isPresent()) {
+			return new ResponseEntity<APIResponse>(new APIResponse(false, "Not found!"), HttpStatus.NO_CONTENT);
+		} else {
+			return new ResponseEntity<User>(user.get(), HttpStatus.OK);
 		}
-		return new ResponseEntity<User>(user.get(), HttpStatus.OK);
 	}
-	
+
+	@GetMapping("/users/houses/{houseId}")
+	public List<User> getUserByHouseId(@PathVariable(value = "houseId") long houseId) {
+		return userService.getUserByHouseId(houseId);
+	}
+
 	@PostMapping("/users")
-	public User saveUser(@Valid @RequestBody User user) {
-		return userService.saveUser(user);
+	public ResponseEntity<?> saveUser(@Valid @RequestBody User user) {
+		boolean flag = userService.saveUser(user);
+		if (flag == false) {
+			return new ResponseEntity<APIResponse>(new APIResponse(false, "Save failed!"), HttpStatus.BAD_REQUEST);
+		} else {
+			return new ResponseEntity<APIResponse>(new APIResponse(true, "Save successful!"), HttpStatus.OK);
+		}
+
 	}
-	
+
 	@GetMapping("/users/count")
 	public long countUser() {
 		return userService.countUser();
 	}
-	
+
 	@PutMapping("/users/{id}")
-	public ResponseEntity<User> updateUser(@PathVariable(value = "id") long id, @Valid @RequestBody User editUser) throws Exception{
+	public ResponseEntity<?> updateUser(@PathVariable(value = "id") long id, @Valid @RequestBody User editUser)
+			throws Exception {
 		Optional<User> opUser = userService.findUserById(id);
-		if(!opUser.isPresent()) {
+		if (!opUser.isPresent()) {
 			return new ResponseEntity<User>(opUser.get(), HttpStatus.NO_CONTENT);
 		}
 		User user = opUser.get();
@@ -70,27 +84,47 @@ public class UserControllerAPI {
 		user.setFamilyLevel(editUser.getFamilyLevel());
 		user.setStatus(editUser.getStatus());
 		user.setIdCreatedDate(editUser.getIdCreatedDate());
-		user.setSendPasswordTo(editUser.getSendPasswordTo());
-		final User updatedUser = userService.saveUser(user);
-		return new ResponseEntity<User>(user, HttpStatus.OK);
-		
-		
+		boolean flag = userService.saveUser(user);
+		if (flag == false) {
+			return new ResponseEntity<APIResponse>(new APIResponse(false, "Save failed!"), HttpStatus.BAD_REQUEST);
+		} else {
+			return new ResponseEntity<APIResponse>(new APIResponse(true, "Save successful!"), HttpStatus.OK);
+		}
+
 	}
-	
+
 	@PutMapping("/users/{id}/password/{password}")
-	public ResponseEntity<User> changePassword(@PathVariable(value = "id") long id, @PathVariable(name = "password") String password) throws Exception{
+	public ResponseEntity<?> changePassword(@PathVariable(value = "id") long id,
+			@PathVariable(name = "password") String password) throws Exception {
 		Optional<User> opUser = userService.findUserById(id);
-		if(!opUser.isPresent()) {
+		if (!opUser.isPresent()) {
 			return new ResponseEntity<User>(opUser.get(), HttpStatus.NO_CONTENT);
 		}
 		User user = opUser.get();
 		user.setPassword(password);
-		final User updatedUser = userService.saveUser(user);
-		return new ResponseEntity<User>(user, HttpStatus.OK);
+		boolean flag = userService.saveUser(user);
+		if (flag == false) {
+			return new ResponseEntity<APIResponse>(new APIResponse(false, "Save failed!"), HttpStatus.BAD_REQUEST);
+		} else {
+			return new ResponseEntity<APIResponse>(new APIResponse(true, "Save successful!"), HttpStatus.OK);
+		}
 	}
-	
+
+	@PostMapping("/users/signin")
+	public ResponseEntity<?> checkLogin(@Valid @RequestBody User user) {
+		String email = user.getEmail();
+		String password = user.getPassword();
+		boolean flag = userService.checkLogin(email, password);
+		if (flag == false) {
+			return new ResponseEntity<APIResponse>(new APIResponse(false, "Username or Password is not valid!"),
+					HttpStatus.BAD_REQUEST);
+		} else {
+			return new ResponseEntity<APIResponse>(new APIResponse(true, "Login successful!"), HttpStatus.OK);
+		}
+	}
+
 	@DeleteMapping("/users/{id}")
-	public ResponseEntity<String> removeUser(@PathVariable(value = "id") long id) throws Exception{
+	public ResponseEntity<String> removeUser(@PathVariable(value = "id") long id) throws Exception {
 		userService.removeUser(id);
 		return new ResponseEntity<String>("Deleted!", HttpStatus.OK);
 	}

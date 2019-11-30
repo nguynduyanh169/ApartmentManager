@@ -30,8 +30,8 @@ public class HouseServiceImpl implements HouseService{
 	}
 
 	@Override
-	public House save(House house) {
-		return houseRepo.save(house);
+	public boolean save(House house) {
+		return houseRepo.save(house) == null ? false : true;
 	}
 
 	@Override
@@ -57,6 +57,18 @@ public class HouseServiceImpl implements HouseService{
 	public String getHouseImage(long id) {
 		// TODO Auto-generated method stub
 		return houseRepo.getHouseImage(id);
+	}
+
+	@Override
+	public List<House> getHouseByBlockId(long blockId) {
+		// TODO Auto-generated method stub
+		return houseRepo.getHouseByBlockId(blockId);
+	}
+
+	@Override
+	public List<House> getHouseByTypeId(long typeId) {
+		// TODO Auto-generated method stub
+		return houseRepo.getHouseByTypeId(typeId);
 	}
 	
 	

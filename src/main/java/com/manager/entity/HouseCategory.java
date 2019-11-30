@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -26,9 +27,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class HouseCategory implements Serializable{
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "type")
+	@JsonIgnore
     private List<House> houses;
 	
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "TypeId")

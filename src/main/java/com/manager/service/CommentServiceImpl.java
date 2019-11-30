@@ -23,9 +23,9 @@ public class CommentServiceImpl implements CommentService{
 	}
 
 	@Override
-	public Comment saveComment(Comment comment) {
+	public boolean saveComment(Comment comment) {
 		// TODO Auto-generated method stub
-		return commentRepo.save(comment);
+		return commentRepo.save(comment) == null ? false : true;
 	}
 
 }

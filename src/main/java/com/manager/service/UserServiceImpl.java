@@ -27,13 +27,12 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public User saveUser(User user) {
-		return userRepo.save(user);
+	public boolean saveUser(User user) {
+		return userRepo.save(user) == null ? false : true;
 	}
 
 	@Override
 	public long countUser() {
-		// TODO Auto-generated method stub
 		return userRepo.count();
 	}
 
@@ -42,5 +41,27 @@ public class UserServiceImpl implements UserService{
 		userRepo.deleteById(id);
 		
 	}
+
+	@Override
+	public List<User> getUserByHouseId(long houseId) {
+		return userRepo.getHouseByHouseId(houseId);
+	}
+
+	@Override
+	public boolean checkLogin(String email, String password) {
+		return userRepo.checkLogin(email, password) == null ? false : true;
+	}
+
+	@Override
+	public boolean checkUsername(String username) {
+		return userRepo.checkUsername(username) == null ? false : true;
+	}
+
+	@Override
+	public boolean checkUserEmail(String email) {
+		return userRepo.checkUserEmail(email) == null ? false : true;
+	}
+	
+	
 
 }

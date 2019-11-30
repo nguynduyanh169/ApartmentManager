@@ -27,9 +27,9 @@ public class PostServiceImpl implements PostService{
 		return postRepo.findById(id);
 	}
 	@Override
-	public Post savePost(Post post) {
+	public boolean savePost(Post post) {
 		// TODO Auto-generated method stub
-		return postRepo.save(post);
+		return postRepo.save(post) == null ? false : true;
 	}
 
 }

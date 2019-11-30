@@ -29,87 +29,86 @@ import com.fasterxml.jackson.annotation.JsonView;
 @Entity
 @Table(name = "Users")
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class User implements Serializable{
-	
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+public class User implements Serializable {
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Post> postList;
-	
+	@JsonIgnore
+	private List<Post> postLists;
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-    private List<Comment> listComments;
+	@JsonIgnore
+	private List<Comment> listComments;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "UserId")
-	private long id;
-	
+	private long userId;
+
 	@Column(name = "Username")
 	private String username;
-	
+
 	@Column(name = "Password")
 	private String password;
-	
+
+	@Column(name = "Email")
+	private String email;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "RoleId", nullable = false)
 	private Role role;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "HouseId", nullable = false)
 	private House house;
-	
+
 	@Column(name = "Creator")
 	@JsonIgnore
 	private int creator;
-	
+
 	@Column(name = "ProfileImage")
 	private String profileImage;
-	
+
 	@Column(name = "DateOfBirth")
 	private Date dateOfBirth;
-	
+
 	@Column(name = "IdNumber")
 	@JsonIgnore
 	private String idNumber;
-	
+
 	@Column(name = "Gender")
 	private int gender;
-	
+
 	@Column(name = "Fullname")
 	private String fullName;
-	
+
 	@Column(name = "CreateDate")
 	@CreatedDate
 	@JsonIgnore
 	private Date createDate;
-	
+
 	@Column(name = "LastModified")
 	@LastModifiedDate
 	@JsonIgnore
 	private Date lastModified;
-	
+
 	@Column(name = "FamilyLevel")
 	private int familyLevel;
-	
+
 	@Column(name = "IdCreatedDate")
 	@CreatedDate
 	@JsonIgnore
 	private Date idCreatedDate;
-	
+
 	@Column(name = "Status")
-	@JsonIgnore
 	private int status;
-	
-	@Column(name = "SendPasswordTo")
-	@JsonIgnore
-	private String sendPasswordTo;
 
-
-	public long getId() {
-		return id;
+	public long getUserId() {
+		return userId;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 
 	public String getUsername() {
@@ -232,15 +231,12 @@ public class User implements Serializable{
 		this.status = status;
 	}
 
-	public String getSendPasswordTo() {
-		return sendPasswordTo;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setSendPasswordTo(String sendPasswordTo) {
-		this.sendPasswordTo = sendPasswordTo;
+	public void setEmail(String email) {
+		this.email = email;
 	}
-	
-	
-	
 
 }

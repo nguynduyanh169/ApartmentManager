@@ -33,9 +33,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Post implements Serializable{
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "postId")
+	@JsonIgnore
     private List<Comment> listComments;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
+	@JsonIgnore
 	private List<PostImage> listPostImage;
 	
 	@Id
