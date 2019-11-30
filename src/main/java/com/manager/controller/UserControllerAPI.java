@@ -76,13 +76,11 @@ public class UserControllerAPI {
 		user.setUsername(editUser.getUsername());
 		user.setRole(editUser.getRole());
 		user.setHouse(editUser.getHouse());
-		user.setCreator(editUser.getCreator());
 		user.setProfileImage(editUser.getProfileImage());
 		user.setDateOfBirth(editUser.getDateOfBirth());
 		user.setCreateDate(editUser.getCreateDate());
 		user.setFamilyLevel(editUser.getFamilyLevel());
 		user.setStatus(editUser.getStatus());
-		user.setIdCreatedDate(editUser.getIdCreatedDate());
 		boolean flag = userService.saveUser(user);
 		if (flag == false) {
 			return new ResponseEntity<APIResponse>(new APIResponse(false, "Save failed!"), HttpStatus.BAD_REQUEST);

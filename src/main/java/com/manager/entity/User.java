@@ -53,6 +53,33 @@ public class User implements Serializable {
 
 	@Column(name = "Email")
 	private String email;
+	
+	@Column(name = "PhoneNo")
+	private String phoneNo;
+
+	public List<Comment> getListComments() {
+		return listComments;
+	}
+
+	public void setListComments(List<Comment> listComments) {
+		this.listComments = listComments;
+	}
+
+	public String getPhoneNo() {
+		return phoneNo;
+	}
+
+	public void setPhoneNo(String phoneNo) {
+		this.phoneNo = phoneNo;
+	}
+
+	public String getIdImage() {
+		return idImage;
+	}
+
+	public void setIdImage(String idImage) {
+		this.idImage = idImage;
+	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "RoleId", nullable = false)
@@ -62,10 +89,6 @@ public class User implements Serializable {
 	@JoinColumn(name = "HouseId", nullable = false)
 	private House house;
 
-	@Column(name = "Creator")
-	@JsonIgnore
-	private int creator;
-
 	@Column(name = "ProfileImage")
 	private String profileImage;
 
@@ -73,8 +96,10 @@ public class User implements Serializable {
 	private Date dateOfBirth;
 
 	@Column(name = "IdNumber")
-	@JsonIgnore
 	private String idNumber;
+	
+	@Column(name = "IdImage")
+	private String idImage;
 
 	@Column(name = "Gender")
 	private int gender;
@@ -94,11 +119,6 @@ public class User implements Serializable {
 
 	@Column(name = "FamilyLevel")
 	private int familyLevel;
-
-	@Column(name = "IdCreatedDate")
-	@CreatedDate
-	@JsonIgnore
-	private Date idCreatedDate;
 
 	@Column(name = "Status")
 	private int status;
@@ -141,14 +161,6 @@ public class User implements Serializable {
 
 	public void setHouse(House house) {
 		this.house = house;
-	}
-
-	public int getCreator() {
-		return creator;
-	}
-
-	public void setCreator(int creator) {
-		this.creator = creator;
 	}
 
 	public String getProfileImage() {
@@ -213,14 +225,6 @@ public class User implements Serializable {
 
 	public void setFamilyLevel(int familyLevel) {
 		this.familyLevel = familyLevel;
-	}
-
-	public Date getIdCreatedDate() {
-		return idCreatedDate;
-	}
-
-	public void setIdCreatedDate(Date idCreatedDate) {
-		this.idCreatedDate = idCreatedDate;
 	}
 
 	public int getStatus() {
