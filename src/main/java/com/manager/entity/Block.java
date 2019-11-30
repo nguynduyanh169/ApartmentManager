@@ -22,15 +22,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import lombok.Getter;
-import lombok.Setter;
-
 @Entity
 @Table(name = "Block")
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-@Getter
-@Setter
 public class Block implements Serializable {
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "block")

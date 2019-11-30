@@ -23,14 +23,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.sym.Name;
 
-import lombok.Getter;
-import lombok.Setter;
-
 @Entity
 @Table(name = "House")
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-@Getter @Setter
 public class House implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "house")
 	@JsonIgnore
