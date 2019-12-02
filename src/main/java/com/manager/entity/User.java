@@ -53,12 +53,6 @@ public class User implements Serializable {
 	@Column(name = "UserId")
 	private long userId;
 
-	@Column(name = "Username")
-	private String username;
-
-	@Column(name = "Password")
-	private String password;
-
 	@Column(name = "Email")
 	private String email;
 	
@@ -103,6 +97,12 @@ public class User implements Serializable {
 
 	@Column(name = "Gender")
 	private int gender;
+	
+	@Column(name = "Job")
+	private String job;
+	
+	@Column(name = "HomeTown")
+	private String homeTown;
 
 	@Column(name = "FirstName")
 	private String firstName;
@@ -132,22 +132,6 @@ public class User implements Serializable {
 
 	public void setUserId(long userId) {
 		this.userId = userId;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public Role getRole() {
@@ -253,6 +237,22 @@ public class User implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getJob() {
+		return job;
+	}
+
+	public void setJob(String job) {
+		this.job = job;
+	}
+
+	public String getHomeTown() {
+		return homeTown;
+	}
+
+	public void setHomeTown(String homeTown) {
+		this.homeTown = homeTown;
 	}
 
 }

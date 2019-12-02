@@ -21,9 +21,7 @@ public interface UserService {
 
 	public void removeUser(long id);
 	
-	public boolean checkLogin(String email, String password);
-	
-	public boolean checkUsername(String username);
+	public boolean checkLogin(String email);
 	
 	public boolean checkUserEmail(String email);
 }

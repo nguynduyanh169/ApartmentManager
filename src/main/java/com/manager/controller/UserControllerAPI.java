@@ -73,13 +73,18 @@ public class UserControllerAPI {
 			return new ResponseEntity<User>(opUser.get(), HttpStatus.NO_CONTENT);
 		}
 		User user = opUser.get();
-		user.setUsername(editUser.getUsername());
 		user.setRole(editUser.getRole());
 		user.setHouse(editUser.getHouse());
 		user.setProfileImage(editUser.getProfileImage());
+		user.setFirstName(editUser.getFirstName());
+		user.setLastName(editUser.getLastName());
+		user.setJob(editUser.getJob());
+		user.setHomeTown(editUser.getHomeTown());
+		user.setPhoneNo(editUser.getPhoneNo());
 		user.setDateOfBirth(editUser.getDateOfBirth());
-		user.setCreateDate(editUser.getCreateDate());
 		user.setFamilyLevel(editUser.getFamilyLevel());
+		user.setIdNumber(editUser.getIdNumber());
+		user.setIdImage(editUser.getIdImage());
 		user.setStatus(editUser.getStatus());
 		boolean flag = userService.saveUser(user);
 		if (flag == false) {
@@ -90,30 +95,12 @@ public class UserControllerAPI {
 
 	}
 
-	@PutMapping("/users/{userId}/password/{password}")
-	public ResponseEntity<?> changePassword(@PathVariable(value = "userId") long id,
-			@PathVariable(name = "password") String password) throws Exception {
-		Optional<User> opUser = userService.findUserById(id);
-		if (!opUser.isPresent()) {
-			return new ResponseEntity<User>(opUser.get(), HttpStatus.NO_CONTENT);
-		}
-		User user = opUser.get();
-		user.setPassword(password);
-		boolean flag = userService.saveUser(user);
-		if (flag == false) {
-			return new ResponseEntity<APIResponse>(new APIResponse(false, "Save failed!"), HttpStatus.BAD_REQUEST);
-		} else {
-			return new ResponseEntity<APIResponse>(new APIResponse(true, "Save successful!"), HttpStatus.OK);
-		}
-	}
-
 	@PostMapping("/users/signin")
 	public ResponseEntity<?> checkLogin(@Valid @RequestBody User user) {
 		String email = user.getEmail();
-		String password = user.getPassword();
-		boolean flag = userService.checkLogin(email, password);
+		boolean flag = userService.checkLogin(email);
 		if (flag == false) {
-			return new ResponseEntity<APIResponse>(new APIResponse(false, "Username or Password is not valid!"),
+			return new ResponseEntity<APIResponse>(new APIResponse(false, "Login Failed!"),
 					HttpStatus.BAD_REQUEST);
 		} else {
 			return new ResponseEntity<APIResponse>(new APIResponse(true, "Login successful!"), HttpStatus.OK);

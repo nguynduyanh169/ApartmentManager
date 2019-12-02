@@ -48,14 +48,10 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public boolean checkLogin(String email, String password) {
-		return userRepo.checkLogin(email, password) == null ? false : true;
+	public boolean checkLogin(String email) {
+		return userRepo.checkLogin(email) == null ? false : true;
 	}
 
-	@Override
-	public boolean checkUsername(String username) {
-		return userRepo.checkUsername(username) == null ? false : true;
-	}
 
 	@Override
 	public boolean checkUserEmail(String email) {
