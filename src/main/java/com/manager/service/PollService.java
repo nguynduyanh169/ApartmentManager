@@ -5,13 +5,12 @@ import java.util.List;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
-import com.manager.entity.Comment;
+import com.manager.entity.Poll;
 
 @Service
 @ComponentScan(basePackages = "com.manager.repository")
-public interface CommentService {
+public interface PollService {
+	public List<Poll> getAllPoll();
 	
-	public List<Comment> getCommentsByPostId(long id);
-	public boolean saveComment(Comment comment);
-
+	public boolean savePoll(Poll poll);
 }

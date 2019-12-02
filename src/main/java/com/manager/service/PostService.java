@@ -12,6 +12,8 @@ import com.manager.entity.Post;
 public interface PostService {
 	public List<Post> getAllPost();
 	
+	public List<Post> getPostByUserId(long userId);
+	
 	public Optional<Post> findPostById(long id);
 	
 	public boolean savePost(Post post);

@@ -35,8 +35,8 @@ public class UserControllerAPI {
 		return userService.getAllUser();
 	}
 
-	@GetMapping("/users/{id}")
-	public ResponseEntity<?> findUserById(@PathVariable(value = "id") long id) throws Exception {
+	@GetMapping("/users/{userId}")
+	public ResponseEntity<?> findUserById(@PathVariable(value = "userId") long id) throws Exception {
 		Optional<User> user = userService.findUserById(id);
 		if (!user.isPresent()) {
 			return new ResponseEntity<APIResponse>(new APIResponse(false, "Not found!"), HttpStatus.NO_CONTENT);
@@ -65,8 +65,8 @@ public class UserControllerAPI {
 		return userService.countUser();
 	}
 
-	@PutMapping("/users/{id}")
-	public ResponseEntity<?> updateUser(@PathVariable(value = "id") long id, @Valid @RequestBody User editUser)
+	@PutMapping("/users/{userId}")
+	public ResponseEntity<?> updateUser(@PathVariable(value = "userId") long id, @Valid @RequestBody User editUser)
 			throws Exception {
 		Optional<User> opUser = userService.findUserById(id);
 		if (!opUser.isPresent()) {
@@ -90,8 +90,8 @@ public class UserControllerAPI {
 
 	}
 
-	@PutMapping("/users/{id}/password/{password}")
-	public ResponseEntity<?> changePassword(@PathVariable(value = "id") long id,
+	@PutMapping("/users/{userId}/password/{password}")
+	public ResponseEntity<?> changePassword(@PathVariable(value = "userId") long id,
 			@PathVariable(name = "password") String password) throws Exception {
 		Optional<User> opUser = userService.findUserById(id);
 		if (!opUser.isPresent()) {
@@ -120,8 +120,8 @@ public class UserControllerAPI {
 		}
 	}
 
-	@DeleteMapping("/users/{id}")
-	public ResponseEntity<String> removeUser(@PathVariable(value = "id") long id) throws Exception {
+	@DeleteMapping("/users/{userId}")
+	public ResponseEntity<String> removeUser(@PathVariable(value = "userId") long id) throws Exception {
 		userService.removeUser(id);
 		return new ResponseEntity<String>("Deleted!", HttpStatus.OK);
 	}

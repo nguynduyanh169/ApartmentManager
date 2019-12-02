@@ -9,33 +9,31 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.manager.dto.APIResponse;
-import com.manager.entity.PostImage;
-import com.manager.service.PostImageService;
+import com.manager.entity.Poll;
+import com.manager.service.PollService;
 
 @RestController
 @RequestMapping("/api/v1")
 @ComponentScan(basePackages = "com.manager.service")
-public class PostImageControllerAPI {
+public class PollControllerAPI {
 	
 	@Autowired
-	PostImageService postImageService;
+	PollService pollService;
 	
-	@GetMapping("/postImages/posts/{postId}")
-	public List<PostImage> getPostImageByPostId(@PathVariable(value = "postId") long postId){
-		List<PostImage> listPostImages = postImageService.getPostImageByPostId(postId);
-		return listPostImages;
+	@GetMapping("/polls")
+	public List<Poll> getAllPoll(){
+		return pollService.getAllPoll();
 	}
 	
-	@PostMapping("/postImages")
-	public ResponseEntity<?> savePostImage(@Valid @RequestBody PostImage postImage){
-		boolean flag = postImageService.savePostImage(postImage);
+	@PostMapping("/polls")
+	public ResponseEntity<?> savePoll(@Valid @RequestBody Poll poll){
+		boolean flag = pollService.savePoll(poll);
 		if (flag == false) {
 			return new ResponseEntity<APIResponse>(new APIResponse(false, "Save failed!"), HttpStatus.BAD_REQUEST);
 		} else {

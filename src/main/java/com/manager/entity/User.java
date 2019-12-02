@@ -34,12 +34,20 @@ public class User implements Serializable {
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	@JsonIgnore
-	private List<Post> postLists;
+	private List<Post> listPosts;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@JsonIgnore
+	private List<Poll> listPolls;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
 	@JsonIgnore
 	private List<Comment> listComments;
-
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@JsonIgnore
+	private List<UserAnswerPoll> listAnswerPolls;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "UserId")
@@ -56,14 +64,6 @@ public class User implements Serializable {
 	
 	@Column(name = "PhoneNo")
 	private String phoneNo;
-
-	public List<Comment> getListComments() {
-		return listComments;
-	}
-
-	public void setListComments(List<Comment> listComments) {
-		this.listComments = listComments;
-	}
 
 	public String getPhoneNo() {
 		return phoneNo;
@@ -104,8 +104,11 @@ public class User implements Serializable {
 	@Column(name = "Gender")
 	private int gender;
 
-	@Column(name = "Fullname")
-	private String fullName;
+	@Column(name = "FirstName")
+	private String firstName;
+	
+	@Column(name = "LastName")
+	private String lastName;
 
 	@Column(name = "CreateDate")
 	@CreatedDate
@@ -183,6 +186,22 @@ public class User implements Serializable {
 		return idNumber;
 	}
 
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
 	public void setIdNumber(String idNumber) {
 		this.idNumber = idNumber;
 	}
@@ -195,14 +214,7 @@ public class User implements Serializable {
 		this.gender = gender;
 	}
 
-	public String getFullName() {
-		return fullName;
-	}
-
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
-	}
-
+	
 	public Date getCreateDate() {
 		return createDate;
 	}

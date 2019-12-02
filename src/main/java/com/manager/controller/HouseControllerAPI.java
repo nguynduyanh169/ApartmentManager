@@ -61,8 +61,8 @@ public class HouseControllerAPI {
 		return houseService.getHouseLite();
 	}
 
-	@GetMapping("/houses/{id}")
-	public ResponseEntity<House> getHouseById(@PathVariable(value = "id") long id) throws Exception {
+	@GetMapping("/houses/{houseId}")
+	public ResponseEntity<House> getHouseById(@PathVariable(value = "houseId") long id) throws Exception {
 		Optional<House> house = houseService.getHouseById(id);
 		if (!house.isPresent()) {
 			return new ResponseEntity<House>(house.get(), HttpStatus.NO_CONTENT);
@@ -82,8 +82,8 @@ public class HouseControllerAPI {
 		}
 	}
 
-	@PutMapping("/houses/{id}")
-	public ResponseEntity<?> updateHouse(@PathVariable(value = "id") long id, @Valid @RequestBody House updateHouse)
+	@PutMapping("/houses/{houseId}")
+	public ResponseEntity<?> updateHouse(@PathVariable(value = "houseId") long id, @Valid @RequestBody House updateHouse)
 			throws Exception {
 		Optional<House> opHouse = houseService.getHouseById(id);
 		if (!opHouse.isPresent()) {
@@ -116,8 +116,8 @@ public class HouseControllerAPI {
 		return houseService.countHouse();
 	}
 
-	@DeleteMapping("/houses/{id}")
-	public ResponseEntity<String> removeHouse(@PathVariable(value = "id") long id) throws Exception {
+	@DeleteMapping("/houses/{houseId}")
+	public ResponseEntity<String> removeHouse(@PathVariable(value = "houseId") long id) throws Exception {
 		houseService.removeHouse(id);
 		return new ResponseEntity<String>("Deleted!", HttpStatus.OK);
 	}

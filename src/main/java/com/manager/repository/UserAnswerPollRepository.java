@@ -7,10 +7,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.manager.entity.Post;
+import com.manager.entity.UserAnswerPoll;
 
 @Repository
-public interface PostRepository extends JpaRepository<Post, Long>{
-	@Query("SELECT p from Post p where p.user.userId = :userId")
-	List<Post> getPostByUserId(@Param(value = "userId") long userId);
+public interface UserAnswerPollRepository extends JpaRepository<UserAnswerPoll, Long>{
+	
+	@Query("SELECT u from UserAnswerPoll u where u.poll.pollId = :pollId")
+	List<UserAnswerPoll> getUserAnswerPollByPollId(@Param(value = "pollId") long pollId);
+
 }

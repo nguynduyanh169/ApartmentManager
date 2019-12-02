@@ -31,5 +31,10 @@ public class PostServiceImpl implements PostService{
 		// TODO Auto-generated method stub
 		return postRepo.save(post) == null ? false : true;
 	}
+	@Override
+	public List<Post> getPostByUserId(long userId) {
+		// TODO Auto-generated method stub
+		return postRepo.getPostByUserId(userId);
+	}
 
 }
