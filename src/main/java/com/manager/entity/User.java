@@ -48,6 +48,10 @@ public class User implements Serializable {
 	@JsonIgnore
 	private List<UserAnswerPoll> listAnswerPolls;
 	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@JsonIgnore
+	private List<BalanceSheet> listBalanceSheets;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "UserId")

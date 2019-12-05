@@ -1,7 +1,6 @@
 package com.manager.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -17,44 +16,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.manager.dto.APIResponse;
-import com.manager.entity.Post;
-import com.manager.service.PostService;
+import com.manager.entity.Transaction;
+import com.manager.service.TransactionService;
 
 @RestController
-@RequestMapping("api/v1")
+@RequestMapping("/api/v1")
 @ComponentScan(basePackages = "com.manager.service")
-public class PostControllerAPI {
+public class TransactionControllerAPI {
 	
 	@Autowired
-	PostService postService;
+	TransactionService transactionService;
 	
-	@GetMapping("/posts")
-	public List<Post> getAllPost(){
-		return postService.getAllPost();
+	@GetMapping("/transactions/receiptDetails/{receiptDetailId}")
+	public List<Transaction> getTransactionByReceiptDetailId(@PathVariable(value = "receiptDetailId") long receiptDetailId){
+		return transactionService.getTransactionByReceiptDetailId(receiptDetailId);
 	}
 	
-	@GetMapping("/posts/{postId}")
-	public ResponseEntity<?> findPostById(@PathVariable(value = "id") long id) throws Exception{
-		Optional<Post> post = postService.findPostById(id);
-		if(!post.isPresent()) {
-			return new ResponseEntity<APIResponse>(new APIResponse(false, "Not found"), HttpStatus.NO_CONTENT);
-		}
-		return new ResponseEntity<Post>(post.get(), HttpStatus.OK);
-	}
-	
-	@PostMapping("/posts")
-	public ResponseEntity<?> savePost(@Valid @RequestBody Post post) {
-		boolean flag = postService.savePost(post);
+	@PostMapping("/transactions")
+	public ResponseEntity<?> saveTransaction(@Valid @RequestBody Transaction transaction){
+		boolean flag = transactionService.saveTransaction(transaction);
 		if (flag == false) {
 			return new ResponseEntity<APIResponse>(new APIResponse(false, "Save failed!"), HttpStatus.BAD_REQUEST);
 		} else {
 			return new ResponseEntity<APIResponse>(new APIResponse(true, "Save successful!"), HttpStatus.OK);
 		}
-	}
-	
-	@GetMapping("/posts/users/{userId}")
-	public List<Post> getPostByUserId(@PathVariable(value = "userId") long userId){
-		return postService.getPostByUserId(userId);
 	}
 
 }

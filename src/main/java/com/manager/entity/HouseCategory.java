@@ -30,6 +30,10 @@ public class HouseCategory implements Serializable{
 	@JsonIgnore
     private List<House> houses;
 	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "houseCategory")
+	@JsonIgnore
+    private List<UtilityServiceForHouseCat> listUtilityServiceForHouseCats;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "TypeId")
