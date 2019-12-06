@@ -34,7 +34,7 @@ public class PostControllerAPI {
 	}
 	
 	@GetMapping("/posts/{postId}")
-	public ResponseEntity<?> findPostById(@PathVariable(value = "id") long id) throws Exception{
+	public ResponseEntity<?> findPostById(@PathVariable(value = "postId") long id) throws Exception{
 		Optional<Post> post = postService.findPostById(id);
 		if(!post.isPresent()) {
 			return new ResponseEntity<APIResponse>(new APIResponse(false, "Not found"), HttpStatus.NO_CONTENT);
