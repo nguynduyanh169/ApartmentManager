@@ -1,5 +1,6 @@
 package com.manager.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.manager.dto.APIResponse;
+import com.manager.dto.HouseDTO;
+import com.manager.dto.UserDTO;
+import com.manager.entity.House;
 import com.manager.entity.User;
 import com.manager.service.UserService;
 
@@ -37,17 +41,55 @@ public class UserControllerAPI {
 
 	@GetMapping("/users/{userId}")
 	public ResponseEntity<?> findUserById(@PathVariable(value = "userId") long id) throws Exception {
-		Optional<User> user = userService.findUserById(id);
-		if (!user.isPresent()) {
+		Optional<User> opUser = userService.findUserById(id);
+		if (!opUser.isPresent()) {
 			return new ResponseEntity<APIResponse>(new APIResponse(false, "Not found!"), HttpStatus.NO_CONTENT);
 		} else {
-			return new ResponseEntity<User>(user.get(), HttpStatus.OK);
+			UserDTO userDTO = new UserDTO();
+			User user = opUser.get();
+			userDTO.setUserId(user.getUserId());
+			userDTO.setEmail(user.getEmail());
+			userDTO.setPhoneNo(user.getPhoneNo());
+			House house = user.getHouse();
+			HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName());
+			userDTO.setHouse(houseDTO);
+			userDTO.setDateOfBirth(user.getDateOfBirth());
+			userDTO.setProfileImage(user.getProfileImage());
+			userDTO.setIdNumber(user.getIdNumber());
+			userDTO.setGender(user.getGender());
+			userDTO.setHomeTown(user.getHomeTown());
+			userDTO.setJob(user.getJob());
+			userDTO.setFirstName(user.getFirstName());
+			userDTO.setLastName(user.getLastName());
+			userDTO.setFamilyLevel(user.getFamilyLevel());
+			return new ResponseEntity<UserDTO>(userDTO, HttpStatus.OK);
 		}
 	}
 
 	@GetMapping("/users/houses/{houseId}")
-	public List<User> getUserByHouseId(@PathVariable(value = "houseId") long houseId) {
-		return userService.getUserByHouseId(houseId);
+	public List<UserDTO> getUserByHouseId(@PathVariable(value = "houseId") long houseId) {
+		List<User> users = userService.getUserByHouseId(houseId);
+		List<UserDTO> userDTOs = new ArrayList<UserDTO>();
+		for (User user : users) {
+			UserDTO userDTO = new UserDTO();
+			userDTO.setUserId(user.getUserId());
+			userDTO.setEmail(user.getEmail());
+			userDTO.setPhoneNo(user.getPhoneNo());
+			House house = user.getHouse();
+			HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName());
+			userDTO.setHouse(houseDTO);
+			userDTO.setDateOfBirth(user.getDateOfBirth());
+			userDTO.setProfileImage(user.getProfileImage());
+			userDTO.setIdNumber(user.getIdNumber());
+			userDTO.setGender(user.getGender());
+			userDTO.setHomeTown(user.getHomeTown());
+			userDTO.setJob(user.getJob());
+			userDTO.setFirstName(user.getFirstName());
+			userDTO.setLastName(user.getLastName());
+			userDTO.setFamilyLevel(user.getFamilyLevel());
+			userDTOs.add(userDTO);
+		}
+		return userDTOs;
 	}
 
 	@PostMapping("/users")
@@ -85,7 +127,6 @@ public class UserControllerAPI {
 		user.setFamilyLevel(editUser.getFamilyLevel());
 		user.setIdNumber(editUser.getIdNumber());
 		user.setIdImage(editUser.getIdImage());
-		user.setStatus(editUser.getStatus());
 		boolean flag = userService.saveUser(user);
 		if (flag == false) {
 			return new ResponseEntity<APIResponse>(new APIResponse(false, "Save failed!"), HttpStatus.BAD_REQUEST);

@@ -116,12 +116,10 @@ public class User implements Serializable {
 
 	@Column(name = "CreateDate")
 	@CreatedDate
-	@JsonIgnore
 	private Date createDate;
 
 	@Column(name = "LastModified")
 	@LastModifiedDate
-	@JsonIgnore
 	private Date lastModified;
 
 	@Column(name = "FamilyLevel")
