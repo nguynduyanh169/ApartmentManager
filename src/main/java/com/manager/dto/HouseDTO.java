@@ -3,13 +3,13 @@ package com.manager.dto;
 public class HouseDTO {
 	private long houseId;
 	private String houseName;
-	
-	
+	private int ownerId;
 
-	public HouseDTO(long houseId, String houseName) {
+	public HouseDTO(long houseId, String houseName, int ownerId) {
 		super();
 		this.houseId = houseId;
 		this.houseName = houseName;
+		this.ownerId = ownerId;
 	}
 
 	public long getHouseId() {
@@ -28,6 +28,15 @@ public class HouseDTO {
 		this.houseName = houseName;
 	}
 
+	public int getOwnerId() {
+		return ownerId;
+	}
+
+	public void setOwnerId(int ownerId) {
+		this.ownerId = ownerId;
+	}
+
+	
 	
 
 }

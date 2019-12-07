@@ -17,8 +17,8 @@ public class TransactionServiceImpl implements TransactionService{
 	TransactionRepository transactionRepo;
 	
 	@Override
-	public List<Transaction> getTransactionByReceiptDetailId(long receiptDetailId) {
-		return transactionRepo.getTransactionByReceiptDetailId(receiptDetailId);
+	public List<Transaction> getTransactionByHouseId(long houseId) {
+		return transactionRepo.getTransactionByHouseId(houseId);
 	}
 
 	@Override

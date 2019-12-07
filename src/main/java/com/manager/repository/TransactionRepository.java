@@ -12,7 +12,7 @@ import com.manager.entity.Transaction;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long>{
 	
-	@Query("SELECT t from Transaction t where t.receiptDetail.receiptDetailId = :receiptDetailId")
-	List<Transaction> getTransactionByReceiptDetailId(@Param(value = "receiptDetailId") long receiptDetailId);
+	@Query("SELECT t from Transaction t where t.house.houseId = :houseId")
+	List<Transaction> getTransactionByHouseId(@Param(value = "houseId") long houseId);
 
 }

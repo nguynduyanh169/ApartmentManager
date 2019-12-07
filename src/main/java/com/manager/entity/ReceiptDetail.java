@@ -30,10 +30,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class ReceiptDetail implements Serializable{
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "receiptDetail")
-	@JsonIgnore
-	private List<Transaction> listTransactions;
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ReceiptDetailId")

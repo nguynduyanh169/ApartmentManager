@@ -11,7 +11,7 @@ import com.manager.entity.Transaction;
 @ComponentScan(basePackages = "com.manager.repository")
 public interface TransactionService {
 	
-	public List<Transaction> getTransactionByReceiptDetailId(long receiptDetailId);
+	public List<Transaction> getTransactionByHouseId(long houseId);
 	
 	public boolean saveTransaction(Transaction transaction);
 

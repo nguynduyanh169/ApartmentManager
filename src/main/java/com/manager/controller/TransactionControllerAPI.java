@@ -1,5 +1,6 @@
 package com.manager.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.manager.dto.APIResponse;
+import com.manager.dto.HouseDTO;
+import com.manager.dto.TransactionDTO;
 import com.manager.entity.Transaction;
 import com.manager.service.TransactionService;
 
@@ -27,9 +30,23 @@ public class TransactionControllerAPI {
 	@Autowired
 	TransactionService transactionService;
 	
-	@GetMapping("/transactions/receiptDetails/{receiptDetailId}")
-	public List<Transaction> getTransactionByReceiptDetailId(@PathVariable(value = "receiptDetailId") long receiptDetailId){
-		return transactionService.getTransactionByReceiptDetailId(receiptDetailId);
+	@GetMapping("/transactions/houses/{houseId}")
+	public List<TransactionDTO> getTransactionByHouseId(@PathVariable(value = "houseId") long houseId){
+		List<Transaction> transactions = transactionService.getTransactionByHouseId(houseId);
+		List<TransactionDTO> transactionDTOs = new ArrayList<>();
+		for (Transaction transaction : transactions) {
+			TransactionDTO transactionDTO = new TransactionDTO();
+			transactionDTO.setTransactionId(transaction.getTransactionId());
+			transactionDTO.setTitle(transaction.getTitle());
+			transactionDTO.setAmount(transaction.getAmount());
+			transactionDTO.setStatus(transaction.getStatus());
+			transactionDTO.setCreatedDate(transaction.getCreatedDate());
+			transactionDTO.setTransactor(transaction.getTransactor());
+			HouseDTO house = new HouseDTO(transaction.getHouse().getHouseId(), transaction.getHouse().getHouseName(), transaction.getHouse().getOwnerId());
+			transactionDTO.setHouse(house);
+			transactionDTOs.add(transactionDTO);
+		}
+		return transactionDTOs;
 	}
 	
 	@PostMapping("/transactions")

@@ -34,7 +34,11 @@ public class House implements Serializable {
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "house")
 	@JsonIgnore
-	private List<Receipt> lisReceipts;
+	private List<Receipt> listReceipts;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "house")
+	@JsonIgnore
+	private List<Transaction> listTransactions;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -72,12 +76,15 @@ public class House implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "TypeId", nullable = true)
 	private HouseCategory type;
-
+	
 	@Column(name = "Status")
 	private int status;
 
 	@Column(name = "WaterMeter")
 	private int waterMeter;
+	
+	@Column(name = "CurrentMoney")
+	private float currentMoney;
 
 	public House() {
 		super();
@@ -194,5 +201,15 @@ public class House implements Serializable {
 	public void setWaterMeter(int waterMeter) {
 		this.waterMeter = waterMeter;
 	}
+
+	public float getCurrentMoney() {
+		return currentMoney;
+	}
+
+	public void setCurrentMoney(float currentMoney) {
+		this.currentMoney = currentMoney;
+	}
+	
+	
 
 }

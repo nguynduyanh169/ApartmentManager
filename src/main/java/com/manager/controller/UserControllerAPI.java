@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.manager.dto.APIResponse;
 import com.manager.dto.HouseDTO;
 import com.manager.dto.UserDTO;
+import com.manager.dto.UserFullNameDTO;
 import com.manager.entity.House;
 import com.manager.entity.User;
 import com.manager.service.UserService;
@@ -40,8 +41,8 @@ public class UserControllerAPI {
 	}
 
 	@GetMapping("/users/{userId}")
-	public ResponseEntity<?> findUserById(@PathVariable(value = "userId") long id) throws Exception {
-		Optional<User> opUser = userService.findUserById(id);
+	public ResponseEntity<?> findUserById(@PathVariable(value = "userId") long userId) throws Exception {
+		Optional<User> opUser = userService.findUserById(userId);
 		if (!opUser.isPresent()) {
 			return new ResponseEntity<APIResponse>(new APIResponse(false, "Not found!"), HttpStatus.NO_CONTENT);
 		} else {
@@ -51,7 +52,7 @@ public class UserControllerAPI {
 			userDTO.setEmail(user.getEmail());
 			userDTO.setPhoneNo(user.getPhoneNo());
 			House house = user.getHouse();
-			HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName());
+			HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId());
 			userDTO.setHouse(houseDTO);
 			userDTO.setDateOfBirth(user.getDateOfBirth());
 			userDTO.setProfileImage(user.getProfileImage());
@@ -76,7 +77,7 @@ public class UserControllerAPI {
 			userDTO.setEmail(user.getEmail());
 			userDTO.setPhoneNo(user.getPhoneNo());
 			House house = user.getHouse();
-			HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName());
+			HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId());
 			userDTO.setHouse(houseDTO);
 			userDTO.setDateOfBirth(user.getDateOfBirth());
 			userDTO.setProfileImage(user.getProfileImage());
@@ -90,6 +91,20 @@ public class UserControllerAPI {
 			userDTOs.add(userDTO);
 		}
 		return userDTOs;
+	}
+	
+	@GetMapping("/users/fullname/{userId}")
+	public ResponseEntity<?> getFullnameOfUserById(@PathVariable(value = "userId") long userId) throws Exception{
+		Optional<User> opUser = userService.findUserById(userId);
+		if (!opUser.isPresent()) {
+			return new ResponseEntity<APIResponse>(new APIResponse(false, "Not found!"), HttpStatus.NO_CONTENT);
+		}else {
+			UserFullNameDTO user = new UserFullNameDTO();
+			user.setFirstName(opUser.get().getFirstName());
+			user.setLastName(opUser.get().getLastName());
+			return new ResponseEntity<UserFullNameDTO>(user, HttpStatus.OK);
+		}
+		
 	}
 
 	@PostMapping("/users")

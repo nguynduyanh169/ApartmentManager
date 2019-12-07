@@ -36,22 +36,24 @@ public class Transaction implements Serializable{
 	private BalanceSheet balanceSheet;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ReceiptDetailId", nullable = true)
-	private ReceiptDetail receiptDetail;
+	@JoinColumn(name = "HouseId", nullable = true)
+	private House house;
 	
-	@Column(name = "TotalAmount")
-	private float totalAmount;
+	@Column(name = "Amount")
+	private float amount;
 	
-	@Column(name = "PaidAmount")
-	private float paidAmount;
+	@Column(name = "Title")
+	private String title;
+	
+	@Column(name = "Status")
+	private int status;
 	
 	@Column(name = "CreatedDate")
 	@CreatedDate
 	private Date createdDate;
 	
-	@Column(name = "LastModifiedDate")
-	@LastModifiedDate
-	private Date lastModifiedDate;
+	@Column(name = "Transactor")
+	private long transactor;
 
 	public long getTransactionId() {
 		return transactionId;
@@ -69,28 +71,36 @@ public class Transaction implements Serializable{
 		this.balanceSheet = balanceSheet;
 	}
 
-	public ReceiptDetail getReceiptDetail() {
-		return receiptDetail;
+	public House getHouse() {
+		return house;
 	}
 
-	public void setReceiptDetail(ReceiptDetail receiptDetail) {
-		this.receiptDetail = receiptDetail;
+	public void setHouse(House house) {
+		this.house = house;
 	}
 
-	public float getTotalAmount() {
-		return totalAmount;
+	public float getAmount() {
+		return amount;
 	}
 
-	public void setTotalAmount(float totalAmount) {
-		this.totalAmount = totalAmount;
+	public void setAmount(float amount) {
+		this.amount = amount;
 	}
 
-	public float getPaidAmount() {
-		return paidAmount;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setPaidAmount(float paidAmount) {
-		this.paidAmount = paidAmount;
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 	public Date getCreatedDate() {
@@ -101,15 +111,14 @@ public class Transaction implements Serializable{
 		this.createdDate = createdDate;
 	}
 
-	public Date getLastModifiedDate() {
-		return lastModifiedDate;
+	public long getTransactor() {
+		return transactor;
 	}
 
-	public void setLastModifiedDate(Date lastModifiedDate) {
-		this.lastModifiedDate = lastModifiedDate;
+	public void setTransactor(long transactor) {
+		this.transactor = transactor;
 	}
-	
-	
+
 	
 	
 
