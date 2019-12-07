@@ -40,7 +40,7 @@ public class User implements Serializable {
 	@JsonIgnore
 	private List<Poll> listPolls;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	@JsonIgnore
 	private List<Comment> listComments;
 	

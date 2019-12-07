@@ -31,11 +31,11 @@ public class House implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "house")
 	@JsonIgnore
 	private List<User> listUser;
-	
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "house")
 	@JsonIgnore
 	private List<Receipt> lisReceipts;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "HouseId")
@@ -90,7 +90,6 @@ public class House implements Serializable {
 		this.description = description;
 		this.profileImage = profileImage;
 	}
-
 
 	public long getHouseId() {
 		return houseId;

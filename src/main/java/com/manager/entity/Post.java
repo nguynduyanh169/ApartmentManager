@@ -32,7 +32,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Post implements Serializable{
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "postId")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
 	@JsonIgnore
     private List<Comment> listComments;
 	
