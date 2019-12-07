@@ -33,11 +33,11 @@ public class Comment implements Serializable {
 	private long commentId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "PostId", nullable = false)
+	@JoinColumn(name = "PostId", nullable = true)
 	private Post postId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "UserId", nullable = false)
+	@JoinColumn(name = "UserId", nullable = true)
 	private User userId;
 
 	@Column(name = "Detail")

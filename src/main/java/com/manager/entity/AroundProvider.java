@@ -55,7 +55,7 @@ public class AroundProvider implements Serializable {
 	private int clickCount;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "AroundProviderCategoryId", nullable = false)
+	@JoinColumn(name = "AroundProviderCategoryId", nullable = true)
 	private AroundProviderCategory providerCategory;
 
 	@Column(name = "ImageUrl")

@@ -55,7 +55,7 @@ public class AroundProviderProduct implements Serializable{
 	private Date lastModifiedDate;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "AroundProviderId", nullable = false)
+	@JoinColumn(name = "AroundProviderId", nullable = true)
 	private AroundProvider aroundProvider;
 
 	public long getAroundProviderProductId() {

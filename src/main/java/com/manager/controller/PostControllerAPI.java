@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -71,6 +72,23 @@ public class PostControllerAPI {
 		} else {
 			return new ResponseEntity<APIResponse>(new APIResponse(true, "Save successful!"), HttpStatus.OK);
 		}
+	}
+	
+	@PutMapping("/posts/{postId}")
+	public ResponseEntity<?> updatePost(@PathVariable(value = "postId") long postId, @Valid @RequestBody Post updatePost) throws Exception{
+		Optional<Post> opPost = postService.findPostById(postId);
+		if(!opPost.isPresent()) {
+			return new ResponseEntity<APIResponse>(new APIResponse(false, "Not found"), HttpStatus.NO_CONTENT);
+		}
+		Post post = opPost.get();
+		post.setBody(updatePost.getBody());
+		boolean flag = postService.savePost(post);
+		if (flag == false) {
+			return new ResponseEntity<APIResponse>(new APIResponse(false, "Save failed!"), HttpStatus.BAD_REQUEST);
+		} else {
+			return new ResponseEntity<APIResponse>(new APIResponse(true, "Save successful!"), HttpStatus.OK);
+		}
+		
 	}
 	
 	@GetMapping("/posts/users/{userId}")

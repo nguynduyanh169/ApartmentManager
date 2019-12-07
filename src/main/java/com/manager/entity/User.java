@@ -80,11 +80,11 @@ public class User implements Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "RoleId", nullable = false)
+	@JoinColumn(name = "RoleId", nullable = true)
 	private Role role;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "HouseId", nullable = false)
+	@JoinColumn(name = "HouseId", nullable = true)
 	private House house;
 
 	@Column(name = "ProfileImage")

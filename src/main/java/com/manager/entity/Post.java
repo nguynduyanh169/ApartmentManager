@@ -63,7 +63,7 @@ public class Post implements Serializable{
 	private int status;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "UserId", nullable = false)
+	@JoinColumn(name = "UserId", nullable = true)
 	private User user;
 	
 	@Column(name = "EmbedCode")

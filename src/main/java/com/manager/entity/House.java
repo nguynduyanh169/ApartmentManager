@@ -42,7 +42,7 @@ public class House implements Serializable {
 	private long houseId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "BlockId", nullable = false)
+	@JoinColumn(name = "BlockId", nullable = true)
 	private Block block;
 
 	@Column(name = "Floor")
@@ -70,7 +70,7 @@ public class House implements Serializable {
 	private boolean displayMember;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "TypeId", nullable = false)
+	@JoinColumn(name = "TypeId", nullable = true)
 	private HouseCategory type;
 
 	@Column(name = "Status")
