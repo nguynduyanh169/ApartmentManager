@@ -1,5 +1,6 @@
 package com.manager.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.manager.dto.APIResponse;
+import com.manager.dto.PostDTO;
+import com.manager.dto.UserForPostDTO;
 import com.manager.entity.Post;
 import com.manager.service.PostService;
 
@@ -29,17 +32,35 @@ public class PostControllerAPI {
 	PostService postService;
 	
 	@GetMapping("/posts")
-	public List<Post> getAllPost(){
-		return postService.getAllPost();
+	public List<PostDTO> getAllPost(){
+		List<Post> posts = postService.getAllPost();
+		List<PostDTO> postDTOs = new ArrayList<>();
+		for (Post post : posts) {
+			PostDTO postDTO = new PostDTO();
+			postDTO.setPostId(post.getPostId());
+			postDTO.setBody(post.getBody());
+			postDTO.setCreatedDate(post.getCreateDate());
+			UserForPostDTO user = new UserForPostDTO(post.getUser().getUserId(), post.getUser().getProfileImage(), post.getUser().getFirstName(), post.getUser().getLastName());
+			postDTO.setUser(user);
+			postDTOs.add(postDTO);
+		}
+		return postDTOs;
 	}
 	
 	@GetMapping("/posts/{postId}")
 	public ResponseEntity<?> findPostById(@PathVariable(value = "postId") long id) throws Exception{
-		Optional<Post> post = postService.findPostById(id);
-		if(!post.isPresent()) {
+		Optional<Post> opPost = postService.findPostById(id);
+		if(!opPost.isPresent()) {
 			return new ResponseEntity<APIResponse>(new APIResponse(false, "Not found"), HttpStatus.NO_CONTENT);
 		}
-		return new ResponseEntity<Post>(post.get(), HttpStatus.OK);
+		Post post = opPost.get();
+		PostDTO postDTO = new PostDTO();
+		postDTO.setPostId(post.getPostId());
+		postDTO.setBody(post.getBody());
+		postDTO.setCreatedDate(post.getCreateDate());
+		UserForPostDTO user = new UserForPostDTO(post.getUser().getUserId(), post.getUser().getProfileImage(), post.getUser().getFirstName(), post.getUser().getLastName());
+		postDTO.setUser(user);
+		return new ResponseEntity<PostDTO>(postDTO, HttpStatus.OK);
 	}
 	
 	@PostMapping("/posts")
@@ -53,8 +74,19 @@ public class PostControllerAPI {
 	}
 	
 	@GetMapping("/posts/users/{userId}")
-	public List<Post> getPostByUserId(@PathVariable(value = "userId") long userId){
-		return postService.getPostByUserId(userId);
+	public List<PostDTO> getPostByUserId(@PathVariable(value = "userId") long userId){
+		List<Post> posts = postService.getPostByUserId(userId);
+		List<PostDTO> postDTOs = new ArrayList<>();
+		for (Post post : posts) {
+			PostDTO postDTO = new PostDTO();
+			postDTO.setPostId(post.getPostId());
+			postDTO.setBody(post.getBody());
+			postDTO.setCreatedDate(post.getCreateDate());
+			UserForPostDTO user = new UserForPostDTO(post.getUser().getUserId(), post.getUser().getProfileImage(), post.getUser().getFirstName(), post.getUser().getLastName());
+			postDTO.setUser(user);
+			postDTOs.add(postDTO);
+		}
+		return postDTOs;
 	}
 
 }

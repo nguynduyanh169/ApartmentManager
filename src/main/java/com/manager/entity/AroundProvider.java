@@ -63,11 +63,9 @@ public class AroundProvider implements Serializable {
 
 	@Column(name = "CreatedDate")
 	@CreatedDate
-	@JsonIgnore
 	private Date createdDate;
 
 	@Column(name = "LastModifiedDate")
-	@JsonIgnore
 	@LastModifiedDate
 	private Date lastModifiedDate;
 
