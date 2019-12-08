@@ -2,15 +2,20 @@ package com.manager.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.manager.dto.APIResponse;
 import com.manager.dto.AroundProviderDTO;
+import com.manager.dto.AroundProviderListDTO;
 import com.manager.entity.AroundProvider;
 import com.manager.service.AroundProviderService;
 
@@ -18,31 +23,47 @@ import com.manager.service.AroundProviderService;
 @RequestMapping("/api/v1")
 @ComponentScan(basePackages = "com.manager.service")
 public class AroundProviderControllerAPI {
-	
+
 	@Autowired
 	AroundProviderService aroundProviderService;
-	
+
 	@GetMapping("/AroundProviders/AroundProviderCategories/{categoryId}")
-	List<AroundProviderDTO> getAroundProviderByCategoryId(@PathVariable(value = "categoryId") long categoryId){
+	public List<AroundProviderListDTO> getAroundProviderByCategoryId(@PathVariable(value = "categoryId") long categoryId) {
 		List<AroundProvider> aroundProviders = aroundProviderService.getAroundProviderByCategoryId(categoryId);
-		
-		List<AroundProviderDTO> aroundProviderDTOs = new ArrayList<>();
-		
-		for (int i = 0; i < aroundProviders.size(); i++) {
-			AroundProviderDTO providerDTO = new AroundProviderDTO();
-			providerDTO.setAroundProviderId(aroundProviders.get(i).getAroundProviderId());
-			providerDTO.setAroundProviderName(aroundProviders.get(i).getAroundProviderName());
-			providerDTO.setDescription(aroundProviders.get(i).getDescription());
-			providerDTO.setPhoneNo(aroundProviders.get(i).getPhoneNo());
-			providerDTO.setAddress(aroundProviders.get(i).getAddress());
-			providerDTO.setClickCount(aroundProviders.get(i).getClickCount());
-			providerDTO.setImageUrl(aroundProviders.get(i).getImageUrl());
-			providerDTO.setLatitude(aroundProviders.get(i).getLatitude());
-			providerDTO.setLongtitude(aroundProviders.get(i).getLongtitude());
-			aroundProviderDTOs.add(providerDTO);
+		List<AroundProviderListDTO> aroundProviderListDTOs = new ArrayList<>();
+
+		for (AroundProvider aroundProvider : aroundProviders) {
+			AroundProviderListDTO providerDTO = new AroundProviderListDTO();
+			providerDTO.setAroundProviderId(aroundProvider.getAroundProviderId());
+			providerDTO.setAroundProviderName(aroundProvider.getAroundProviderName());
+			providerDTO.setAddress(aroundProvider.getAddress());
+			aroundProviderListDTOs.add(providerDTO);
 			
 		}
-		return aroundProviderDTOs;
+		return aroundProviderListDTOs;
 	}
+	
+	@GetMapping("/AroundProviders/{aroundProviderId}")
+	public ResponseEntity<?> getAroundProviderById(@PathVariable(value = "aroundProviderId") long aroundProviderId) throws Exception{
+		Optional<AroundProvider> opAroundProvider = aroundProviderService.getAroundProviderById(aroundProviderId);
+		if(!opAroundProvider.isPresent()) {
+			return new ResponseEntity<APIResponse>(new APIResponse(false, "Not found!"), HttpStatus.NO_CONTENT);
+		}else {
+			AroundProvider aroundProvider = opAroundProvider.get();
+			AroundProviderDTO providerDTO = new AroundProviderDTO();
+			providerDTO.setAroundProviderId(aroundProvider.getAroundProviderId());
+			providerDTO.setAroundProviderName(aroundProvider.getAroundProviderName());
+			providerDTO.setDescription(aroundProvider.getDescription());
+			providerDTO.setPhoneNo(aroundProvider.getPhoneNo());
+			providerDTO.setAddress(aroundProvider.getAddress());
+			providerDTO.setClickCount(aroundProvider.getClickCount());
+			providerDTO.setImageUrl(aroundProvider.getImageUrl());
+			providerDTO.setLatitude(aroundProvider.getLatitude());
+			providerDTO.setLongtitude(aroundProvider.getLongtitude());
+			return new ResponseEntity<AroundProviderDTO>(providerDTO, HttpStatus.OK);
+		}
+	}
+	
+	
 
 }
