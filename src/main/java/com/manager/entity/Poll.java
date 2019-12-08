@@ -66,7 +66,7 @@ public class Poll implements Serializable {
 	private int priority;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "UserId", nullable = false)
+	@JoinColumn(name = "UserId", nullable = true)
 	private User user;
 
 	public long getPollId() {

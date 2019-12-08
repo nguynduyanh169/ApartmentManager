@@ -31,11 +31,11 @@ public class UserAnswerPoll implements Serializable{
 	private long userAnswerPollId;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "UserId", nullable = false)
+	@JoinColumn(name = "UserId", nullable = true)
 	private User user;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "PollId", nullable = false)
+	@JoinColumn(name = "PollId", nullable = true)
 	private Poll poll;
 	
 	@Column(name = "Answer")

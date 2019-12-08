@@ -11,7 +11,7 @@ import com.manager.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-	@Query("SELECT u from User u where u.status = 1")
+	@Query("SELECT u from User u where u.status = 0")
 	List<User> findAllActiveUser();
 
 	@Query("SELECT u from User u where u.house.houseId = :houseId")
@@ -22,5 +22,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	@Query("SELECT u from User u where u.email = :email")
 	User checkUserEmail(@Param(value = "email") String email);
+	
+	@Query("UPDATE User u set u.status = 1 where u.userId = :userId")
+	boolean deactivateUser(@Param("userId") long userId);
 
 }

@@ -33,19 +33,18 @@ public class Comment implements Serializable {
 	private long commentId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "PostId", nullable = false)
-	private Post postId;
+	@JoinColumn(name = "PostId", nullable = true)
+	private Post post;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "UserId", nullable = false)
-	private User userId;
+	@JoinColumn(name = "UserId", nullable = true)
+	private User user;
 
 	@Column(name = "Detail")
 	private String detail;
 
 	@Column(name = "CreatedDate")
 	@CreatedDate
-	@JsonIgnore
 	private Date createdDate;
 
 	public long getCommentId() {
@@ -56,12 +55,20 @@ public class Comment implements Serializable {
 		this.commentId = commentId;
 	}
 
-	public User getUserId() {
-		return userId;
+	public Post getPost() {
+		return post;
 	}
 
-	public void setUserId(User userId) {
-		this.userId = userId;
+	public void setPost(Post post) {
+		this.post = post;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public String getDetail() {

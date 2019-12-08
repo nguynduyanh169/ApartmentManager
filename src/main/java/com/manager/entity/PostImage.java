@@ -40,7 +40,7 @@ public class PostImage implements Serializable{
 	private Date createdDate;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "PostId", nullable = false)
+	@JoinColumn(name = "PostId", nullable = true)
 	private Post post;
 
 	public long getPostImageId() {

@@ -1,5 +1,6 @@
 package com.manager.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.manager.dto.APIResponse;
+import com.manager.dto.UserAnswerPollDTO;
+import com.manager.dto.UserForPollDTO;
 import com.manager.entity.UserAnswerPoll;
 import com.manager.service.UserAnswerPollService;
 
@@ -28,8 +31,20 @@ public class UserAnswerPollControllerAPI {
 	UserAnswerPollService answerPollService;
 	
 	@GetMapping("/userAnswerPolls/polls/{pollId}")
-	public List<UserAnswerPoll> getUserAnswerPollByPollId(@PathVariable(value = "pollId") long pollId){
-		return answerPollService.getUserAnswerPollByPollId(pollId);
+	public List<UserAnswerPollDTO> getUserAnswerPollByPollId(@PathVariable(value = "pollId") long pollId){
+		List<UserAnswerPoll> answerPolls = answerPollService.getUserAnswerPollByPollId(pollId);
+		List<UserAnswerPollDTO> answerPollDTOs = new ArrayList<>();
+		for (UserAnswerPoll userAnswerPoll : answerPolls) {
+			UserAnswerPollDTO answerPollDTO = new UserAnswerPollDTO();
+			answerPollDTO.setUserAnswerPollId(userAnswerPoll.getUserAnswerPollId());
+			answerPollDTO.setAnswer(userAnswerPoll.getAnswer());
+			answerPollDTO.setAnswerDate(userAnswerPoll.getAnswerDate());
+			UserForPollDTO user = new UserForPollDTO(userAnswerPoll.getUser().getUserId(), userAnswerPoll.getUser().getProfileImage(), userAnswerPoll.getUser().getFirstName(), userAnswerPoll.getUser().getLastName());
+			answerPollDTO.setUser(user);
+			answerPollDTOs.add(answerPollDTO);
+		}
+		return answerPollDTOs;
+		
 	}
 	
 	@PostMapping("/userAnswerPolls")

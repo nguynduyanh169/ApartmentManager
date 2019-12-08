@@ -31,14 +31,22 @@ public class House implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "house")
 	@JsonIgnore
 	private List<User> listUser;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "house")
+	@JsonIgnore
+	private List<Receipt> listReceipts;
 	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "house")
+	@JsonIgnore
+	private List<Transaction> listTransactions;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "HouseId")
 	private long houseId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "BlockId", nullable = false)
+	@JoinColumn(name = "BlockId", nullable = true)
 	private Block block;
 
 	@Column(name = "Floor")
@@ -66,14 +74,17 @@ public class House implements Serializable {
 	private boolean displayMember;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "TypeId", nullable = false)
+	@JoinColumn(name = "TypeId", nullable = true)
 	private HouseCategory type;
-
+	
 	@Column(name = "Status")
 	private int status;
 
 	@Column(name = "WaterMeter")
 	private int waterMeter;
+	
+	@Column(name = "CurrentMoney")
+	private float currentMoney;
 
 	public House() {
 		super();
@@ -86,7 +97,6 @@ public class House implements Serializable {
 		this.description = description;
 		this.profileImage = profileImage;
 	}
-
 
 	public long getHouseId() {
 		return houseId;
@@ -191,5 +201,15 @@ public class House implements Serializable {
 	public void setWaterMeter(int waterMeter) {
 		this.waterMeter = waterMeter;
 	}
+
+	public float getCurrentMoney() {
+		return currentMoney;
+	}
+
+	public void setCurrentMoney(float currentMoney) {
+		this.currentMoney = currentMoney;
+	}
+	
+	
 
 }

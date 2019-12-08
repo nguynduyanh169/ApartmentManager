@@ -32,7 +32,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Post implements Serializable{
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "postId")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
 	@JsonIgnore
     private List<Comment> listComments;
 	
@@ -50,20 +50,17 @@ public class Post implements Serializable{
 	
 	@Column(name = "CreateDate")
 	@CreatedDate
-	@JsonIgnore
 	private Date createDate;
 	
 	@Column(name = "UpdateDate")
-	@JsonIgnore
 	@LastModifiedDate
 	private Date updateDate;
 	
 	@Column(name = "Status")
-	@JsonIgnore
 	private int status;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "UserId", nullable = false)
+	@JoinColumn(name = "UserId", nullable = true)
 	private User user;
 	
 	@Column(name = "EmbedCode")

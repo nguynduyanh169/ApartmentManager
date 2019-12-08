@@ -55,7 +55,7 @@ public class AroundProvider implements Serializable {
 	private int clickCount;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "AroundProviderCategoryId", nullable = false)
+	@JoinColumn(name = "AroundProviderCategoryId", nullable = true)
 	private AroundProviderCategory providerCategory;
 
 	@Column(name = "ImageUrl")
@@ -63,11 +63,9 @@ public class AroundProvider implements Serializable {
 
 	@Column(name = "CreatedDate")
 	@CreatedDate
-	@JsonIgnore
 	private Date createdDate;
 
 	@Column(name = "LastModifiedDate")
-	@JsonIgnore
 	@LastModifiedDate
 	private Date lastModifiedDate;
 

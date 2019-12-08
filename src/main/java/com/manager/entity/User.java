@@ -40,13 +40,17 @@ public class User implements Serializable {
 	@JsonIgnore
 	private List<Poll> listPolls;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	@JsonIgnore
 	private List<Comment> listComments;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	@JsonIgnore
 	private List<UserAnswerPoll> listAnswerPolls;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@JsonIgnore
+	private List<BalanceSheet> listBalanceSheets;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -76,11 +80,11 @@ public class User implements Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "RoleId", nullable = false)
+	@JoinColumn(name = "RoleId", nullable = true)
 	private Role role;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "HouseId", nullable = false)
+	@JoinColumn(name = "HouseId", nullable = true)
 	private House house;
 
 	@Column(name = "ProfileImage")
@@ -112,12 +116,10 @@ public class User implements Serializable {
 
 	@Column(name = "CreateDate")
 	@CreatedDate
-	@JsonIgnore
 	private Date createDate;
 
 	@Column(name = "LastModified")
 	@LastModifiedDate
-	@JsonIgnore
 	private Date lastModified;
 
 	@Column(name = "FamilyLevel")
