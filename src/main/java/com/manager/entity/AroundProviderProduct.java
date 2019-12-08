@@ -46,12 +46,10 @@ public class AroundProviderProduct implements Serializable{
 	
 	@Column(name = "CreatedDate")
 	@CreatedDate
-	@JsonIgnore
 	private Date createdDate;
 	
 	@Column(name = "LastModifiedDate")
 	@LastModifiedDate
-	@JsonIgnore
 	private Date lastModifiedDate;
 	
 	@ManyToOne(fetch = FetchType.LAZY)

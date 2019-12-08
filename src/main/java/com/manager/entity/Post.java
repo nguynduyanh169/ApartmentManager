@@ -50,16 +50,13 @@ public class Post implements Serializable{
 	
 	@Column(name = "CreateDate")
 	@CreatedDate
-	@JsonIgnore
 	private Date createDate;
 	
 	@Column(name = "UpdateDate")
-	@JsonIgnore
 	@LastModifiedDate
 	private Date updateDate;
 	
 	@Column(name = "Status")
-	@JsonIgnore
 	private int status;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
