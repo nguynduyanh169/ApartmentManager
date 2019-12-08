@@ -112,6 +112,25 @@ public class HouseControllerAPI {
 
 	}
 
+	@PutMapping("/houses/{houseId}/currentMoney/{currentMoney}")
+	public ResponseEntity<?> updateHouseWalletById(@PathVariable(value = "houseId") long id,
+			@PathVariable(value = "currentMoney") float currentMoney) throws Exception {
+		Optional<House> opHouse = houseService.getHouseById(id);
+		if (!opHouse.isPresent()) {
+			return new ResponseEntity<House>(opHouse.get(), HttpStatus.NO_CONTENT);
+		} else {
+			House house = opHouse.get();
+			house.setCurrentMoney(currentMoney);
+			boolean flag = houseService.save(house);
+			if (flag == false) {
+				return new ResponseEntity<APIResponse>(new APIResponse(false, "Save failed!"), HttpStatus.BAD_REQUEST);
+			} else {
+				return new ResponseEntity<APIResponse>(new APIResponse(true, "Save successful!"), HttpStatus.OK);
+			}
+		}
+
+	}
+
 	@GetMapping("/houses/count")
 	public long countHouse() {
 		return houseService.countHouse();

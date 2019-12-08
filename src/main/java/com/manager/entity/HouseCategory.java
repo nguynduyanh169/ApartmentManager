@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -47,7 +48,7 @@ public class HouseCategory implements Serializable{
 	private Date createDate;
 	
 	@Column(name = "LastModified")
-	@org.springframework.data.annotation.LastModifiedDate
+	@LastModifiedDate
 	private Date LastModified;
 
 	public long getTypeId() {

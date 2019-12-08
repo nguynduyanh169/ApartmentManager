@@ -52,7 +52,7 @@ public class UserControllerAPI {
 			userDTO.setEmail(user.getEmail());
 			userDTO.setPhoneNo(user.getPhoneNo());
 			House house = user.getHouse();
-			HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId());
+			HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId(), house.getCurrentMoney());
 			userDTO.setHouse(houseDTO);
 			userDTO.setDateOfBirth(user.getDateOfBirth());
 			userDTO.setProfileImage(user.getProfileImage());
@@ -77,7 +77,7 @@ public class UserControllerAPI {
 			userDTO.setEmail(user.getEmail());
 			userDTO.setPhoneNo(user.getPhoneNo());
 			House house = user.getHouse();
-			HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId());
+			HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId(), house.getCurrentMoney());
 			userDTO.setHouse(houseDTO);
 			userDTO.setDateOfBirth(user.getDateOfBirth());
 			userDTO.setProfileImage(user.getProfileImage());

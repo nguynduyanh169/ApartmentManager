@@ -42,7 +42,7 @@ public class TransactionControllerAPI {
 			transactionDTO.setStatus(transaction.getStatus());
 			transactionDTO.setCreatedDate(transaction.getCreatedDate());
 			transactionDTO.setTransactor(transaction.getTransactor());
-			HouseDTO house = new HouseDTO(transaction.getHouse().getHouseId(), transaction.getHouse().getHouseName(), transaction.getHouse().getOwnerId());
+			HouseDTO house = new HouseDTO(transaction.getHouse().getHouseId(), transaction.getHouse().getHouseName(), transaction.getHouse().getOwnerId(), transaction.getHouse().getCurrentMoney());
 			transactionDTO.setHouse(house);
 			transactionDTOs.add(transactionDTO);
 		}
