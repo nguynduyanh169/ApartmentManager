@@ -1,6 +1,7 @@
 package com.manager.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -19,6 +20,17 @@ public class ReceiptServiceImpl implements ReceiptService{
 	@Override
 	public List<Receipt> getReceiptByHouseId(long houseId) {
 		return receiptRepo.getReceiptByHouseId(houseId);
+	}
+
+	@Override
+	public Optional<Receipt> getReceiptById(long receiptId) {
+		return receiptRepo.findById(receiptId);
+	}
+
+	@Override
+	public boolean saveReceipt(Receipt receipt) {
+		// TODO Auto-generated method stub
+		return receiptRepo.save(receipt) == null ? false : true;
 	}
 
 }

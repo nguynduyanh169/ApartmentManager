@@ -83,30 +83,31 @@ public class HouseControllerAPI {
 	}
 
 	@PutMapping("/houses/{houseId}")
-	public ResponseEntity<?> updateHouse(@PathVariable(value = "houseId") long id, @Valid @RequestBody House updateHouse)
-			throws Exception {
+	public ResponseEntity<?> updateHouse(@PathVariable(value = "houseId") long id,
+			@Valid @RequestBody House updateHouse) throws Exception {
 		Optional<House> opHouse = houseService.getHouseById(id);
 		if (!opHouse.isPresent()) {
 			return new ResponseEntity<House>(opHouse.get(), HttpStatus.NO_CONTENT);
-		}
-		House house = opHouse.get();
-		house.setBlock(updateHouse.getBlock());
-		house.setFloor(updateHouse.getFloor());
-		house.setHouseName(updateHouse.getHouseName());
-		house.setDescription(updateHouse.getDescription());
-		house.setArea(updateHouse.getArea());
-		house.setOwnerId(updateHouse.getOwnerId());
-		house.setProfileImage(updateHouse.getProfileImage());
-		house.setCoverImage(updateHouse.getCoverImage());
-		house.setDisplayMember(updateHouse.isDisplayMember());
-		house.setType(updateHouse.getType());
-		house.setStatus(updateHouse.getStatus());
-		house.setWaterMeter(updateHouse.getWaterMeter());
-		boolean flag = houseService.save(house);
-		if (flag == false) {
-			return new ResponseEntity<APIResponse>(new APIResponse(false, "Save failed!"), HttpStatus.BAD_REQUEST);
 		} else {
-			return new ResponseEntity<APIResponse>(new APIResponse(true, "Save successful!"), HttpStatus.OK);
+			House house = opHouse.get();
+			house.setBlock(updateHouse.getBlock());
+			house.setFloor(updateHouse.getFloor());
+			house.setHouseName(updateHouse.getHouseName());
+			house.setDescription(updateHouse.getDescription());
+			house.setArea(updateHouse.getArea());
+			house.setOwnerId(updateHouse.getOwnerId());
+			house.setProfileImage(updateHouse.getProfileImage());
+			house.setCoverImage(updateHouse.getCoverImage());
+			house.setDisplayMember(updateHouse.isDisplayMember());
+			house.setType(updateHouse.getType());
+			house.setStatus(updateHouse.getStatus());
+			house.setWaterMeter(updateHouse.getWaterMeter());
+			boolean flag = houseService.save(house);
+			if (flag == false) {
+				return new ResponseEntity<APIResponse>(new APIResponse(false, "Save failed!"), HttpStatus.BAD_REQUEST);
+			} else {
+				return new ResponseEntity<APIResponse>(new APIResponse(true, "Save successful!"), HttpStatus.OK);
+			}
 		}
 
 	}
