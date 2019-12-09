@@ -52,6 +52,10 @@ public class User implements Serializable {
 	@JsonIgnore
 	private List<BalanceSheet> listBalanceSheets;
 	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@JsonIgnore
+	private List<Like> listLikes;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "UserId")

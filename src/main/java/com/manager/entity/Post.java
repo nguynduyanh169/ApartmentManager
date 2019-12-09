@@ -40,6 +40,10 @@ public class Post implements Serializable{
 	@JsonIgnore
 	private List<PostImage> listPostImage;
 	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
+	@JsonIgnore
+	private List<Like> listLikes;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "PostId")
