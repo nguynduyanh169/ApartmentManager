@@ -49,6 +49,15 @@ public class ElectricRangePrice implements Serializable{
 	@Column(name = "VAT")
 	private float vat;
 
+	
+	public long getElectricId() {
+		return electricId;
+	}
+
+	public void setElectricId(long electricId) {
+		this.electricId = electricId;
+	}
+
 	public String getCompanyName() {
 		return companyName;
 	}
