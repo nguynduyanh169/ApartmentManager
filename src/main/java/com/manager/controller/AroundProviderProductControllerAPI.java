@@ -34,9 +34,7 @@ public class AroundProviderProductControllerAPI {
 			aroundProviderProductListDTO.setDescription(aroundProviderProduct.getDescription());
 			aroundProviderProductListDTO.setImgUrl(aroundProviderProduct.getImgUrl());
 			productListDTOs.add(aroundProviderProductListDTO);
-			
 		}
 		return productListDTOs;
 	}
-
 }

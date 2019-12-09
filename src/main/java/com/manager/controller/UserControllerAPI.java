@@ -151,9 +151,8 @@ public class UserControllerAPI {
 
 	}
 
-	@PostMapping("/users/signin")
-	public ResponseEntity<?> checkLogin(@Valid @RequestBody User user) {
-		String email = user.getEmail();
+	@GetMapping("/users/signin/{email}")
+	public ResponseEntity<?> checkLogin(@PathVariable(value = "email") String email) {
 		boolean flag = userService.checkLogin(email);
 		if (flag == false) {
 			return new ResponseEntity<APIResponse>(new APIResponse(false, "Login Failed!"),
