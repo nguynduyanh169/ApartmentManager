@@ -31,7 +31,7 @@ import com.manager.service.UserService;
 @RequestMapping("api/v1")
 @ComponentScan(basePackages = "com.manager.service")
 public class UserControllerAPI {
-
+    
 	@Autowired
 	UserService userService;
 
@@ -104,7 +104,6 @@ public class UserControllerAPI {
 			user.setLastName(opUser.get().getLastName());
 			return new ResponseEntity<UserFullNameDTO>(user, HttpStatus.OK);
 		}
-		
 	}
 
 	@PostMapping("/users")
@@ -151,9 +150,8 @@ public class UserControllerAPI {
 
 	}
 
-	@PostMapping("/users/signin")
-	public ResponseEntity<?> checkLogin(@Valid @RequestBody User user) {
-		String email = user.getEmail();
+	@GetMapping("/users/signin/{email}")
+	public ResponseEntity<?> checkLogin(@PathVariable(name = "email") String email) {
 		boolean flag = userService.checkLogin(email);
 		if (flag == false) {
 			return new ResponseEntity<APIResponse>(new APIResponse(false, "Login Failed!"),

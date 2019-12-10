@@ -15,7 +15,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
@@ -24,237 +23,234 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
 @Table(name = "Users")
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User implements Serializable {
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-	@JsonIgnore
-	private List<Post> listPosts;
-	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-	@JsonIgnore
-	private List<Poll> listPolls;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonIgnore
+    private List<Post> listPosts;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-	@JsonIgnore
-	private List<Comment> listComments;
-	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-	@JsonIgnore
-	private List<UserAnswerPoll> listAnswerPolls;
-	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-	@JsonIgnore
-	private List<BalanceSheet> listBalanceSheets;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "UserId")
-	private long userId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonIgnore
+    private List<Poll> listPolls;
 
-	@Column(name = "Email")
-	private String email;
-	
-	@Column(name = "PhoneNo")
-	private String phoneNo;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonIgnore
+    private List<Comment> listComments;
 
-	public String getPhoneNo() {
-		return phoneNo;
-	}
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonIgnore
+    private List<UserAnswerPoll> listAnswerPolls;
 
-	public void setPhoneNo(String phoneNo) {
-		this.phoneNo = phoneNo;
-	}
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonIgnore
+    private List<BalanceSheet> listBalanceSheets;
 
-	public String getIdImage() {
-		return idImage;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "UserId")
+    private long userId;
 
-	public void setIdImage(String idImage) {
-		this.idImage = idImage;
-	}
+    @Column(name = "Email")
+    private String email;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "RoleId", nullable = true)
-	private Role role;
+    @Column(name = "PhoneNo")
+    private String phoneNo;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "HouseId", nullable = true)
-	private House house;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "RoleId", nullable = true)
+    private Role role;
 
-	@Column(name = "ProfileImage")
-	private String profileImage;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "HouseId", nullable = true)
+    private House house;
 
-	@Column(name = "DateOfBirth")
-	private Date dateOfBirth;
+    @Column(name = "ProfileImage")
+    private String profileImage;
 
-	@Column(name = "IdNumber")
-	private String idNumber;
-	
-	@Column(name = "IdImage")
-	private String idImage;
+    @Column(name = "DateOfBirth")
+    private Date dateOfBirth;
 
-	@Column(name = "Gender")
-	private int gender;
-	
-	@Column(name = "Job")
-	private String job;
-	
-	@Column(name = "HomeTown")
-	private String homeTown;
+    @Column(name = "IdNumber")
+    private String idNumber;
 
-	@Column(name = "FirstName")
-	private String firstName;
-	
-	@Column(name = "LastName")
-	private String lastName;
+    @Column(name = "IdImage")
+    private String idImage;
 
-	@Column(name = "CreateDate")
-	@CreatedDate
-	private Date createDate;
+    @Column(name = "Gender")
+    private int gender;
 
-	@Column(name = "LastModified")
-	@LastModifiedDate
-	private Date lastModified;
+    @Column(name = "Job")
+    private String job;
 
-	@Column(name = "FamilyLevel")
-	private int familyLevel;
+    @Column(name = "HomeTown")
+    private String homeTown;
 
-	@Column(name = "Status")
-	private int status;
+    @Column(name = "FirstName")
+    private String firstName;
 
-	public long getUserId() {
-		return userId;
-	}
+    @Column(name = "LastName")
+    private String lastName;
 
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
+    @Column(name = "CreateDate")
+    @CreatedDate
+    private Date createDate;
 
-	public Role getRole() {
-		return role;
-	}
+    @Column(name = "LastModified")
+    @LastModifiedDate
+    private Date lastModified;
 
-	public void setRole(Role role) {
-		this.role = role;
-	}
+    @Column(name = "FamilyLevel")
+    private int familyLevel;
 
-	public House getHouse() {
-		return house;
-	}
+    @Column(name = "Status")
+    private int status;
 
-	public void setHouse(House house) {
-		this.house = house;
-	}
+    public long getUserId() {
+        return userId;
+    }
 
-	public String getProfileImage() {
-		return profileImage;
-	}
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
 
-	public void setProfileImage(String profileImage) {
-		this.profileImage = profileImage;
-	}
+    public Role getRole() {
+        return role;
+    }
 
-	public Date getDateOfBirth() {
-		return dateOfBirth;
-	}
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
-	public void setDateOfBirth(Date dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
+    public House getHouse() {
+        return house;
+    }
 
-	public String getIdNumber() {
-		return idNumber;
-	}
+    public void setHouse(House house) {
+        this.house = house;
+    }
 
-	public String getFirstName() {
-		return firstName;
-	}
+    public String getProfileImage() {
+        return profileImage;
+    }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
 
-	public void setIdNumber(String idNumber) {
-		this.idNumber = idNumber;
-	}
+    public String getIdNumber() {
+        return idNumber;
+    }
 
-	public int getGender() {
-		return gender;
-	}
+    public String getFirstName() {
+        return firstName;
+    }
 
-	public void setGender(int gender) {
-		this.gender = gender;
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-	
-	public Date getCreateDate() {
-		return createDate;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-	public Date getLastModified() {
-		return lastModified;
-	}
+    public void setIdNumber(String idNumber) {
+        this.idNumber = idNumber;
+    }
 
-	public void setLastModified(Date lastModified) {
-		this.lastModified = lastModified;
-	}
+    public int getGender() {
+        return gender;
+    }
 
-	public int getFamilyLevel() {
-		return familyLevel;
-	}
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
 
-	public void setFamilyLevel(int familyLevel) {
-		this.familyLevel = familyLevel;
-	}
+    public Date getCreateDate() {
+        return createDate;
+    }
 
-	public int getStatus() {
-		return status;
-	}
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
 
-	public void setStatus(int status) {
-		this.status = status;
-	}
+    public Date getLastModified() {
+        return lastModified;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setLastModified(Date lastModified) {
+        this.lastModified = lastModified;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public int getFamilyLevel() {
+        return familyLevel;
+    }
 
-	public String getJob() {
-		return job;
-	}
+    public void setFamilyLevel(int familyLevel) {
+        this.familyLevel = familyLevel;
+    }
 
-	public void setJob(String job) {
-		this.job = job;
-	}
+    public int getStatus() {
+        return status;
+    }
 
-	public String getHomeTown() {
-		return homeTown;
-	}
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
-	public void setHomeTown(String homeTown) {
-		this.homeTown = homeTown;
-	}
+    public String getEmail() {
+        return email;
+    }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getJob() {
+        return job;
+    }
+
+    public void setJob(String job) {
+        this.job = job;
+    }
+
+    public String getHomeTown() {
+        return homeTown;
+    }
+
+    public void setHomeTown(String homeTown) {
+        this.homeTown = homeTown;
+    }
+
+    public String getPhoneNo() {
+        return phoneNo;
+    }
+
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
+    }
+
+    public String getIdImage() {
+        return idImage;
+    }
+
+    public void setIdImage(String idImage) {
+        this.idImage = idImage;
+    }
 }
