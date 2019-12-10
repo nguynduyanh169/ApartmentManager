@@ -35,6 +35,11 @@ public class UserControllerAPI {
     @Autowired
     UserService userService;
 
+    @GetMapping("/users")
+    public List<User> getAllUser() {
+        return userService.getAllUser();
+    }
+
     @GetMapping("/users/{userId}")
     public ResponseEntity<?> findUserById(@PathVariable(value = "userId") long userId) throws Exception {
         Optional<User> opUser = userService.findUserById(userId);
