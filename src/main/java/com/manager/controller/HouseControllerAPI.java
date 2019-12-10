@@ -40,11 +40,6 @@ public class HouseControllerAPI {
 				.body(java.nio.file.Files.readAllBytes(img.toPath()));
 	}
 
-	@GetMapping("/houses")
-	public List<House> getAllHouse() {
-		return houseService.getAllHouse();
-	}
-
 	@GetMapping("/houses/blocks/{blockId}")
 	public List<House> getHouseByBlockId(@PathVariable(value = "blockId") long blockId) {
 		return houseService.getHouseByBlockId(blockId);

@@ -27,283 +27,235 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name = "Users")
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class User implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    @JsonIgnore
-    private List<Post> listPosts;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@JsonIgnore
+	private List<Post> listPosts;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    @JsonIgnore
-    private List<Poll> listPolls;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@JsonIgnore
+	private List<Poll> listPolls;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    @JsonIgnore
-    private List<Comment> listComments;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@JsonIgnore
+	private List<Comment> listComments;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    @JsonIgnore
-    private List<UserAnswerPoll> listAnswerPolls;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@JsonIgnore
+	private List<UserAnswerPoll> listAnswerPolls;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    @JsonIgnore
-    private List<BalanceSheet> listBalanceSheets;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@JsonIgnore
+	private List<BalanceSheet> listBalanceSheets;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    @JsonIgnore
-    private List<Like> listLikes;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@JsonIgnore
+	private List<Like> listLikes;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "UserId")
-    private long userId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "UserId")
+	private long userId;
 
-    @Column(name = "Email")
-    private String email;
+	@Column(name = "Email")
+	private String email;
 
-    @Column(name = "PhoneNo")
-    private String phoneNo;
+	@Column(name = "PhoneNo")
+	private String phoneNo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "RoleId", nullable = true)
-    private Role role;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "RoleId", nullable = true)
+	private Role role;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "HouseId", nullable = true)
-    private House house;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "HouseId", nullable = true)
+	private House house;
 
-    @Column(name = "ProfileImage")
-    private String profileImage;
+	@Column(name = "ProfileImage")
+	private String profileImage;
 
-    @Column(name = "DateOfBirth")
-    private Date dateOfBirth;
+	@Column(name = "DateOfBirth")
+	private Date dateOfBirth;
 
-    @Column(name = "IdNumber")
-    private String idNumber;
+	@Column(name = "IdNumber")
+	private String idNumber;
 
-    @Column(name = "IdImage")
-    private String idImage;
+	@Column(name = "IdImage")
+	private String idImage;
 
-    @Column(name = "Gender")
-    private int gender;
+	@Column(name = "Gender")
+	private int gender;
 
-    @Column(name = "Job")
-    private String job;
+	@Column(name = "Job")
+	private String job;
 
-    @Column(name = "HomeTown")
-    private String homeTown;
+	@Column(name = "HomeTown")
+	private String homeTown;
 
-    @Column(name = "FirstName")
-    private String firstName;
+	@Column(name = "FirstName")
+	private String firstName;
 
-    @Column(name = "LastName")
-    private String lastName;
+	@Column(name = "LastName")
+	private String lastName;
 
-    @Column(name = "CreateDate")
-    @CreatedDate
-    private Date createDate;
+	@Column(name = "CreateDate")
+	@CreatedDate
+	private Date createDate;
 
-    @Column(name = "LastModified")
-    @LastModifiedDate
-    private Date lastModified;
+	@Column(name = "LastModified")
+	@LastModifiedDate
+	private Date lastModified;
 
-    @Column(name = "FamilyLevel")
-    private int familyLevel;
+	@Column(name = "FamilyLevel")
+	private int familyLevel;
 
-    @Column(name = "Status")
-    private int status;
+	@Column(name = "Status")
+	private int status;
 
-    public List<Post> getListPosts() {
-        return listPosts;
-    }
+	public long getUserId() {
+		return userId;
+	}
 
-    public void setListPosts(List<Post> listPosts) {
-        this.listPosts = listPosts;
-    }
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
 
-    public List<Poll> getListPolls() {
-        return listPolls;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setListPolls(List<Poll> listPolls) {
-        this.listPolls = listPolls;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public List<Comment> getListComments() {
-        return listComments;
-    }
-
-    public void setListComments(List<Comment> listComments) {
-        this.listComments = listComments;
-    }
-
-    public List<UserAnswerPoll> getListAnswerPolls() {
-        return listAnswerPolls;
-    }
-
-    public void setListAnswerPolls(List<UserAnswerPoll> listAnswerPolls) {
-        this.listAnswerPolls = listAnswerPolls;
-    }
-
-    public List<BalanceSheet> getListBalanceSheets() {
-        return listBalanceSheets;
-    }
-
-    public void setListBalanceSheets(List<BalanceSheet> listBalanceSheets) {
-        this.listBalanceSheets = listBalanceSheets;
-    }
-
-    public List<Like> getListLikes() {
-        return listLikes;
-    }
-
-    public void setListLikes(List<Like> listLikes) {
-        this.listLikes = listLikes;
-    }
-
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhoneNo() {
-        return phoneNo;
-    }
-
-    public void setPhoneNo(String phoneNo) {
-        this.phoneNo = phoneNo;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public House getHouse() {
-        return house;
-    }
-
-    public void setHouse(House house) {
-        this.house = house;
-    }
-
-    public String getProfileImage() {
-        return profileImage;
-    }
-
-    public void setProfileImage(String profileImage) {
-        this.profileImage = profileImage;
-    }
-
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public String getIdNumber() {
-        return idNumber;
-    }
-
-    public void setIdNumber(String idNumber) {
-        this.idNumber = idNumber;
-    }
-
-    public String getIdImage() {
-        return idImage;
-    }
-
-    public void setIdImage(String idImage) {
-        this.idImage = idImage;
-    }
-
-    public int getGender() {
-        return gender;
-    }
-
-    public void setGender(int gender) {
-        this.gender = gender;
-    }
-
-    public String getJob() {
-        return job;
-    }
-
-    public void setJob(String job) {
-        this.job = job;
-    }
-
-    public String getHomeTown() {
-        return homeTown;
-    }
-
-    public void setHomeTown(String homeTown) {
-        this.homeTown = homeTown;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public Date getLastModified() {
-        return lastModified;
-    }
-
-    public void setLastModified(Date lastModified) {
-        this.lastModified = lastModified;
-    }
-
-    public int getFamilyLevel() {
-        return familyLevel;
-    }
-
-    public void setFamilyLevel(int familyLevel) {
-        this.familyLevel = familyLevel;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
+	public String getPhoneNo() {
+		return phoneNo;
+	}
+
+	public void setPhoneNo(String phoneNo) {
+		this.phoneNo = phoneNo;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	public House getHouse() {
+		return house;
+	}
+
+	public void setHouse(House house) {
+		this.house = house;
+	}
+
+	public String getProfileImage() {
+		return profileImage;
+	}
+
+	public void setProfileImage(String profileImage) {
+		this.profileImage = profileImage;
+	}
+
+	public Date getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+	public String getIdNumber() {
+		return idNumber;
+	}
+
+	public void setIdNumber(String idNumber) {
+		this.idNumber = idNumber;
+	}
+
+	public String getIdImage() {
+		return idImage;
+	}
+
+	public void setIdImage(String idImage) {
+		this.idImage = idImage;
+	}
+
+	public int getGender() {
+		return gender;
+	}
+
+	public void setGender(int gender) {
+		this.gender = gender;
+	}
+
+	public String getJob() {
+		return job;
+	}
+
+	public void setJob(String job) {
+		this.job = job;
+	}
+
+	public String getHomeTown() {
+		return homeTown;
+	}
+
+	public void setHomeTown(String homeTown) {
+		this.homeTown = homeTown;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	public Date getLastModified() {
+		return lastModified;
+	}
+
+	public void setLastModified(Date lastModified) {
+		this.lastModified = lastModified;
+	}
+
+	public int getFamilyLevel() {
+		return familyLevel;
+	}
+
+	public void setFamilyLevel(int familyLevel) {
+		this.familyLevel = familyLevel;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
 
 }

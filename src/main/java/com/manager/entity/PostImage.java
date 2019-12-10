@@ -36,7 +36,6 @@ public class PostImage implements Serializable{
 	
 	@Column(name = "CreatedDate")
 	@CreatedDate
-	@JsonIgnore
 	private Date createdDate;
 	
 	@ManyToOne(fetch = FetchType.LAZY)

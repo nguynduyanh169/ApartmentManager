@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.manager.dto.APIResponse;
+import com.manager.dto.PostImageDTO;
 import com.manager.entity.PostImage;
 import com.manager.service.PostImageService;
 import java.io.BufferedOutputStream;
@@ -44,9 +45,18 @@ public class PostImageControllerAPI {
     PostImageService postImageService;
 
     @GetMapping("/postImages/posts/{postId}")
-    public List<PostImage> getPostImageByPostId(@PathVariable(value = "postId") long postId) {
+    public List<PostImageDTO> getPostImageByPostId(@PathVariable(value = "postId") long postId) {
         List<PostImage> listPostImages = postImageService.getPostImageByPostId(postId);
-        return listPostImages;
+        List<PostImageDTO> imageDTOs = new ArrayList<>();
+        for (PostImage postImage : listPostImages) {
+        	PostImageDTO postImageDTO = new PostImageDTO();
+        	postImageDTO.setPostImageId(postImage.getPostImageId());
+        	postImageDTO.setUrl(postImage.getUrl());
+        	postImageDTO.setCreatedDate(postImage.getCreatedDate());
+        	imageDTOs.add(postImageDTO);
+			
+		}
+        return imageDTOs;
     }
     
     @PostMapping("/postImages")
