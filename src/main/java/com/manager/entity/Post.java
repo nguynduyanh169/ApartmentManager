@@ -60,9 +60,6 @@ public class Post implements Serializable{
 	@LastModifiedDate
 	private Date updateDate;
 	
-	@Column(name = "Status")
-	private int status;
-	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "UserId", nullable = true)
 	private User user;
@@ -72,7 +69,7 @@ public class Post implements Serializable{
 	
 	@Column(name = "Disable")
 	@JsonIgnore
-	private int disable;
+	private boolean disable;
 
 	public long getPostId() {
 		return postId;
@@ -106,14 +103,6 @@ public class Post implements Serializable{
 		this.updateDate = updateDate;
 	}
 
-	public int getStatus() {
-		return status;
-	}
-
-	public void setStatus(int status) {
-		this.status = status;
-	}
-
 	public User getUser() {
 		return user;
 	}
@@ -130,11 +119,11 @@ public class Post implements Serializable{
 		this.embedCode = embedCode;
 	}
 
-	public int getDisable() {
+	public boolean getDisable() {
 		return disable;
 	}
 
-	public void setDisable(int disable) {
+	public void setDisable(boolean disable) {
 		this.disable = disable;
 	}
 	

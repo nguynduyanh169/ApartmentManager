@@ -17,4 +17,6 @@ public interface PostService {
 	public Optional<Post> findPostById(long id);
 	
 	public boolean savePost(Post post);
+	
+	public void disablePost(long postId);
 }
