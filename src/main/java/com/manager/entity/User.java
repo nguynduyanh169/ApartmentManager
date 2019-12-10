@@ -50,6 +50,10 @@ public class User implements Serializable {
     @JsonIgnore
     private List<BalanceSheet> listBalanceSheets;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonIgnore
+    private List<Like> listLikes;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "UserId")
@@ -110,12 +114,76 @@ public class User implements Serializable {
     @Column(name = "Status")
     private int status;
 
+    public List<Post> getListPosts() {
+        return listPosts;
+    }
+
+    public void setListPosts(List<Post> listPosts) {
+        this.listPosts = listPosts;
+    }
+
+    public List<Poll> getListPolls() {
+        return listPolls;
+    }
+
+    public void setListPolls(List<Poll> listPolls) {
+        this.listPolls = listPolls;
+    }
+
+    public List<Comment> getListComments() {
+        return listComments;
+    }
+
+    public void setListComments(List<Comment> listComments) {
+        this.listComments = listComments;
+    }
+
+    public List<UserAnswerPoll> getListAnswerPolls() {
+        return listAnswerPolls;
+    }
+
+    public void setListAnswerPolls(List<UserAnswerPoll> listAnswerPolls) {
+        this.listAnswerPolls = listAnswerPolls;
+    }
+
+    public List<BalanceSheet> getListBalanceSheets() {
+        return listBalanceSheets;
+    }
+
+    public void setListBalanceSheets(List<BalanceSheet> listBalanceSheets) {
+        this.listBalanceSheets = listBalanceSheets;
+    }
+
+    public List<Like> getListLikes() {
+        return listLikes;
+    }
+
+    public void setListLikes(List<Like> listLikes) {
+        this.listLikes = listLikes;
+    }
+
     public long getUserId() {
         return userId;
     }
 
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNo() {
+        return phoneNo;
+    }
+
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
     }
 
     public Role getRole() {
@@ -154,6 +222,42 @@ public class User implements Serializable {
         return idNumber;
     }
 
+    public void setIdNumber(String idNumber) {
+        this.idNumber = idNumber;
+    }
+
+    public String getIdImage() {
+        return idImage;
+    }
+
+    public void setIdImage(String idImage) {
+        this.idImage = idImage;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
+
+    public String getJob() {
+        return job;
+    }
+
+    public void setJob(String job) {
+        this.job = job;
+    }
+
+    public String getHomeTown() {
+        return homeTown;
+    }
+
+    public void setHomeTown(String homeTown) {
+        this.homeTown = homeTown;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -168,18 +272,6 @@ public class User implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public void setIdNumber(String idNumber) {
-        this.idNumber = idNumber;
-    }
-
-    public int getGender() {
-        return gender;
-    }
-
-    public void setGender(int gender) {
-        this.gender = gender;
     }
 
     public Date getCreateDate() {
@@ -214,43 +306,4 @@ public class User implements Serializable {
         this.status = status;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getJob() {
-        return job;
-    }
-
-    public void setJob(String job) {
-        this.job = job;
-    }
-
-    public String getHomeTown() {
-        return homeTown;
-    }
-
-    public void setHomeTown(String homeTown) {
-        this.homeTown = homeTown;
-    }
-
-    public String getPhoneNo() {
-        return phoneNo;
-    }
-
-    public void setPhoneNo(String phoneNo) {
-        this.phoneNo = phoneNo;
-    }
-
-    public String getIdImage() {
-        return idImage;
-    }
-
-    public void setIdImage(String idImage) {
-        this.idImage = idImage;
-    }
 }
