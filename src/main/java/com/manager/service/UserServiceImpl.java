@@ -8,56 +8,52 @@ import org.springframework.stereotype.Service;
 
 import com.manager.entity.User;
 import com.manager.repository.UserRepository;
+
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
-	@Autowired
-	UserRepository userRepo;
-	
-	@Override
-	public List<User> getAllUser() {
-		List<User> userList = userRepo.findAllActiveUser();
-		return userList;
-	}
+    @Autowired
+    UserRepository userRepo;
 
-	@Override
-	public Optional<User> findUserById(long id) {
-		Optional<User> user = userRepo.findById(id);
-		return user;
-	}
+    @Override
+    public List<User> getAllUser() {
+        List<User> userList = userRepo.findAllActiveUser();
+        return userList;
+    }
 
-	@Override
-	public boolean saveUser(User user) {
-		return userRepo.save(user) == null ? false : true;
-	}
+    @Override
+    public Optional<User> findUserById(long id) {
+        Optional<User> user = userRepo.findById(id);
+        return user;
+    }
 
-	@Override
-	public long countUser() {
-		return userRepo.count();
-	}
+    @Override
+    public boolean saveUser(User user) {
+        return userRepo.save(user) == null ? false : true;
+    }
 
-	@Override
-	public void removeUser(long id) {
-		userRepo.deleteById(id);
-		
-	}
+    @Override
+    public long countUser() {
+        return userRepo.count();
+    }
 
-	@Override
-	public List<User> getUserByHouseId(long houseId) {
-		return userRepo.getHouseByHouseId(houseId);
-	}
+    @Override
+    public void removeUser(long id) {
+        userRepo.deleteById(id);
+    }
 
-	@Override
-	public boolean checkLogin(String email) {
-		return userRepo.checkLogin(email) == null ? false : true;
-	}
+    @Override
+    public List<User> getUserByHouseId(long houseId) {
+        return userRepo.getHouseByHouseId(houseId);
+    }
 
+    @Override
+    public boolean checkLogin(String email) {
+        return userRepo.checkLogin(email) == null ? false : true;
+    }
 
-	@Override
-	public boolean checkUserEmail(String email) {
-		return userRepo.checkUserEmail(email) == null ? false : true;
-	}
-	
-	
-
+    @Override
+    public boolean checkUserEmail(String email) {
+        return userRepo.checkUserEmail(email) == null ? false : true;
+    }
 }

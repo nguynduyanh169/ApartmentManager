@@ -32,140 +32,139 @@ import com.manager.service.UserService;
 @ComponentScan(basePackages = "com.manager.service")
 public class UserControllerAPI {
 
-	@Autowired
-	UserService userService;
+    @Autowired
+    UserService userService;
 
-	@GetMapping("/users")
-	public List<User> getAllUser() {
-		return userService.getAllUser();
-	}
+    @GetMapping("/users")
+    public List<User> getAllUser() {
+        return userService.getAllUser();
+    }
 
-	@GetMapping("/users/{userId}")
-	public ResponseEntity<?> findUserById(@PathVariable(value = "userId") long userId) throws Exception {
-		Optional<User> opUser = userService.findUserById(userId);
-		if (!opUser.isPresent()) {
-			return new ResponseEntity<APIResponse>(new APIResponse(false, "Not found!"), HttpStatus.NO_CONTENT);
-		} else {
-			UserDTO userDTO = new UserDTO();
-			User user = opUser.get();
-			userDTO.setUserId(user.getUserId());
-			userDTO.setEmail(user.getEmail());
-			userDTO.setPhoneNo(user.getPhoneNo());
-			House house = user.getHouse();
-			HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId(), house.getCurrentMoney());
-			userDTO.setHouse(houseDTO);
-			userDTO.setDateOfBirth(user.getDateOfBirth());
-			userDTO.setProfileImage(user.getProfileImage());
-			userDTO.setIdNumber(user.getIdNumber());
-			userDTO.setGender(user.getGender());
-			userDTO.setHomeTown(user.getHomeTown());
-			userDTO.setJob(user.getJob());
-			userDTO.setFirstName(user.getFirstName());
-			userDTO.setLastName(user.getLastName());
-			userDTO.setFamilyLevel(user.getFamilyLevel());
-			return new ResponseEntity<UserDTO>(userDTO, HttpStatus.OK);
-		}
-	}
+    @GetMapping("/users/{userId}")
+    public ResponseEntity<?> findUserById(@PathVariable(value = "userId") long userId) throws Exception {
+        Optional<User> opUser = userService.findUserById(userId);
+        if (!opUser.isPresent()) {
+            return new ResponseEntity<APIResponse>(new APIResponse(false, "Not found!"), HttpStatus.NO_CONTENT);
+        } else {
+            UserDTO userDTO = new UserDTO();
+            User user = opUser.get();
+            userDTO.setUserId(user.getUserId());
+            userDTO.setEmail(user.getEmail());
+            userDTO.setPhoneNo(user.getPhoneNo());
+            House house = user.getHouse();
+            HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId(), house.getCurrentMoney());
+            userDTO.setHouse(houseDTO);
+            userDTO.setDateOfBirth(user.getDateOfBirth());
+            userDTO.setProfileImage(user.getProfileImage());
+            userDTO.setIdNumber(user.getIdNumber());
+            userDTO.setGender(user.getGender());
+            userDTO.setHomeTown(user.getHomeTown());
+            userDTO.setJob(user.getJob());
+            userDTO.setFirstName(user.getFirstName());
+            userDTO.setLastName(user.getLastName());
+            userDTO.setFamilyLevel(user.getFamilyLevel());
+            return new ResponseEntity<UserDTO>(userDTO, HttpStatus.OK);
+        }
+    }
 
-	@GetMapping("/users/houses/{houseId}")
-	public List<UserDTO> getUserByHouseId(@PathVariable(value = "houseId") long houseId) {
-		List<User> users = userService.getUserByHouseId(houseId);
-		List<UserDTO> userDTOs = new ArrayList<UserDTO>();
-		for (User user : users) {
-			UserDTO userDTO = new UserDTO();
-			userDTO.setUserId(user.getUserId());
-			userDTO.setEmail(user.getEmail());
-			userDTO.setPhoneNo(user.getPhoneNo());
-			House house = user.getHouse();
-			HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId(), house.getCurrentMoney());
-			userDTO.setHouse(houseDTO);
-			userDTO.setDateOfBirth(user.getDateOfBirth());
-			userDTO.setProfileImage(user.getProfileImage());
-			userDTO.setIdNumber(user.getIdNumber());
-			userDTO.setGender(user.getGender());
-			userDTO.setHomeTown(user.getHomeTown());
-			userDTO.setJob(user.getJob());
-			userDTO.setFirstName(user.getFirstName());
-			userDTO.setLastName(user.getLastName());
-			userDTO.setFamilyLevel(user.getFamilyLevel());
-			userDTOs.add(userDTO);
-		}
-		return userDTOs;
-	}
-	
-	@GetMapping("/users/fullname/{userId}")
-	public ResponseEntity<?> getFullnameOfUserById(@PathVariable(value = "userId") long userId) throws Exception{
-		Optional<User> opUser = userService.findUserById(userId);
-		if (!opUser.isPresent()) {
-			return new ResponseEntity<APIResponse>(new APIResponse(false, "Not found!"), HttpStatus.NO_CONTENT);
-		}else {
-			UserFullNameDTO user = new UserFullNameDTO();
-			user.setFirstName(opUser.get().getFirstName());
-			user.setLastName(opUser.get().getLastName());
-			return new ResponseEntity<UserFullNameDTO>(user, HttpStatus.OK);
-		}
-		
-	}
+    @GetMapping("/users/houses/{houseId}")
+    public List<UserDTO> getUserByHouseId(@PathVariable(value = "houseId") long houseId) {
+        List<User> users = userService.getUserByHouseId(houseId);
+        List<UserDTO> userDTOs = new ArrayList<UserDTO>();
+        for (User user : users) {
+            UserDTO userDTO = new UserDTO();
+            userDTO.setUserId(user.getUserId());
+            userDTO.setEmail(user.getEmail());
+            userDTO.setPhoneNo(user.getPhoneNo());
+            House house = user.getHouse();
+            HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId(), house.getCurrentMoney());
+            userDTO.setHouse(houseDTO);
+            userDTO.setDateOfBirth(user.getDateOfBirth());
+            userDTO.setProfileImage(user.getProfileImage());
+            userDTO.setIdNumber(user.getIdNumber());
+            userDTO.setGender(user.getGender());
+            userDTO.setHomeTown(user.getHomeTown());
+            userDTO.setJob(user.getJob());
+            userDTO.setFirstName(user.getFirstName());
+            userDTO.setLastName(user.getLastName());
+            userDTO.setFamilyLevel(user.getFamilyLevel());
+            userDTOs.add(userDTO);
+        }
+        return userDTOs;
+    }
 
-	@PostMapping("/users")
-	public ResponseEntity<?> saveUser(@Valid @RequestBody User user) {
-		boolean flag = userService.saveUser(user);
-		if (flag == false) {
-			return new ResponseEntity<APIResponse>(new APIResponse(false, "Save failed!"), HttpStatus.BAD_REQUEST);
-		} else {
-			return new ResponseEntity<APIResponse>(new APIResponse(true, "Save successful!"), HttpStatus.OK);
-		}
-	}
+    @GetMapping("/users/fullname/{userId}")
+    public ResponseEntity<?> getFullnameOfUserById(@PathVariable(value = "userId") long userId) throws Exception {
+        Optional<User> opUser = userService.findUserById(userId);
+        if (!opUser.isPresent()) {
+            return new ResponseEntity<APIResponse>(new APIResponse(false, "Not found!"), HttpStatus.NO_CONTENT);
+        } else {
+            UserFullNameDTO user = new UserFullNameDTO();
+            user.setFirstName(opUser.get().getFirstName());
+            user.setLastName(opUser.get().getLastName());
+            return new ResponseEntity<UserFullNameDTO>(user, HttpStatus.OK);
+        }
+    }
 
-	@GetMapping("/users/count")
-	public long countUser() {
-		return userService.countUser();
-	}
+    @PostMapping("/users")
+    public ResponseEntity<?> saveUser(@Valid @RequestBody User user) {
+        boolean flag = userService.saveUser(user);
+        if (flag == false) {
+            return new ResponseEntity<APIResponse>(new APIResponse(false, "Save failed!"), HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<APIResponse>(new APIResponse(true, "Save successful!"), HttpStatus.OK);
+        }
+    }
 
-	@PutMapping("/users/{userId}")
-	public ResponseEntity<?> updateUser(@PathVariable(value = "userId") long id, @Valid @RequestBody User editUser)
-			throws Exception {
-		Optional<User> opUser = userService.findUserById(id);
-		if (!opUser.isPresent()) {
-			return new ResponseEntity<User>(opUser.get(), HttpStatus.NO_CONTENT);
-		}
-		User user = opUser.get();
-		user.setRole(editUser.getRole());
-		user.setHouse(editUser.getHouse());
-		user.setProfileImage(editUser.getProfileImage());
-		user.setFirstName(editUser.getFirstName());
-		user.setLastName(editUser.getLastName());
-		user.setJob(editUser.getJob());
-		user.setHomeTown(editUser.getHomeTown());
-		user.setPhoneNo(editUser.getPhoneNo());
-		user.setDateOfBirth(editUser.getDateOfBirth());
-		user.setFamilyLevel(editUser.getFamilyLevel());
-		user.setIdNumber(editUser.getIdNumber());
-		user.setIdImage(editUser.getIdImage());
-		boolean flag = userService.saveUser(user);
-		if (flag == false) {
-			return new ResponseEntity<APIResponse>(new APIResponse(false, "Save failed!"), HttpStatus.BAD_REQUEST);
-		} else {
-			return new ResponseEntity<APIResponse>(new APIResponse(true, "Save successful!"), HttpStatus.OK);
-		}
+    @GetMapping("/users/count")
+    public long countUser() {
+        return userService.countUser();
+    }
 
-	}
+    @PutMapping("/users/{userId}")
+    public ResponseEntity<?> updateUser(@PathVariable(value = "userId") long id, @Valid @RequestBody User editUser)
+            throws Exception {
+        Optional<User> opUser = userService.findUserById(id);
+        if (!opUser.isPresent()) {
+            return new ResponseEntity<User>(opUser.get(), HttpStatus.NO_CONTENT);
+        }
+        User user = opUser.get();
+        user.setRole(editUser.getRole());
+        user.setHouse(editUser.getHouse());
+        user.setProfileImage(editUser.getProfileImage());
+        user.setFirstName(editUser.getFirstName());
+        user.setLastName(editUser.getLastName());
+        user.setJob(editUser.getJob());
+        user.setHomeTown(editUser.getHomeTown());
+        user.setPhoneNo(editUser.getPhoneNo());
+        user.setDateOfBirth(editUser.getDateOfBirth());
+        user.setFamilyLevel(editUser.getFamilyLevel());
+        user.setIdNumber(editUser.getIdNumber());
+        user.setIdImage(editUser.getIdImage());
+        boolean flag = userService.saveUser(user);
+        if (flag == false) {
+            return new ResponseEntity<APIResponse>(new APIResponse(false, "Save failed!"), HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<APIResponse>(new APIResponse(true, "Save successful!"), HttpStatus.OK);
+        }
 
-	@GetMapping("/users/signin/{email}")
-	public ResponseEntity<?> checkLogin(@PathVariable(value = "email") String email) {
-		boolean flag = userService.checkLogin(email);
-		if (flag == false) {
-			return new ResponseEntity<APIResponse>(new APIResponse(false, "Login Failed!"),
-					HttpStatus.BAD_REQUEST);
-		} else {
-			return new ResponseEntity<APIResponse>(new APIResponse(true, "Login successful!"), HttpStatus.OK);
-		}
-	}
+    }
 
-	@DeleteMapping("/users/{userId}")
-	public ResponseEntity<String> removeUser(@PathVariable(value = "userId") long id) throws Exception {
-		userService.removeUser(id);
-		return new ResponseEntity<String>("Deleted!", HttpStatus.OK);
-	}
+    @GetMapping("/users/signin/{email}")
+    public ResponseEntity<?> checkLogin(@PathVariable(name = "email") String email) {
+        boolean flag = userService.checkLogin(email);
+        if (flag == false) {
+            return new ResponseEntity<APIResponse>(new APIResponse(false, "Login Failed!"),
+                    HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<APIResponse>(new APIResponse(true, "Login successful!"), HttpStatus.OK);
+        }
+    }
+
+    @DeleteMapping("/users/{userId}")
+    public ResponseEntity<String> removeUser(@PathVariable(value = "userId") long id) throws Exception {
+        userService.removeUser(id);
+        return new ResponseEntity<String>("Deleted!", HttpStatus.OK);
+    }
 
 }

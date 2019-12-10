@@ -1,19 +1,20 @@
 package com.manager.dto;
 
 public class APIResponse {
-	private Boolean success;
+
+    private boolean success;
     private String message;
 
-    public APIResponse(Boolean success, String message) {
+    public APIResponse(boolean success, String message) {
         this.success = success;
         this.message = message;
     }
 
-    public Boolean getSuccess() {
+    public boolean getSuccess() {
         return success;
     }
 
-    public void setSuccess(Boolean success) {
+    public void setSuccess(boolean success) {
         this.success = success;
     }
 
