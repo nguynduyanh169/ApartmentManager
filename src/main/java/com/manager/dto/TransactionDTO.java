@@ -5,7 +5,7 @@ import java.util.Date;
 public class TransactionDTO {
 
 	private long transactionId;
-	private HouseDTO house;
+	private HouseForTransactionDTO house;
 	private float amount;
 	private String title;
 	private int status;
@@ -20,11 +20,11 @@ public class TransactionDTO {
 		this.transactionId = transactionId;
 	}
 
-	public HouseDTO getHouse() {
+	public HouseForTransactionDTO getHouse() {
 		return house;
 	}
 
-	public void setHouse(HouseDTO house) {
+	public void setHouse(HouseForTransactionDTO house) {
 		this.house = house;
 	}
 
@@ -67,6 +67,5 @@ public class TransactionDTO {
 	public void setTransactor(long transactor) {
 		this.transactor = transactor;
 	}
-	
 
 }

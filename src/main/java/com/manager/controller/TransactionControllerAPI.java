@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.manager.dto.APIResponse;
 import com.manager.dto.HouseDTO;
+import com.manager.dto.HouseForTransactionDTO;
 import com.manager.dto.TransactionDTO;
 import com.manager.entity.Transaction;
 import com.manager.service.TransactionService;
@@ -42,7 +43,7 @@ public class TransactionControllerAPI {
 			transactionDTO.setStatus(transaction.getStatus());
 			transactionDTO.setCreatedDate(transaction.getCreatedDate());
 			transactionDTO.setTransactor(transaction.getTransactor());
-			HouseDTO house = new HouseDTO(transaction.getHouse().getHouseId(), transaction.getHouse().getHouseName(), transaction.getHouse().getOwnerId(), transaction.getHouse().getCurrentMoney());
+			HouseForTransactionDTO house = new HouseForTransactionDTO(transaction.getHouse().getHouseId(), transaction.getHouse().getHouseName(), transaction.getHouse().getOwnerId(), transaction.getHouse().getCurrentMoney());
 			transactionDTO.setHouse(house);
 			transactionDTOs.add(transactionDTO);
 		}

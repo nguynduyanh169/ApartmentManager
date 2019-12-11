@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.manager.dto.APIResponse;
+import com.manager.dto.BlockDTO;
 import com.manager.dto.HouseDTO;
 import com.manager.dto.UserDTO;
 import com.manager.dto.UserFullNameDTO;
@@ -52,7 +53,8 @@ public class UserControllerAPI {
             userDTO.setEmail(user.getEmail());
             userDTO.setPhoneNo(user.getPhoneNo());
             House house = user.getHouse();
-            HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId(), house.getCurrentMoney());
+            BlockDTO block = new BlockDTO(house.getBlock().getBlockId(), house.getBlock().getBlockName());
+            HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId(), house.getCurrentMoney(), block);
             userDTO.setHouse(houseDTO);
             userDTO.setDateOfBirth(user.getDateOfBirth());
             userDTO.setProfileImage(user.getProfileImage());
@@ -77,7 +79,8 @@ public class UserControllerAPI {
             userDTO.setEmail(user.getEmail());
             userDTO.setPhoneNo(user.getPhoneNo());
             House house = user.getHouse();
-            HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId(), house.getCurrentMoney());
+            BlockDTO block = new BlockDTO(house.getBlock().getBlockId(), house.getBlock().getBlockName());
+            HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId(), house.getCurrentMoney(), block);
             userDTO.setHouse(houseDTO);
             userDTO.setDateOfBirth(user.getDateOfBirth());
             userDTO.setProfileImage(user.getProfileImage());
@@ -151,12 +154,28 @@ public class UserControllerAPI {
 
     @GetMapping("/users/signin/{email}")
     public ResponseEntity<?> checkLogin(@PathVariable(name = "email") String email) {
-        boolean flag = userService.checkLogin(email);
-        if (flag == false) {
-            return new ResponseEntity<APIResponse>(new APIResponse(false, "Login Failed!"),
-                    HttpStatus.BAD_REQUEST);
-        } else {
-            return new ResponseEntity<APIResponse>(new APIResponse(true, "Login successful!"), HttpStatus.OK);
+        User user = userService.checkLogin(email);
+        if (user == null) {
+            return new ResponseEntity<APIResponse>(new APIResponse(false, "Login Failed!"), HttpStatus.BAD_REQUEST);
+        }else {
+        	UserDTO userDTO = new UserDTO();
+            userDTO.setUserId(user.getUserId());
+            userDTO.setEmail(user.getEmail());
+            userDTO.setPhoneNo(user.getPhoneNo());
+            House house = user.getHouse();
+            BlockDTO block = new BlockDTO(house.getBlock().getBlockId(), house.getBlock().getBlockName());
+            HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId(), house.getCurrentMoney(), block);
+            userDTO.setHouse(houseDTO);
+            userDTO.setDateOfBirth(user.getDateOfBirth());
+            userDTO.setProfileImage(user.getProfileImage());
+            userDTO.setIdNumber(user.getIdNumber());
+            userDTO.setGender(user.getGender());
+            userDTO.setHomeTown(user.getHomeTown());
+            userDTO.setJob(user.getJob());
+            userDTO.setFirstName(user.getFirstName());
+            userDTO.setLastName(user.getLastName());
+            userDTO.setFamilyLevel(user.getFamilyLevel());
+            return new ResponseEntity<UserDTO>(userDTO, HttpStatus.OK);
         }
     }
 

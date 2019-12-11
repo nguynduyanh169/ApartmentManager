@@ -19,7 +19,7 @@ public class PostServiceImpl implements PostService{
 	@Override
 	public List<Post> getAllPost() {
 		// TODO Auto-generated method stub
-		return postRepo.findAll();
+		return postRepo.getAllActivePost();
 	}
 	@Override
 	public Optional<Post> findPostById(long id) {
@@ -35,6 +35,11 @@ public class PostServiceImpl implements PostService{
 	public List<Post> getPostByUserId(long userId) {
 		// TODO Auto-generated method stub
 		return postRepo.getPostByUserId(userId);
+	}
+	@Override
+	public void disablePost(long postId) {
+		postRepo.disablePost(postId);
+		
 	}
 
 }
