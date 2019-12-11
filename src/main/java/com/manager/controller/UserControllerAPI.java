@@ -147,7 +147,6 @@ public class UserControllerAPI {
         } else {
             return new ResponseEntity<APIResponse>(new APIResponse(true, "Save successful!"), HttpStatus.OK);
         }
-
     }
 
     @GetMapping("/users/signin/{email}")
