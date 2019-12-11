@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.manager.dto.APIResponse;
+import com.manager.dto.BlockDTO;
 import com.manager.dto.HouseDTO;
 import com.manager.dto.UserDTO;
 import com.manager.dto.UserFullNameDTO;
@@ -52,7 +53,8 @@ public class UserControllerAPI {
             userDTO.setEmail(user.getEmail());
             userDTO.setPhoneNo(user.getPhoneNo());
             House house = user.getHouse();
-            HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId(), house.getCurrentMoney());
+            BlockDTO block = new BlockDTO(house.getBlock().getBlockId(), house.getBlock().getBlockName());
+            HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId(), house.getCurrentMoney(), block);
             userDTO.setHouse(houseDTO);
             userDTO.setDateOfBirth(user.getDateOfBirth());
             userDTO.setProfileImage(user.getProfileImage());
@@ -77,7 +79,8 @@ public class UserControllerAPI {
             userDTO.setEmail(user.getEmail());
             userDTO.setPhoneNo(user.getPhoneNo());
             House house = user.getHouse();
-            HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId(), house.getCurrentMoney());
+            BlockDTO block = new BlockDTO(house.getBlock().getBlockId(), house.getBlock().getBlockName());
+            HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId(), house.getCurrentMoney(), block);
             userDTO.setHouse(houseDTO);
             userDTO.setDateOfBirth(user.getDateOfBirth());
             userDTO.setProfileImage(user.getProfileImage());
@@ -161,7 +164,8 @@ public class UserControllerAPI {
             userDTO.setEmail(user.getEmail());
             userDTO.setPhoneNo(user.getPhoneNo());
             House house = user.getHouse();
-            HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId(), house.getCurrentMoney());
+            BlockDTO block = new BlockDTO(house.getBlock().getBlockId(), house.getBlock().getBlockName());
+            HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId(), house.getCurrentMoney(), block);
             userDTO.setHouse(houseDTO);
             userDTO.setDateOfBirth(user.getDateOfBirth());
             userDTO.setProfileImage(user.getProfileImage());

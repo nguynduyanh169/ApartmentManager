@@ -1,19 +1,18 @@
 package com.manager.dto;
 
-public class HouseDTO {
+public class HouseForTransactionDTO {
+
 	private long houseId;
 	private String houseName;
-	private BlockDTO block;
 	private int ownerId;
 	private float currentMoney;
 
-	public HouseDTO(long houseId, String houseName, int ownerId, float currentMoney, BlockDTO block) {
+	public HouseForTransactionDTO(long houseId, String houseName, int ownerId, float currentMoney) {
 		super();
 		this.houseId = houseId;
 		this.houseName = houseName;
 		this.ownerId = ownerId;
 		this.currentMoney = currentMoney;
-		this.block = block;
 	}
 
 	public long getHouseId() {
@@ -47,17 +46,5 @@ public class HouseDTO {
 	public void setCurrentMoney(float currentMoney) {
 		this.currentMoney = currentMoney;
 	}
-
-	public BlockDTO getBlock() {
-		return block;
-	}
-
-	public void setBlock(BlockDTO block) {
-		this.block = block;
-	}
-
-	
-	
-	
 
 }
