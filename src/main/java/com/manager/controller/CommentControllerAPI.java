@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.manager.dto.APIResponse;
 import com.manager.dto.CommentDTO;
+import com.manager.dto.PostForLikeDTO;
 import com.manager.dto.UserForPostDTO;
 import com.manager.entity.Comment;
 import com.manager.service.CommentService;
@@ -42,6 +43,11 @@ public class CommentControllerAPI {
 			UserForPostDTO user = new UserForPostDTO(comment.getUser().getUserId(), comment.getUser().getProfileImage(),
 					comment.getUser().getFirstName(), comment.getUser().getLastName());
 			commentDTO.setUser(user);
+			PostForLikeDTO post = new PostForLikeDTO();
+			post.setPostId(comment.getPost().getPostId());
+			post.setBody(comment.getPost().getBody());
+			post.setCreatedDate(comment.getPost().getCreateDate());
+			commentDTO.setPost(post);
 			commentDTOs.add(commentDTO);
 		}
 		return commentDTOs;
@@ -56,6 +62,28 @@ public class CommentControllerAPI {
 			return new ResponseEntity<APIResponse>(new APIResponse(true, "Save successful!"), HttpStatus.OK);
 		}
 
+	}
+
+	@GetMapping("/comments")
+	public List<CommentDTO> getAllComment() {
+		List<Comment> comments = commentService.getAllComment();
+		List<CommentDTO> commentDTOs = new ArrayList<>();
+		for (Comment comment : comments) {
+			CommentDTO commentDTO = new CommentDTO();
+			commentDTO.setCommentId(comment.getCommentId());
+			commentDTO.setCreatedDate(comment.getCreatedDate());
+			commentDTO.setDetail(comment.getDetail());
+			UserForPostDTO user = new UserForPostDTO(comment.getUser().getUserId(), comment.getUser().getProfileImage(),
+					comment.getUser().getFirstName(), comment.getUser().getLastName());
+			commentDTO.setUser(user);
+			PostForLikeDTO post = new PostForLikeDTO();
+			post.setPostId(comment.getPost().getPostId());
+			post.setBody(comment.getPost().getBody());
+			post.setCreatedDate(comment.getPost().getCreateDate());
+			commentDTO.setPost(post);
+			commentDTOs.add(commentDTO);
+		}
+		return commentDTOs;
 	}
 
 }

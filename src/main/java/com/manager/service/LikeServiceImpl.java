@@ -31,4 +31,10 @@ public class LikeServiceImpl implements LikeService{
 		 likeRepo.deleteById(likeId);
 	}
 
+	@Override
+	public List<Like> getAllLike() {
+		// TODO Auto-generated method stub
+		return likeRepo.findAll();
+	}
+
 }

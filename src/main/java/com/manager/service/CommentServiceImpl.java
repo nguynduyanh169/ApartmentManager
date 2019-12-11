@@ -28,4 +28,10 @@ public class CommentServiceImpl implements CommentService{
 		return commentRepo.save(comment) == null ? false : true;
 	}
 
+	@Override
+	public List<Comment> getAllComment() {
+		// TODO Auto-generated method stub
+		return commentRepo.findAll();
+	}
+
 }

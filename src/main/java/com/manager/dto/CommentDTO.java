@@ -8,6 +8,15 @@ public class CommentDTO {
 	private UserForPostDTO user;
 	private String detail;
 	private Date createdDate;
+	private PostForLikeDTO post;
+
+	public PostForLikeDTO getPost() {
+		return post;
+	}
+
+	public void setPost(PostForLikeDTO post) {
+		this.post = post;
+	}
 
 	public long getCommentId() {
 		return commentId;

@@ -19,4 +19,8 @@ public interface PostService {
 	public boolean savePost(Post post);
 	
 	public void disablePost(long postId);
+	
+	public long getPostIdByBody(String body);
+	
+	public Post savePostTest(Post post);
 }

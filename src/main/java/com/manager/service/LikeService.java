@@ -16,5 +16,7 @@ public interface LikeService {
 	public boolean saveLike(Like like);
 	
 	public void unliked(long likeId);
+	
+	public List<Like> getAllLike();
 
 }
