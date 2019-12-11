@@ -48,8 +48,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean checkLogin(String email) {
-        return userRepo.checkLogin(email) == null ? false : true;
+    public User checkLogin(String email) {
+        return userRepo.checkLogin(email);
     }
 
     @Override
