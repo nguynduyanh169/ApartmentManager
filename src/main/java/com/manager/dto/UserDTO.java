@@ -9,7 +9,7 @@ public class UserDTO {
     private String phoneNo;
     private HouseDTO house;
     private String profileImage;
-    private Date dateOfBirth;
+    private String dateOfBirth;
     private String idNumber;
     private int Gender;
     private String job;
@@ -58,11 +58,11 @@ public class UserDTO {
         this.profileImage = profileImage;
     }
 
-    public Date getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

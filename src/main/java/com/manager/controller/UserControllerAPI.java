@@ -1,5 +1,6 @@
 package com.manager.controller;
 
+import com.manager.ApartmentManager.ParseDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,12 +28,17 @@ import com.manager.dto.UserFullNameDTO;
 import com.manager.entity.House;
 import com.manager.entity.User;
 import com.manager.service.UserService;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 @RestController
 @RequestMapping("api/v1")
 @ComponentScan(basePackages = "com.manager.service")
 public class UserControllerAPI {
 
+    ParseDate parse;
+    
     @Autowired
     UserService userService;
 
@@ -56,7 +62,14 @@ public class UserControllerAPI {
             BlockDTO block = new BlockDTO(house.getBlock().getBlockId(), house.getBlock().getBlockName());
             HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId(), house.getCurrentMoney(), block);
             userDTO.setHouse(houseDTO);
-            userDTO.setDateOfBirth(user.getDateOfBirth());
+
+            try {
+                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                userDTO.setDateOfBirth(format.parse(user.getDateOfBirth().toString()).toString());
+            } catch (ParseException e) {
+                userDTO.setDateOfBirth(null);
+            }
+
             userDTO.setProfileImage(user.getProfileImage());
             userDTO.setIdNumber(user.getIdNumber());
             userDTO.setGender(user.getGender());
@@ -82,7 +95,14 @@ public class UserControllerAPI {
             BlockDTO block = new BlockDTO(house.getBlock().getBlockId(), house.getBlock().getBlockName());
             HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId(), house.getCurrentMoney(), block);
             userDTO.setHouse(houseDTO);
-            userDTO.setDateOfBirth(user.getDateOfBirth());
+
+            try {
+                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                userDTO.setDateOfBirth(format.parse(user.getDateOfBirth().toString()).toString());
+            } catch (ParseException e) {
+                userDTO.setDateOfBirth(null);
+            }
+
             userDTO.setProfileImage(user.getProfileImage());
             userDTO.setIdNumber(user.getIdNumber());
             userDTO.setGender(user.getGender());
@@ -91,6 +111,7 @@ public class UserControllerAPI {
             userDTO.setFirstName(user.getFirstName());
             userDTO.setLastName(user.getLastName());
             userDTO.setFamilyLevel(user.getFamilyLevel());
+
             userDTOs.add(userDTO);
         }
         return userDTOs;
@@ -157,8 +178,8 @@ public class UserControllerAPI {
         User user = userService.checkLogin(email);
         if (user == null) {
             return new ResponseEntity<APIResponse>(new APIResponse(false, "Login Failed!"), HttpStatus.BAD_REQUEST);
-        }else {
-        	UserDTO userDTO = new UserDTO();
+        } else {
+            UserDTO userDTO = new UserDTO();
             userDTO.setUserId(user.getUserId());
             userDTO.setEmail(user.getEmail());
             userDTO.setPhoneNo(user.getPhoneNo());
@@ -166,7 +187,10 @@ public class UserControllerAPI {
             BlockDTO block = new BlockDTO(house.getBlock().getBlockId(), house.getBlock().getBlockName());
             HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId(), house.getCurrentMoney(), block);
             userDTO.setHouse(houseDTO);
-            userDTO.setDateOfBirth(user.getDateOfBirth());
+
+            parse = new ParseDate();
+            userDTO.setDateOfBirth(parse.parseDateToString(user.getDateOfBirth()));
+            
             userDTO.setProfileImage(user.getProfileImage());
             userDTO.setIdNumber(user.getIdNumber());
             userDTO.setGender(user.getGender());
@@ -184,5 +208,4 @@ public class UserControllerAPI {
         userService.removeUser(id);
         return new ResponseEntity<String>("Deleted!", HttpStatus.OK);
     }
-
 }
