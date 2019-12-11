@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.manager.dto.APIResponse;
 import com.manager.dto.LikeDTO;
+import com.manager.dto.PostDTO;
+import com.manager.dto.PostForLikeDTO;
 import com.manager.dto.UserDTO;
 import com.manager.dto.UserForPostDTO;
 import com.manager.entity.Like;
@@ -43,6 +45,11 @@ public class LikeControllerAPI {
 					like.getUser().getFirstName(), like.getUser().getLastName());
 			likeDTO.setUser(user);
 			likeDTO.setCreatedDate(like.getCreatedDate());
+			PostForLikeDTO post = new PostForLikeDTO();
+			post.setPostId(like.getPost().getPostId());
+			post.setBody(like.getPost().getBody());
+			post.setCreatedDate(like.getPost().getCreateDate());
+			likeDTO.setPost(post);
 			likeDTOs.add(likeDTO);
 		}
 		return likeDTOs;
@@ -62,6 +69,27 @@ public class LikeControllerAPI {
 	public ResponseEntity<String> unlike(@PathVariable(value = "likeId") long likeId) {
 		likeService.unliked(likeId);
 		return new ResponseEntity<String>("Deleted!", HttpStatus.OK);
+	}
+	
+	@GetMapping("/likes")
+	public List<LikeDTO> getAllLike(){
+		List<Like> likes = likeService.getAllLike();
+		List<LikeDTO> likeDTOs = new ArrayList<>();
+		for (Like like : likes) {
+			LikeDTO likeDTO = new LikeDTO();
+			likeDTO.setLikeId(like.getLikeId());
+			UserForPostDTO user = new UserForPostDTO(like.getUser().getUserId(), like.getUser().getProfileImage(),
+					like.getUser().getFirstName(), like.getUser().getLastName());
+			likeDTO.setUser(user);
+			likeDTO.setCreatedDate(like.getCreatedDate());
+			PostForLikeDTO post = new PostForLikeDTO();
+			post.setPostId(like.getPost().getPostId());
+			post.setBody(like.getPost().getBody());
+			post.setCreatedDate(like.getPost().getCreateDate());
+			likeDTO.setPost(post);
+			likeDTOs.add(likeDTO);
+		}
+		return likeDTOs;
 	}
 
 }

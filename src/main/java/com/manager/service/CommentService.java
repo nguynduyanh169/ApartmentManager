@@ -10,8 +10,11 @@ import com.manager.entity.Comment;
 @Service
 @ComponentScan(basePackages = "com.manager.repository")
 public interface CommentService {
-	
+
 	public List<Comment> getCommentsByPostId(long id);
+
 	public boolean saveComment(Comment comment);
+	
+	public List<Comment> getAllComment();
 
 }

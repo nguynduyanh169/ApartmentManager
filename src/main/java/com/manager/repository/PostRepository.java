@@ -13,15 +13,18 @@ import org.springframework.stereotype.Repository;
 import com.manager.entity.Post;
 
 @Repository
-public interface PostRepository extends JpaRepository<Post, Long>{
+public interface PostRepository extends JpaRepository<Post, Long> {
 	@Query("SELECT p from Post p where p.user.userId = :userId")
 	List<Post> getPostByUserId(@Param(value = "userId") long userId);
-	
+
 	@Query("SELECT p from Post p where p.disable = false")
 	List<Post> getAllActivePost();
-	
+
 	@Modifying
 	@Transactional
 	@Query("UPDATE Post p SET p.disable = true where p.postId = :postId")
 	void disablePost(@Param(value = "postId") long postId);
+
+	@Query("SELECT p.postId from Post p where p.body = :body")
+	long getPostIdByBody(@Param(value = "body") String body);
 }

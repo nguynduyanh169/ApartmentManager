@@ -12,34 +12,51 @@ import com.manager.repository.PostRepository;
 
 @Service
 @ComponentScan(basePackages = "com.manager.repository")
-public class PostServiceImpl implements PostService{
+public class PostServiceImpl implements PostService {
 
 	@Autowired
 	PostRepository postRepo;
+
 	@Override
 	public List<Post> getAllPost() {
-		// TODO Auto-generated method stub
+
 		return postRepo.getAllActivePost();
 	}
+
 	@Override
 	public Optional<Post> findPostById(long id) {
-		// TODO Auto-generated method stub
+
 		return postRepo.findById(id);
 	}
+
 	@Override
 	public boolean savePost(Post post) {
-		// TODO Auto-generated method stub
+
 		return postRepo.save(post) == null ? false : true;
 	}
+
 	@Override
 	public List<Post> getPostByUserId(long userId) {
-		// TODO Auto-generated method stub
+
 		return postRepo.getPostByUserId(userId);
 	}
+
 	@Override
 	public void disablePost(long postId) {
 		postRepo.disablePost(postId);
-		
+
+	}
+
+	@Override
+	public long getPostIdByBody(String body) {
+
+		return postRepo.getPostIdByBody(body);
+	}
+
+	@Override
+	public Post savePostTest(Post post) {
+		// TODO Auto-generated method stub
+		return postRepo.save(post);
 	}
 
 }
