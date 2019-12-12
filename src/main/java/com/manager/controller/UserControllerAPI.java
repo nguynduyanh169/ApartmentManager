@@ -295,6 +295,4 @@ public class UserControllerAPI {
 		return pathString;
 	}
 
-	ParseDate parse;
-
 }
