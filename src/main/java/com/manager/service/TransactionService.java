@@ -14,5 +14,7 @@ public interface TransactionService {
 	public List<Transaction> getTransactionByHouseId(long houseId);
 	
 	public boolean saveTransaction(Transaction transaction);
+	
+	public List<Transaction> getAllTransaction();
 
 }

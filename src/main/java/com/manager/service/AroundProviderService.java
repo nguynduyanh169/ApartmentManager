@@ -11,8 +11,13 @@ import com.manager.entity.AroundProvider;
 @Service
 @ComponentScan(basePackages = "com.manager.repository")
 public interface AroundProviderService {
-	
+
 	List<AroundProvider> getAroundProviderByCategoryId(long categoryId);
+
 	Optional<AroundProvider> getAroundProviderById(long aroundProviderId);
+	
+	boolean saveAroundProvider(AroundProvider aroundProvider);
+	
+	List<AroundProvider> getAllAroundProvider();
 
 }

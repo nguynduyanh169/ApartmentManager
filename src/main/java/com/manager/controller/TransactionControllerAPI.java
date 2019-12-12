@@ -30,7 +30,11 @@ public class TransactionControllerAPI {
 
 	@Autowired
 	TransactionService transactionService;
-
+	
+	@GetMapping("/transactions")
+	public List<Transaction> getAllTransaction(){
+		return transactionService.getAllTransaction();
+	}
 	@GetMapping("/transactions/houses/{houseId}")
 	public List<TransactionDTO> getTransactionByHouseId(@PathVariable(value = "houseId") long houseId) {
 		List<Transaction> transactions = transactionService.getTransactionByHouseId(houseId);

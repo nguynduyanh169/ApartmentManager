@@ -26,4 +26,10 @@ public class TransactionServiceImpl implements TransactionService{
 		return transactionRepo.save(transaction) == null ? false : true;
 	}
 
+	@Override
+	public List<Transaction> getAllTransaction() {
+		// TODO Auto-generated method stub
+		return transactionRepo.findAll();
+	}
+
 }

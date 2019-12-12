@@ -1,4 +1,4 @@
- package com.manager.controller;
+package com.manager.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,9 +27,15 @@ public class AroundProviderControllerAPI {
 
 	@Autowired
 	AroundProviderService aroundProviderService;
+	
+	@GetMapping("/AroundProviders")
+	public List<AroundProvider> getAllAroundProvider(){
+		return aroundProviderService.getAllAroundProvider();
+	}
 
 	@GetMapping("/AroundProviders/AroundProviderCategories/{categoryId}")
-	public List<AroundProviderListDTO> getAroundProviderByCategoryId(@PathVariable(value = "categoryId") long categoryId) {
+	public List<AroundProviderListDTO> getAroundProviderByCategoryId(
+			@PathVariable(value = "categoryId") long categoryId) {
 		List<AroundProvider> aroundProviders = aroundProviderService.getAroundProviderByCategoryId(categoryId);
 		List<AroundProviderListDTO> aroundProviderListDTOs = new ArrayList<>();
 
@@ -38,17 +45,18 @@ public class AroundProviderControllerAPI {
 			providerDTO.setAroundProviderName(aroundProvider.getAroundProviderName());
 			providerDTO.setAddress(aroundProvider.getAddress());
 			aroundProviderListDTOs.add(providerDTO);
-			
+
 		}
 		return aroundProviderListDTOs;
 	}
-	
+
 	@GetMapping("/AroundProviders/{aroundProviderId}")
-	public ResponseEntity<?> getAroundProviderById(@PathVariable(value = "aroundProviderId") long aroundProviderId) throws Exception{
+	public ResponseEntity<?> getAroundProviderById(@PathVariable(value = "aroundProviderId") long aroundProviderId)
+			throws Exception {
 		Optional<AroundProvider> opAroundProvider = aroundProviderService.getAroundProviderById(aroundProviderId);
-		if(!opAroundProvider.isPresent()) {
+		if (!opAroundProvider.isPresent()) {
 			return new ResponseEntity<APIResponse>(new APIResponse(false, "Not found!"), HttpStatus.NO_CONTENT);
-		}else {
+		} else {
 			AroundProvider aroundProvider = opAroundProvider.get();
 			AroundProviderDTO providerDTO = new AroundProviderDTO();
 			providerDTO.setAroundProviderId(aroundProvider.getAroundProviderId());
@@ -63,7 +71,23 @@ public class AroundProviderControllerAPI {
 			return new ResponseEntity<AroundProviderDTO>(providerDTO, HttpStatus.OK);
 		}
 	}
-	
-	
+
+	@PutMapping("/AroundProviders/{aroundProviderId}/clickCount")
+	public ResponseEntity<?> changeClickCountById(@PathVariable(value = "aroundProviderId") long aroundProviderId)
+			throws Exception {
+		Optional<AroundProvider> opAroundProvider = aroundProviderService.getAroundProviderById(aroundProviderId);
+		if (!opAroundProvider.isPresent()) {
+			return new ResponseEntity<APIResponse>(new APIResponse(false, "Not found!"), HttpStatus.NO_CONTENT);
+		} else {
+			AroundProvider aroundProvider = opAroundProvider.get();
+			aroundProvider.setClickCount(aroundProvider.getClickCount() + 1);
+			boolean flag = aroundProviderService.saveAroundProvider(aroundProvider);
+			if (flag == false) {
+				return new ResponseEntity<APIResponse>(new APIResponse(false, "Save failed!"), HttpStatus.BAD_REQUEST);
+			} else {
+				return new ResponseEntity<APIResponse>(new APIResponse(true, "Save successful!"), HttpStatus.OK);
+			}
+		}
+	}
 
 }

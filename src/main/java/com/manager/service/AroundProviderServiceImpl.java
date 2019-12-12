@@ -29,4 +29,16 @@ public class AroundProviderServiceImpl implements AroundProviderService{
 		return aroundProviderRepo.findById(aroundProviderId);
 	}
 
+	@Override
+	public boolean saveAroundProvider(AroundProvider aroundProvider) {
+		// TODO Auto-generated method stub
+		return aroundProviderRepo.save(aroundProvider) == null ? false : true;
+	}
+
+	@Override
+	public List<AroundProvider> getAllAroundProvider() {
+		// TODO Auto-generated method stub
+		return aroundProviderRepo.findAll();
+	}
+
 }
