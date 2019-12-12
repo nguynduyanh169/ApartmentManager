@@ -23,5 +23,9 @@ public interface UserService {
 	
 	public User checkLogin(String email);
 	
-	public boolean checkUserEmail(String email);
+	public User checkUserEmail(String email);
+	
+	public int setIdImageByEmail(String idImage, String email);
+	
+	public int setProfileImageByEmail(String profileImage, String email);
 }

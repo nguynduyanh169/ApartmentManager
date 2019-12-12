@@ -52,7 +52,6 @@ public class HouseControllerAPI {
 
 	@GetMapping("/houseslite")
 	public List<House> getHouseLite() {
-		System.out.println(houseService.getHouseLite().size());
 		return houseService.getHouseLite();
 	}
 

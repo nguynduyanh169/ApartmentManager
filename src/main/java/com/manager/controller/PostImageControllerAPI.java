@@ -108,7 +108,6 @@ public class PostImageControllerAPI {
             String nameFile = data.getOriginalFilename();
             try {
                 File serverFile = new File(uploadRootDir.getAbsolutePath() + "/" + nameFile);
-
                 BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(serverFile));
                 bos.write(data.getBytes());
                 bos.close();

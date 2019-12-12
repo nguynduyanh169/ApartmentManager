@@ -70,9 +70,9 @@ public class LikeControllerAPI {
 		likeService.unliked(likeId);
 		return new ResponseEntity<String>("Deleted!", HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/likes")
-	public List<LikeDTO> getAllLike(){
+	public List<LikeDTO> getAllLike() {
 		List<Like> likes = likeService.getAllLike();
 		List<LikeDTO> likeDTOs = new ArrayList<>();
 		for (Like like : likes) {

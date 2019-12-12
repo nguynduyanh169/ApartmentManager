@@ -27,12 +27,12 @@ import com.manager.service.TransactionService;
 @RequestMapping("/api/v1")
 @ComponentScan(basePackages = "com.manager.service")
 public class TransactionControllerAPI {
-	
+
 	@Autowired
 	TransactionService transactionService;
-	
+
 	@GetMapping("/transactions/houses/{houseId}")
-	public List<TransactionDTO> getTransactionByHouseId(@PathVariable(value = "houseId") long houseId){
+	public List<TransactionDTO> getTransactionByHouseId(@PathVariable(value = "houseId") long houseId) {
 		List<Transaction> transactions = transactionService.getTransactionByHouseId(houseId);
 		List<TransactionDTO> transactionDTOs = new ArrayList<>();
 		for (Transaction transaction : transactions) {
@@ -43,15 +43,17 @@ public class TransactionControllerAPI {
 			transactionDTO.setStatus(transaction.getStatus());
 			transactionDTO.setCreatedDate(transaction.getCreatedDate());
 			transactionDTO.setTransactor(transaction.getTransactor());
-			HouseForTransactionDTO house = new HouseForTransactionDTO(transaction.getHouse().getHouseId(), transaction.getHouse().getHouseName(), transaction.getHouse().getOwnerId(), transaction.getHouse().getCurrentMoney());
+			HouseForTransactionDTO house = new HouseForTransactionDTO(transaction.getHouse().getHouseId(),
+					transaction.getHouse().getHouseName(), transaction.getHouse().getOwnerId(),
+					transaction.getHouse().getCurrentMoney());
 			transactionDTO.setHouse(house);
 			transactionDTOs.add(transactionDTO);
 		}
 		return transactionDTOs;
 	}
-	
+
 	@PostMapping("/transactions")
-	public ResponseEntity<?> saveTransaction(@Valid @RequestBody Transaction transaction){
+	public ResponseEntity<?> saveTransaction(@Valid @RequestBody Transaction transaction) {
 		boolean flag = transactionService.saveTransaction(transaction);
 		if (flag == false) {
 			return new ResponseEntity<APIResponse>(new APIResponse(false, "Save failed!"), HttpStatus.BAD_REQUEST);
