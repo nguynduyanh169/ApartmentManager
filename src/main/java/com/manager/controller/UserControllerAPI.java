@@ -284,13 +284,12 @@ public class UserControllerAPI {
 		String pathString = "";
 		for (MultipartFile file : files) {
 			if (file.isEmpty()) {
-				continue;
+				return null;
 			}
 			byte[] bytes = file.getBytes();
 			Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
 			Files.write(path, bytes);
 			pathString = path.toString();
-
 		}
 		return pathString;
 	}

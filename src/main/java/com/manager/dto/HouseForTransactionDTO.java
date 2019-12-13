@@ -5,9 +5,9 @@ public class HouseForTransactionDTO {
 	private long houseId;
 	private String houseName;
 	private int ownerId;
-	private float currentMoney;
+	private long currentMoney;
 
-	public HouseForTransactionDTO(long houseId, String houseName, int ownerId, float currentMoney) {
+	public HouseForTransactionDTO(long houseId, String houseName, int ownerId, long currentMoney) {
 		super();
 		this.houseId = houseId;
 		this.houseName = houseName;
@@ -39,11 +39,11 @@ public class HouseForTransactionDTO {
 		this.ownerId = ownerId;
 	}
 
-	public float getCurrentMoney() {
+	public long getCurrentMoney() {
 		return currentMoney;
 	}
 
-	public void setCurrentMoney(float currentMoney) {
+	public void setCurrentMoney(long currentMoney) {
 		this.currentMoney = currentMoney;
 	}
 

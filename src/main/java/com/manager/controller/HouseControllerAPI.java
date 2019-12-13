@@ -108,7 +108,7 @@ public class HouseControllerAPI {
 
 	@PutMapping("/houses/{houseId}/currentMoney/{currentMoney}")
 	public ResponseEntity<?> updateHouseWalletById(@PathVariable(value = "houseId") long id,
-			@PathVariable(value = "currentMoney") float currentMoney) throws Exception {
+			@PathVariable(value = "currentMoney") long currentMoney) throws Exception {
 		Optional<House> opHouse = houseService.getHouseById(id);
 		if (!opHouse.isPresent()) {
 			return new ResponseEntity<House>(opHouse.get(), HttpStatus.NO_CONTENT);

@@ -71,22 +71,22 @@ public class BalanceSheet implements Serializable {
 	private User user;
 
 	@Column(name = "TotalIncome")
-	private float totalIncome;
+	private long totalIncome;
 
 	@Column(name = "TotalExpense")
-	private float totalExpense;
+	private long totalExpense;
 
 	@Column(name = "TotalIncomeInCash")
-	private float totalIncomeInCash;
+	private long totalIncomeInCash;
 
 	@Column(name = "TotalExpenseInCash")
-	private float totalExpenseInCash;
+	private long totalExpenseInCash;
 
 	@Column(name = "RedudancyStartMonth")
-	private float redudancyStartMonth;
+	private long redudancyStartMonth;
 
 	@Column(name = "RedudancyEndMonth")
-	private float redudancyEndMonth;
+	private long redudancyEndMonth;
 
 	public long getBalanceSheetId() {
 		return balanceSheetId;
@@ -160,51 +160,51 @@ public class BalanceSheet implements Serializable {
 		this.user = user;
 	}
 
-	public float getTotalIncome() {
+	public long getTotalIncome() {
 		return totalIncome;
 	}
 
-	public void setTotalIncome(float totalIncome) {
+	public void setTotalIncome(long totalIncome) {
 		this.totalIncome = totalIncome;
 	}
 
-	public float getTotalExpense() {
+	public long getTotalExpense() {
 		return totalExpense;
 	}
 
-	public void setTotalExpense(float totalExpense) {
+	public void setTotalExpense(long totalExpense) {
 		this.totalExpense = totalExpense;
 	}
 
-	public float getTotalIncomeInCash() {
+	public long getTotalIncomeInCash() {
 		return totalIncomeInCash;
 	}
 
-	public void setTotalIncomeInCash(float totalIncomeInCash) {
+	public void setTotalIncomeInCash(long totalIncomeInCash) {
 		this.totalIncomeInCash = totalIncomeInCash;
 	}
 
-	public float getTotalExpenseInCash() {
+	public long getTotalExpenseInCash() {
 		return totalExpenseInCash;
 	}
 
-	public void setTotalExpenseInCash(float totalExpenseInCash) {
+	public void setTotalExpenseInCash(long totalExpenseInCash) {
 		this.totalExpenseInCash = totalExpenseInCash;
 	}
 
-	public float getRedudancyStartMonth() {
+	public long getRedudancyStartMonth() {
 		return redudancyStartMonth;
 	}
 
-	public void setRedudancyStartMonth(float redudancyStartMonth) {
+	public void setRedudancyStartMonth(long redudancyStartMonth) {
 		this.redudancyStartMonth = redudancyStartMonth;
 	}
 
-	public float getRedudancyEndMonth() {
+	public long getRedudancyEndMonth() {
 		return redudancyEndMonth;
 	}
 
-	public void setRedudancyEndMonth(float redudancyEndMonth) {
+	public void setRedudancyEndMonth(long redudancyEndMonth) {
 		this.redudancyEndMonth = redudancyEndMonth;
 	}
 

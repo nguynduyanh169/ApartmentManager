@@ -43,13 +43,13 @@ public class UtilityServiceRangePrice implements Serializable {
 	private String name;
 
 	@Column(name = "FromAmount")
-	private float fromAmount;
+	private long fromAmount;
 
 	@Column(name = "ToAmount")
-	private float toAmount;
+	private long toAmount;
 
 	@Column(name = "Price")
-	private float price;
+	private long price;
 
 	@Column(name = "CreatedDate")
 	@CreatedDate
@@ -83,27 +83,27 @@ public class UtilityServiceRangePrice implements Serializable {
 		this.name = name;
 	}
 
-	public float getFromAmount() {
+	public long getFromAmount() {
 		return fromAmount;
 	}
 
-	public void setFromAmount(float fromAmount) {
+	public void setFromAmount(long fromAmount) {
 		this.fromAmount = fromAmount;
 	}
 
-	public float getToAmount() {
+	public long getToAmount() {
 		return toAmount;
 	}
 
-	public void setToAmount(float toAmount) {
+	public void setToAmount(long toAmount) {
 		this.toAmount = toAmount;
 	}
 
-	public float getPrice() {
+	public long getPrice() {
 		return price;
 	}
 
-	public void setPrice(float price) {
+	public void setPrice(long price) {
 		this.price = price;
 	}
 

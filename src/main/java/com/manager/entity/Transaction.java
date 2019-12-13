@@ -23,35 +23,35 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name = "Transactions")
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Transaction implements Serializable{
-	
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+public class Transaction implements Serializable {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "TransactionId")
 	private long transactionId;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "BalanceSheetId", nullable = true)
 	private BalanceSheet balanceSheet;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "HouseId", nullable = true)
 	private House house;
-	
+
 	@Column(name = "Amount")
-	private float amount;
-	
+	private long amount;
+
 	@Column(name = "Title")
 	private String title;
-	
+
 	@Column(name = "Status")
 	private int status;
-	
+
 	@Column(name = "CreatedDate")
 	@CreatedDate
 	private Date createdDate;
-	
+
 	@Column(name = "Transactor")
 	private long transactor;
 
@@ -79,11 +79,11 @@ public class Transaction implements Serializable{
 		this.house = house;
 	}
 
-	public float getAmount() {
+	public long getAmount() {
 		return amount;
 	}
 
-	public void setAmount(float amount) {
+	public void setAmount(long amount) {
 		this.amount = amount;
 	}
 
@@ -118,8 +118,5 @@ public class Transaction implements Serializable{
 	public void setTransactor(long transactor) {
 		this.transactor = transactor;
 	}
-
-	
-	
 
 }

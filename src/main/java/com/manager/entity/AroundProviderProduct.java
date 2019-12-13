@@ -36,7 +36,7 @@ public class AroundProviderProduct implements Serializable{
 	private String aroundProviderProductName;
 	
 	@Column(name = "Price")
-	private float price;
+	private long price;
 	
 	@Column(name = "ImgUrl")
 	private String imgUrl;
@@ -72,11 +72,11 @@ public class AroundProviderProduct implements Serializable{
 		this.aroundProviderProductName = aroundProviderProductName;
 	}
 
-	public float getPrice() {
+	public long getPrice() {
 		return price;
 	}
 
-	public void setPrice(float price) {
+	public void setPrice(long price) {
 		this.price = price;
 	}
 
