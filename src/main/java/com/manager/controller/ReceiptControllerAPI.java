@@ -1,5 +1,6 @@
 package com.manager.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +39,7 @@ public class ReceiptControllerAPI {
 			return new ResponseEntity<Receipt>(opReceipt.get(), HttpStatus.NO_CONTENT);
 		} else {
 			opReceipt.get().setStatus(status);
+			opReceipt.get().setPaymentDate(new Date());
 			boolean flag = receiptService.saveReceipt(opReceipt.get());
 			if (flag == false) {
 				return new ResponseEntity<APIResponse>(new APIResponse(false, "Save failed!"), HttpStatus.BAD_REQUEST);
