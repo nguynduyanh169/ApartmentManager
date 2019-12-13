@@ -5,7 +5,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import com.manager.ApartmentManager.ParseDate;
-import com.manager.ApartmentManager.ParseDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +12,6 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
-import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpHeaders;
@@ -38,16 +36,24 @@ import com.manager.dto.UserFullNameDTO;
 import com.manager.entity.House;
 import com.manager.entity.User;
 import com.manager.service.UserService;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+import org.springframework.http.MediaType;
 
 @RestController
 @RequestMapping("api/v1")
 @ComponentScan(basePackages = "com.manager.service")
 public class UserControllerAPI {
 
-    private static final String UPLOADED_FOLDER = "src/main/resources/images/";
+    final String FOLDER_PATH = "src/main/resources/images";
+    final String JPEG = "JPEG";
+    final String PNG = "PNG";
+    final String GIF = "GIF";
     ParseDate parse;
 
     @Autowired
@@ -166,9 +172,9 @@ public class UserControllerAPI {
             return new ResponseEntity<User>(opUser.get(), HttpStatus.NO_CONTENT);
         }
         User user = opUser.get();
+        user.setEmail(editUser.getEmail());
         user.setRole(editUser.getRole());
         user.setHouse(editUser.getHouse());
-        user.setProfileImage(editUser.getProfileImage());
         user.setFirstName(editUser.getFirstName());
         user.setLastName(editUser.getLastName());
         user.setJob(editUser.getJob());
@@ -177,7 +183,6 @@ public class UserControllerAPI {
         user.setDateOfBirth(editUser.getDateOfBirth());
         user.setFamilyLevel(editUser.getFamilyLevel());
         user.setIdNumber(editUser.getIdNumber());
-        user.setIdImage(editUser.getIdImage());
         boolean flag = userService.saveUser(user);
         if (flag == false) {
             return new ResponseEntity<APIResponse>(new APIResponse(false, "Save failed!"), HttpStatus.BAD_REQUEST);
@@ -280,18 +285,41 @@ public class UserControllerAPI {
 //		}
 //	}
     private String saveUploadedFiles(List<MultipartFile> files) throws IOException {
-        String pathString = "";
-        for (MultipartFile file : files) {
-            if (file.isEmpty()) {
-                continue;
+        File uploadRootDir = new File(FOLDER_PATH);
+        for (MultipartFile data : files) {
+            String nameFile = data.getOriginalFilename();
+            try {
+                File serverFile = new File(uploadRootDir.getAbsolutePath() + "/" + nameFile);
+                BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(serverFile));
+                bos.write(data.getBytes());
+                bos.close();
+                return nameFile;
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            byte[] bytes = file.getBytes();
-            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
-            Files.write(path, bytes);
-            pathString = path.toString();
-
         }
-        return pathString;
+        return null;
     }
-
+    
+    @GetMapping("/user/image/{name}")
+    public ResponseEntity<byte[]> getImage(@PathVariable(value = "name") String name) throws Exception {
+        File img = new File(FOLDER_PATH + "/" + name);
+        String[] extension = name.split("\\.");
+        switch (extension[extension.length - 1].toUpperCase()) {
+            case GIF:
+                return ResponseEntity.ok().contentType(MediaType.IMAGE_GIF)
+                        .body(java.nio.file.Files.readAllBytes(img.toPath()));
+            case PNG:
+                return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG)
+                        .body(java.nio.file.Files.readAllBytes(img.toPath()));
+            case JPEG:
+                return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG)
+                        .body(java.nio.file.Files.readAllBytes(img.toPath()));
+            default:
+                return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG)
+                        .body(java.nio.file.Files.readAllBytes(img.toPath()));
+        }
+    }
 }
