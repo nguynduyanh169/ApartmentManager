@@ -6,7 +6,7 @@ public class TransactionDTO {
 
 	private long transactionId;
 	private HouseForTransactionDTO house;
-	private float amount;
+	private long amount;
 	private String title;
 	private int status;
 	private long transactor;
@@ -28,11 +28,11 @@ public class TransactionDTO {
 		this.house = house;
 	}
 
-	public float getAmount() {
+	public long getAmount() {
 		return amount;
 	}
 
-	public void setAmount(float amount) {
+	public void setAmount(long amount) {
 		this.amount = amount;
 	}
 

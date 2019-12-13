@@ -5,9 +5,9 @@ public class HouseDTO {
 	private String houseName;
 	private BlockDTO block;
 	private int ownerId;
-	private float currentMoney;
+	private long currentMoney;
 
-	public HouseDTO(long houseId, String houseName, int ownerId, float currentMoney, BlockDTO block) {
+	public HouseDTO(long houseId, String houseName, int ownerId, long currentMoney, BlockDTO block) {
 		super();
 		this.houseId = houseId;
 		this.houseName = houseName;
@@ -40,11 +40,11 @@ public class HouseDTO {
 		this.ownerId = ownerId;
 	}
 
-	public float getCurrentMoney() {
+	public long getCurrentMoney() {
 		return currentMoney;
 	}
 
-	public void setCurrentMoney(float currentMoney) {
+	public void setCurrentMoney(long currentMoney) {
 		this.currentMoney = currentMoney;
 	}
 
@@ -55,9 +55,5 @@ public class HouseDTO {
 	public void setBlock(BlockDTO block) {
 		this.block = block;
 	}
-
-	
-	
-	
 
 }

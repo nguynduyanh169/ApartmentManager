@@ -6,7 +6,7 @@ public class AroundProviderProductListDTO {
 
 	private String aroundProviderProductName;
 
-	private float price;
+	private long price;
 
 	private String imgUrl;
 
@@ -28,11 +28,11 @@ public class AroundProviderProductListDTO {
 		this.aroundProviderProductName = aroundProviderProductName;
 	}
 
-	public float getPrice() {
+	public long getPrice() {
 		return price;
 	}
 
-	public void setPrice(float price) {
+	public void setPrice(long price) {
 		this.price = price;
 	}
 

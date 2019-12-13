@@ -27,41 +27,41 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name = "ReceiptDetail")
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class ReceiptDetail implements Serializable{
-	
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+public class ReceiptDetail implements Serializable {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ReceiptDetailId")
 	private long receiptDetailId;
-	
+
 	@Column(name = "Total")
-	private float total;
-	
+	private long total;
+
 	@Column(name = "UnitPrice")
-	private float unitPrice;
-	
+	private long unitPrice;
+
 	@Column(name = "Quantity")
 	private int quantity;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "UtilityServiceId", nullable = true)
 	private UtilityService service;
-	
+
 	@Column(name = "FromNumber")
 	private int fromNumber;
-	
+
 	@Column(name = "ToNumber")
 	private int toNumber;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ReceiptId", nullable = true)
 	private Receipt receipt;
-	
+
 	@Column(name = "CreatedDate")
 	@CreatedDate
 	private Date createdDate;
-	
+
 	@Column(name = "LastModifiedDate")
 	@LastModifiedDate
 	private Date lastModifiedDate;
@@ -74,19 +74,19 @@ public class ReceiptDetail implements Serializable{
 		this.receiptDetailId = receiptDetailId;
 	}
 
-	public float getTotal() {
+	public long getTotal() {
 		return total;
 	}
 
-	public void setTotal(float total) {
+	public void setTotal(long total) {
 		this.total = total;
 	}
 
-	public float getUnitPrice() {
+	public long getUnitPrice() {
 		return unitPrice;
 	}
 
-	public void setUnitPrice(float unitPrice) {
+	public void setUnitPrice(long unitPrice) {
 		this.unitPrice = unitPrice;
 	}
 
@@ -145,9 +145,5 @@ public class ReceiptDetail implements Serializable{
 	public void setLastModifiedDate(Date lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
 	}
-	
-	
-	
-	
 
 }
