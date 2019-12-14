@@ -53,6 +53,9 @@ public class UserControllerAPI {
 
     @Autowired
     UserService userService;
+    
+    @Autowired
+    private FCMService fcmService;
 
     @GetMapping("/users")
     public List<User> getAllUser() {
@@ -138,8 +141,7 @@ public class UserControllerAPI {
         if (flag == false) {
             return new ResponseEntity<APIResponse>(new APIResponse(false, "Save failed!"), HttpStatus.BAD_REQUEST);
         } else {
-            FCMService fcm = new FCMService();
-            fcm.pushNotificationByTopic(user.getEmail(), "Register", user.getEmail());
+            fcmService.pushNotificationByTopic(user.getEmail(), "Register", user.getEmail());
             return new ResponseEntity<APIResponse>(new APIResponse(true, "Save successful!"), HttpStatus.OK);
         }
     }
@@ -215,7 +217,7 @@ public class UserControllerAPI {
     @PutMapping("/users/idImage/{email}")
     public ResponseEntity<?> uploadIdImageByEmail(@PathVariable(value = "email") String email,
             @RequestParam("file") MultipartFile uploadfile) {
-        String path = "";
+        String path;
         if (uploadfile.isEmpty()) {
             return new ResponseEntity<String>("please select a file!", HttpStatus.OK);
         }
@@ -238,7 +240,7 @@ public class UserControllerAPI {
     @PutMapping("/users/profileImage/{email}")
     public ResponseEntity<?> uploadProfileImageByEmail(@PathVariable(value = "email") String email,
             @RequestParam("file") MultipartFile uploadfile) {
-        String path = "";
+        String path;
         if (uploadfile.isEmpty()) {
             return new ResponseEntity<String>("please select a file!", HttpStatus.OK);
         }

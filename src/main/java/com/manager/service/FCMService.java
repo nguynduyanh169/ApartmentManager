@@ -39,7 +39,7 @@ public class FCMService {
                 System.out.println("Firebase application has been initialized");
             }
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
     
@@ -48,10 +48,17 @@ public class FCMService {
         FirebaseApp app = FirebaseApp.getInstance();
         System.out.println("Firebase App: " + app.getName());
         
+        int end;
+        if (topic.lastIndexOf("@gmail.com") != -1) {
+            end = topic.lastIndexOf("@gmail.com");
+        } else {
+            end = topic.lastIndexOf("@fpt.edu.vn");
+        }
+        
         Message message = Message.builder()
                 .putData("content", content)
                 .setNotification(new Notification(title, content))
-                .setTopic(topic.substring(0, topic.lastIndexOf("@gmail.com")))
+                .setTopic(topic.substring(0, end))
                 .build();
         
         String response = null;
