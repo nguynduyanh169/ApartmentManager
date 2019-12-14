@@ -8,6 +8,8 @@ public class PostImageDTO {
 	private String url;
 
 	private Date createdDate;
+	
+	private PostForLikeDTO post;
 
 	public long getPostImageId() {
 		return postImageId;
@@ -32,6 +34,16 @@ public class PostImageDTO {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
+
+	public PostForLikeDTO getPost() {
+		return post;
+	}
+
+	public void setPost(PostForLikeDTO post) {
+		this.post = post;
+	}
+	
+	
 	
 	
 }

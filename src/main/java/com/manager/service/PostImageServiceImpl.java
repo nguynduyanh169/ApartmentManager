@@ -25,5 +25,10 @@ public class PostImageServiceImpl implements PostImageService{
 		// TODO Auto-generated method stub
 		return postImageRepo.save(postImage) == null ? false : true;
 	}
+	@Override
+	public List<PostImage> getAllPostImage() {
+		// TODO Auto-generated method stub
+		return postImageRepo.findAll();
+	}
 
 }
