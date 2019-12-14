@@ -18,5 +18,6 @@ public interface LikeService {
 	public void unliked(long likeId);
 	
 	public List<Like> getAllLike();
+	
 
 }

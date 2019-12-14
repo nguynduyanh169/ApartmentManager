@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.manager.dto.APIResponse;
+import com.manager.dto.PostDTO;
+import com.manager.dto.PostForLikeDTO;
 import com.manager.dto.PostImageDTO;
 import com.manager.entity.PostImage;
 import com.manager.service.PostImageService;
@@ -53,8 +55,31 @@ public class PostImageControllerAPI {
         	postImageDTO.setPostImageId(postImage.getPostImageId());
         	postImageDTO.setUrl(postImage.getUrl());
         	postImageDTO.setCreatedDate(postImage.getCreatedDate());
+        	PostForLikeDTO post = new PostForLikeDTO();
+			post.setPostId(postImage.getPost().getPostId());
+			post.setBody(postImage.getPost().getBody());
+			post.setCreatedDate(postImage.getPost().getCreateDate());
+			postImageDTO.setPost(post);
         	imageDTOs.add(postImageDTO);
-			
+		}
+        return imageDTOs;
+    }
+    
+    @GetMapping("/postImages")
+    public List<PostImageDTO> getAllPostImage(){
+    	List<PostImage> listPostImages = postImageService.getAllPostImage();
+        List<PostImageDTO> imageDTOs = new ArrayList<>();
+        for (PostImage postImage : listPostImages) {
+        	PostImageDTO postImageDTO = new PostImageDTO();
+        	postImageDTO.setPostImageId(postImage.getPostImageId());
+        	postImageDTO.setUrl(postImage.getUrl());
+        	postImageDTO.setCreatedDate(postImage.getCreatedDate());
+        	PostForLikeDTO post = new PostForLikeDTO();
+			post.setPostId(postImage.getPost().getPostId());
+			post.setBody(postImage.getPost().getBody());
+			post.setCreatedDate(postImage.getPost().getCreateDate());
+			postImageDTO.setPost(post);
+        	imageDTOs.add(postImageDTO);
 		}
         return imageDTOs;
     }

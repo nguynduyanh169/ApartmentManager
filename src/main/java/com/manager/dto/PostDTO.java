@@ -8,7 +8,7 @@ public class PostDTO {
 	private String body;
 	private Date createdDate;
 	private UserForPostDTO user;
-
+	
 	public long getPostId() {
 		return postId;
 	}

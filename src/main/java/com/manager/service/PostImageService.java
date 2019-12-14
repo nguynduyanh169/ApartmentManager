@@ -13,4 +13,6 @@ public interface PostImageService {
 	public List<PostImage> getPostImageByPostId(long postId);
 	
 	public boolean savePostImage(PostImage postImage);
+	
+	public List<PostImage> getAllPostImage();
 }

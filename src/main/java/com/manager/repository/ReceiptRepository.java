@@ -12,7 +12,7 @@ import com.manager.entity.Receipt;
 @Repository
 public interface ReceiptRepository extends JpaRepository<Receipt, Long>{
 	
-	@Query("SELECT r from Receipt r where r.house.houseId = :houseId")
+	@Query("SELECT r from Receipt r where r.house.houseId = :houseId order by r.publishDate desc")
 	List<Receipt> getReceiptByHouseId(@Param(value = "houseId") long houseId);
 
 }
