@@ -54,7 +54,6 @@ public class PostImageControllerAPI {
         	postImageDTO.setUrl(postImage.getUrl());
         	postImageDTO.setCreatedDate(postImage.getCreatedDate());
         	imageDTOs.add(postImageDTO);
-			
 		}
         return imageDTOs;
     }

@@ -17,7 +17,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 	@Query("SELECT p from Post p where p.user.userId = :userId")
 	List<Post> getPostByUserId(@Param(value = "userId") long userId);
 
-	@Query("SELECT p from Post p where p.disable = false")
+	@Query("SELECT p from Post p where p.disable = false order by p.createDate desc")
 	List<Post> getAllActivePost();
 
 	@Modifying
