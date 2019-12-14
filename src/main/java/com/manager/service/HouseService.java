@@ -12,22 +12,22 @@ import com.manager.entity.House;
 @ComponentScan(basePackages = "com.manager.repository")
 public interface HouseService {
 
-	public List<House> getAllHouse();
+    public List<House> getAllHouse();
 
-	public List<House> getHouseByBlockId(long blockId);
-	
-	public List<House> getHouseByTypeId(long typeId);
+    public List<House> getHouseByBlockId(long blockId);
 
-	public List<House> getHouseLite();
+    public List<House> getHouseByTypeId(long typeId);
 
-	public Optional<House> getHouseById(long id);
+    public List<House> getHouseLite();
 
-	public boolean save(House house);
+    public Optional<House> getHouseById(long id);
 
-	public long countHouse();
+    public boolean save(House house);
 
-	public void removeHouse(long id);
+    public long countHouse();
 
-	public String getHouseImage(long id);
+    public void removeHouse(long id);
+
+    public String getHouseImage(long id);
 
 }

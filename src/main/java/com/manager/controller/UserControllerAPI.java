@@ -274,35 +274,17 @@ public class UserControllerAPI {
         }
     }
 
-//	@GetMapping("/users/email/{email}")
-//	public ResponseEntity<?> checkUserEmail(@PathVariable(value = "email") String email) {
-//		User user = userService.checkUserEmail(email);
-//		if (user != null) {
-//			return new ResponseEntity<APIResponse>(new APIResponse(false, "Email have been exist!"),
-//					HttpStatus.BAD_REQUEST);
-//		} else {
-//			return new ResponseEntity<APIResponse>(new APIResponse(true, "Email is valid!"), HttpStatus.OK);
-//		}
-//	}
-    private String saveUploadedFiles(List<MultipartFile> files) throws IOException {
-        File uploadRootDir = new File(FOLDER_PATH);
-        for (MultipartFile data : files) {
-            String nameFile = data.getOriginalFilename();
-            try {
-                File serverFile = new File(uploadRootDir.getAbsolutePath() + "/" + nameFile);
-                BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(serverFile));
-                bos.write(data.getBytes());
-                bos.close();
-                return nameFile;
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    @GetMapping("/users/email/{email}")
+    public ResponseEntity<?> checkUserEmail(@PathVariable(value = "email") String email) {
+        User user = userService.checkUserEmail(email);
+        if (user == null) {
+            return new ResponseEntity<APIResponse>(new APIResponse(false, "Email not available!"),
+                    HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<APIResponse>(new APIResponse(true, "Email has been existed!"), HttpStatus.OK);
         }
-        return null;
     }
-    
+
     @GetMapping("/user/image/{name}")
     public ResponseEntity<byte[]> getImage(@PathVariable(value = "name") String name) throws Exception {
         File img = new File(FOLDER_PATH + "/" + name);
@@ -321,5 +303,24 @@ public class UserControllerAPI {
                 return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG)
                         .body(java.nio.file.Files.readAllBytes(img.toPath()));
         }
+    }
+    
+    private String saveUploadedFiles(List<MultipartFile> files) throws IOException {
+        File uploadRootDir = new File(FOLDER_PATH);
+        for (MultipartFile data : files) {
+            String nameFile = data.getOriginalFilename();
+            try {
+                File serverFile = new File(uploadRootDir.getAbsolutePath() + "/" + nameFile);
+                BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(serverFile));
+                bos.write(data.getBytes());
+                bos.close();
+                return nameFile;
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 }
