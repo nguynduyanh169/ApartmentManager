@@ -11,6 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -25,8 +26,14 @@ public class PushNotificationController {
     @Autowired
     private FCMService service;
     
-    @GetMapping("/push/{notify}")
-    public String pushNotification(@PathVariable("notify") String notify) {
-        return service.pushNotification(notify);
+    @RequestMapping("/push")
+    public String pushNotificationByTopic(@RequestParam(name = "topic") String topic, 
+            @RequestParam("title") String title, @RequestParam("content") String content) {
+        return service.pushNotificationByTopic(topic, title, content);
+    }
+    
+    @RequestMapping("/push/all")
+    public String pushNotificationByApp(@RequestParam("title") String title, @RequestParam("content") String content) {
+        return service.pushNotificationByApp(title, content);
     }
 }

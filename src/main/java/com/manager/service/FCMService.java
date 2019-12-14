@@ -11,6 +11,7 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
+import com.google.firebase.messaging.Notification;
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
@@ -42,12 +43,35 @@ public class FCMService {
         }
     }
     
-    public String pushNotification(String notify) {
+    public String pushNotificationByTopic(String topic, String title, String content) {
         initialize();
+        FirebaseApp app = FirebaseApp.getInstance();
+        System.out.println("Firebase App: " + app.getName());
         
         Message message = Message.builder()
-                .putData("content", notify)
-                .setTopic("register")
+                .putData("content", content)
+                .setNotification(new Notification(title, content))
+                .setTopic(topic.substring(0, topic.lastIndexOf("@gmail.com")))
+                .build();
+        
+        String response = null;
+        try {
+            response = FirebaseMessaging.getInstance().send(message);
+        } catch (FirebaseMessagingException e) {
+            e.printStackTrace();
+        }
+        return response;
+    }
+    
+    public String pushNotificationByApp(String title, String content) {
+        initialize();
+        FirebaseApp app = FirebaseApp.getInstance();
+        System.out.println("Firebase App: " + app.getName());
+        
+        Message message = Message.builder()
+                .putData("content", content)
+                .setNotification(new Notification(title, content))
+                .setTopic("AHTAPARTMENT")
                 .build();
         
         String response = null;

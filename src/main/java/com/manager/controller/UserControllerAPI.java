@@ -32,6 +32,7 @@ import com.manager.dto.UserDTO;
 import com.manager.dto.UserFullNameDTO;
 import com.manager.entity.House;
 import com.manager.entity.User;
+import com.manager.service.FCMService;
 import com.manager.service.UserService;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -137,6 +138,8 @@ public class UserControllerAPI {
         if (flag == false) {
             return new ResponseEntity<APIResponse>(new APIResponse(false, "Save failed!"), HttpStatus.BAD_REQUEST);
         } else {
+            FCMService fcm = new FCMService();
+            fcm.pushNotificationByTopic(user.getEmail(), "Register", user.getEmail());
             return new ResponseEntity<APIResponse>(new APIResponse(true, "Save successful!"), HttpStatus.OK);
         }
     }
