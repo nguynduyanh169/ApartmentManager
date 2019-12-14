@@ -1,9 +1,6 @@
 package com.manager.controller;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import com.manager.ApartmentManager.ParseDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,9 +37,6 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 import org.springframework.http.MediaType;
 
 @RestController
@@ -80,14 +74,8 @@ public class UserControllerAPI {
             HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId(),
                     house.getCurrentMoney(), block);
             userDTO.setHouse(houseDTO);
-
-            try {
-                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                userDTO.setDateOfBirth(format.parse(user.getDateOfBirth().toString()).toString());
-            } catch (ParseException e) {
-                userDTO.setDateOfBirth(null);
-            }
-
+            parse = new ParseDate();
+            userDTO.setDateOfBirth(parse.parseDateToString(user.getDateOfBirth()));
             userDTO.setProfileImage(user.getProfileImage());
             userDTO.setIdNumber(user.getIdNumber());
             userDTO.setGender(user.getGender());
@@ -114,14 +102,8 @@ public class UserControllerAPI {
             HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId(),
                     house.getCurrentMoney(), block);
             userDTO.setHouse(houseDTO);
-
-            try {
-                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                userDTO.setDateOfBirth(format.parse(user.getDateOfBirth().toString()).toString());
-            } catch (ParseException e) {
-                userDTO.setDateOfBirth(null);
-            }
-
+            parse = new ParseDate();
+            userDTO.setDateOfBirth(parse.parseDateToString(user.getDateOfBirth()));
             userDTO.setProfileImage(user.getProfileImage());
             userDTO.setIdNumber(user.getIdNumber());
             userDTO.setGender(user.getGender());
@@ -209,7 +191,6 @@ public class UserControllerAPI {
 
             parse = new ParseDate();
             userDTO.setDateOfBirth(parse.parseDateToString(user.getDateOfBirth()));
-
             userDTO.setProfileImage(user.getProfileImage());
             userDTO.setIdNumber(user.getIdNumber());
             userDTO.setGender(user.getGender());
@@ -304,7 +285,7 @@ public class UserControllerAPI {
                         .body(java.nio.file.Files.readAllBytes(img.toPath()));
         }
     }
-    
+
     private String saveUploadedFiles(List<MultipartFile> files) throws IOException {
         File uploadRootDir = new File(FOLDER_PATH);
         for (MultipartFile data : files) {
