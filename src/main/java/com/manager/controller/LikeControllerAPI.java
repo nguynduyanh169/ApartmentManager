@@ -19,9 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.manager.dto.APIResponse;
 import com.manager.dto.LikeDTO;
-import com.manager.dto.PostDTO;
 import com.manager.dto.PostForLikeDTO;
-import com.manager.dto.UserDTO;
 import com.manager.dto.UserForPostDTO;
 import com.manager.entity.Like;
 import com.manager.service.LikeService;

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.manager.dto.APIResponse;
-import com.manager.dto.HouseDTO;
 import com.manager.dto.HouseForTransactionDTO;
 import com.manager.dto.TransactionDTO;
 import com.manager.entity.Transaction;
