@@ -47,7 +47,7 @@ public class ElectricRangePrice implements Serializable {
 	private long moreThan400;
 
 	@Column(name = "VAT")
-	private long vat;
+	private float vat;
 
 	public long getElectricId() {
 		return electricId;
@@ -113,11 +113,11 @@ public class ElectricRangePrice implements Serializable {
 		this.moreThan400 = moreThan400;
 	}
 
-	public long getVat() {
+	public float getVat() {
 		return vat;
 	}
 
-	public void setVat(long vat) {
+	public void setVat(float vat) {
 		this.vat = vat;
 	}
 

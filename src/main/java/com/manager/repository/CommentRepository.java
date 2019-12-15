@@ -12,4 +12,7 @@ import com.manager.entity.Comment;
 public interface CommentRepository extends JpaRepository<Comment, Long>{
 	@Query("SELECT c from Comment c where c.post.postId = ?1")
 	List<Comment> getCommentsByPostId(long postId);
+	
+	@Query("SELECT COUNT(c) from Comment c where c.post.postId = ?1")
+	int countComment(long postId);
 }

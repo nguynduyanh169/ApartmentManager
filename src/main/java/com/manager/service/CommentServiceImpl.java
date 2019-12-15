@@ -34,4 +34,10 @@ public class CommentServiceImpl implements CommentService{
 		return commentRepo.findAll();
 	}
 
+	@Override
+	public int countComment(long postId) {
+		// TODO Auto-generated method stub
+		return commentRepo.countComment(postId);
+	}
+
 }
