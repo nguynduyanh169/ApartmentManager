@@ -195,6 +195,7 @@ public class UserControllerAPI {
             userDTO.setHouse(houseDTO);
             parse = new ParseDate();
             userDTO.setDateOfBirth(parse.parseDateToString(user.getDateOfBirth()));
+           
             userDTO.setProfileImage(user.getProfileImage());
             userDTO.setIdNumber(user.getIdNumber());
             userDTO.setGender(user.getGender());
