@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.manager.dto.APIResponse;
-import com.manager.dto.PostDTO;
 import com.manager.dto.PostForLikeDTO;
 import com.manager.dto.PostImageDTO;
 import com.manager.entity.PostImage;

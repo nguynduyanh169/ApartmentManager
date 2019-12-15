@@ -85,5 +85,10 @@ public class CommentControllerAPI {
 		}
 		return commentDTOs;
 	}
+	
+	@GetMapping("/comments/count/posts/{postId}")
+	public int countCommentByPostId(@PathVariable(value = "postId") long postId) {
+		return commentService.countComment(postId);
+	}
 
 }

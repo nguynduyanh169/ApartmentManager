@@ -16,5 +16,7 @@ public interface CommentService {
 	public boolean saveComment(Comment comment);
 	
 	public List<Comment> getAllComment();
+	
+	public int countComment(long postId);
 
 }
