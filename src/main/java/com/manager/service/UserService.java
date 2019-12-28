@@ -22,7 +22,7 @@ public interface UserService {
 
     public void removeUser(long id);
 
-    public User checkLogin(String email);
+    public User checkLogin(String email, String password);
 
     public User checkUserEmail(String email);
 

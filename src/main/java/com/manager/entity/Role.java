@@ -11,8 +11,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Proxy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -20,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name = "Role")
 @EntityListeners(AuditingEntityListener.class)
+@Proxy(lazy = false)
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Role implements Serializable {
 

@@ -19,8 +19,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Query("SELECT u from User u where u.house.houseId = :houseId ORDER BY u.familyLevel ASC")
 	List<User> getHouseByHouseId(@Param(value = "houseId") long houseId);
 
-	@Query("SELECT u from User u where u.email = :email")
-	User checkLogin(@Param(value = "email") String email);
+	@Query("SELECT u from User u where u.email = :email and u.password =:password")
+	User checkLogin(@Param(value = "email") String email, @Param(value = "password") String password);
 
 	@Query("SELECT u from User u where u.email = :email")
 	User checkUserEmail(@Param(value = "email") String email);

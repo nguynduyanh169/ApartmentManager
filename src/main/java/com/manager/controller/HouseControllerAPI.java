@@ -32,14 +32,6 @@ public class HouseControllerAPI {
 	@Autowired
 	HouseService houseService;
 
-	@GetMapping("/image/{id}")
-	public ResponseEntity<byte[]> getImage(@PathVariable(value = "id") long id) throws Exception {
-		String imgPath = houseService.getHouseImage(id);
-		File img = new File(imgPath);
-		return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG)
-				.body(java.nio.file.Files.readAllBytes(img.toPath()));
-	}
-
 	@GetMapping("/houses/blocks/{blockId}")
 	public List<House> getHouseByBlockId(@PathVariable(value = "blockId") long blockId) {
 		return houseService.getHouseByBlockId(blockId);
@@ -48,11 +40,6 @@ public class HouseControllerAPI {
 	@GetMapping("/houses/houseCategories/{typeId}")
 	public List<House> getHouseByTypeId(@PathVariable(value = "typeId") long typeId) {
 		return houseService.getHouseByTypeId(typeId);
-	}
-
-	@GetMapping("/houseslite")
-	public List<House> getHouseLite() {
-		return houseService.getHouseLite();
 	}
 
 	@GetMapping("/houses/{houseId}")
