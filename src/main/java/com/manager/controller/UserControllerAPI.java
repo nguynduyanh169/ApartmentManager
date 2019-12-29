@@ -65,9 +65,33 @@ public class UserControllerAPI {
 	private FCMService fcmService;
 
 	@GetMapping("/users")
-	public List<User> getAllUser() {
+	public List<UserDTO> getAllUser() {
 		System.out.println("aasbfs");
-		return userService.getAllUser();
+		List<UserDTO> userDTOs = new ArrayList<UserDTO>();
+		List<User> users = userService.getAllUser();
+		for (User user : users) {
+			UserDTO userDTO = new UserDTO();
+			userDTO.setUserId(user.getUserId());
+			userDTO.setEmail(user.getEmail());
+			userDTO.setPhoneNo(user.getPhoneNo());
+			House house = user.getHouse();
+			//BlockDTO block = new BlockDTO(house.getBlock().getBlockId(), house.getBlock().getBlockName());
+			//HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId(),
+			//	house.getCurrentMoney(), block);
+			//userDTO.setHouse(houseDTO);
+			parse = new ParseDate();
+			userDTO.setDateOfBirth(parse.parseDateToString(user.getDateOfBirth()));
+			userDTO.setProfileImage(user.getProfileImage());
+			userDTO.setIdNumber(user.getIdNumber());
+			userDTO.setGender(user.getGender());
+			userDTO.setHomeTown(user.getHomeTown());
+			userDTO.setJob(user.getJob());
+			userDTO.setFirstName(user.getFirstName());
+			userDTO.setLastName(user.getLastName());
+			userDTO.setFamilyLevel(user.getFamilyLevel());
+			userDTOs.add(userDTO);
+		}
+		return userDTOs;
 	}
 
 	@GetMapping("/users/{userId}")
@@ -82,10 +106,10 @@ public class UserControllerAPI {
 			userDTO.setEmail(user.getEmail());
 			userDTO.setPhoneNo(user.getPhoneNo());
 			House house = user.getHouse();
-			//BlockDTO block = new BlockDTO(house.getBlock().getBlockId(), house.getBlock().getBlockName());
-			//HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId(),
-			//		house.getCurrentMoney(), block);
-			//userDTO.setHouse(houseDTO);
+			BlockDTO block = new BlockDTO(house.getBlock().getBlockId(), house.getBlock().getBlockName());
+			HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId(),
+				house.getCurrentMoney(), block);
+			userDTO.setHouse(houseDTO);
 			parse = new ParseDate();
 			userDTO.setDateOfBirth(parse.parseDateToString(user.getDateOfBirth()));
 			userDTO.setProfileImage(user.getProfileImage());
