@@ -1,5 +1,7 @@
 package com.manager.ApartmentManager;
 
+import java.util.Arrays;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -24,7 +26,7 @@ public class SwaggerConfig{
             .apis(RequestHandlerSelectors
                 .basePackage("com.manager.controller"))
             .paths(PathSelectors.any())
-            .build().apiInfo(apiEndPointsInfo());
+            .build().apiInfo(apiEndPointsInfo()).securitySchemes(Arrays.asList(apiKey()));
     }
     private ApiInfo apiEndPointsInfo() {
         return new ApiInfoBuilder().title("Spring Boot REST API")
