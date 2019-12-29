@@ -82,10 +82,10 @@ public class UserControllerAPI {
 			userDTO.setEmail(user.getEmail());
 			userDTO.setPhoneNo(user.getPhoneNo());
 			House house = user.getHouse();
-			BlockDTO block = new BlockDTO(house.getBlock().getBlockId(), house.getBlock().getBlockName());
-			HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId(),
-					house.getCurrentMoney(), block);
-			userDTO.setHouse(houseDTO);
+			//BlockDTO block = new BlockDTO(house.getBlock().getBlockId(), house.getBlock().getBlockName());
+			//HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId(),
+			//		house.getCurrentMoney(), block);
+			//userDTO.setHouse(houseDTO);
 			parse = new ParseDate();
 			userDTO.setDateOfBirth(parse.parseDateToString(user.getDateOfBirth()));
 			userDTO.setProfileImage(user.getProfileImage());
