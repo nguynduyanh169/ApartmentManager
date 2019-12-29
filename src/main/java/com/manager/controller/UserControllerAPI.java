@@ -65,7 +65,7 @@ public class UserControllerAPI {
 	private FCMService fcmService;
 
 	@GetMapping("/users")
-	public List<UserDTO> getAllUser() {
+	public ResponseEntity<List<UserDTO>> getAllUser() {
 		System.out.println("aasbfs");
 		List<UserDTO> userDTOs = new ArrayList<UserDTO>();
 		List<User> users = userService.getAllUser();
@@ -91,7 +91,7 @@ public class UserControllerAPI {
 			userDTO.setFamilyLevel(user.getFamilyLevel());
 			userDTOs.add(userDTO);
 		}
-		return userDTOs;
+		return new ResponseEntity<List<UserDTO>>(userDTOs, HttpStatus.OK);
 	}
 
 	@GetMapping("/users/{userId}")
