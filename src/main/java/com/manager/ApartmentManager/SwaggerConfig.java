@@ -28,7 +28,7 @@ public class SwaggerConfig{
             .apis(RequestHandlerSelectors
                 .basePackage("com.manager.controller"))
             .paths(PathSelectors.any())
-            .build().apiInfo(apiEndPointsInfo()).securitySchemes(Arrays.asList(apiKey()));
+            .build().apiInfo(apiEndPointsInfo());
     }
     private ApiInfo apiEndPointsInfo() {
         return new ApiInfoBuilder().title("Spring Boot REST API")
@@ -38,9 +38,6 @@ public class SwaggerConfig{
             .version("1.0.0")
             .build();
     }
-    private ApiKey apiKey() {
-        return new ApiKey("authkey", "Authorization", "header");
-      }
     
     @Bean
     public WebMvcConfigurer mvcConfigurer() {

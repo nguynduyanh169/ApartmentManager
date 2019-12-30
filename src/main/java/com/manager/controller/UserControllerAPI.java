@@ -203,8 +203,6 @@ public class UserControllerAPI {
 	}
 
 	@PostMapping("/users/signin")
-	@ApiImplicitParams({
-			@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public ResponseEntity<String> login(HttpServletRequest request, @Valid @RequestBody User user) {
 		String result = "";
 		HttpStatus httpStatus = null;
