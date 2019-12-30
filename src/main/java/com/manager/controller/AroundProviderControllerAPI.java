@@ -20,6 +20,9 @@ import com.manager.dto.AroundProviderListDTO;
 import com.manager.entity.AroundProvider;
 import com.manager.service.AroundProviderService;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+
 @RestController
 @RequestMapping("/api/v1")
 @ComponentScan(basePackages = "com.manager.service")
@@ -29,11 +32,15 @@ public class AroundProviderControllerAPI {
 	AroundProviderService aroundProviderService;
 	
 	@GetMapping("/AroundProviders")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public List<AroundProvider> getAllAroundProvider(){
 		return aroundProviderService.getAllAroundProvider();
 	}
 
 	@GetMapping("/AroundProviders/AroundProviderCategories/{categoryId}")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public List<AroundProviderListDTO> getAroundProviderByCategoryId(
 			@PathVariable(value = "categoryId") long categoryId) {
 		List<AroundProvider> aroundProviders = aroundProviderService.getAroundProviderByCategoryId(categoryId);
@@ -51,6 +58,8 @@ public class AroundProviderControllerAPI {
 	}
 
 	@GetMapping("/AroundProviders/{aroundProviderId}")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public ResponseEntity<?> getAroundProviderById(@PathVariable(value = "aroundProviderId") long aroundProviderId)
 			throws Exception {
 		Optional<AroundProvider> opAroundProvider = aroundProviderService.getAroundProviderById(aroundProviderId);

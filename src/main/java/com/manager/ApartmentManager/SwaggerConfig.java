@@ -8,8 +8,10 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.ApiKey;
 import springfox.documentation.spi.DocumentationType;
@@ -36,10 +38,9 @@ public class SwaggerConfig{
             .version("1.0.0")
             .build();
     }
-    
     private ApiKey apiKey() {
         return new ApiKey("authkey", "Authorization", "header");
-    }
+      }
     
     @Bean
     public WebMvcConfigurer mvcConfigurer() {

@@ -1,5 +1,6 @@
 package com.manager.dto;
 
+import java.util.Date;
 
 public class UserDTO {
 
@@ -8,7 +9,7 @@ public class UserDTO {
     private String phoneNo;
     private HouseDTO house;
     private String profileImage;
-    private String dateOfBirth;
+    private Date dateOfBirth;
     private String idNumber;
     private int Gender;
     private String job;
@@ -57,15 +58,15 @@ public class UserDTO {
         this.profileImage = profileImage;
     }
 
-    public String getDateOfBirth() {
-        return dateOfBirth;
-    }
+    public Date getDateOfBirth() {
+		return dateOfBirth;
+	}
 
-    public void setDateOfBirth(String dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
 
-    public String getIdNumber() {
+	public String getIdNumber() {
         return idNumber;
     }
 

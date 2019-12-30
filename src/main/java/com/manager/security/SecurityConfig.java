@@ -1,7 +1,6 @@
 package com.manager.security;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -38,16 +37,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return super.authenticationManager();
 	}
 
+	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-    // Disable crsf cho đường dẫn /api/v1/**
-    http.csrf().ignoringAntMatchers("/api/v1/**");
-    http.authorizeRequests().antMatchers("/api/v1/users/signin**").permitAll();
-    http.antMatcher("/api/v1/**").httpBasic().authenticationEntryPoint(restServicesEntryPoint()).and()
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-        .antMatchers(HttpMethod.GET, "/api/v1/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_RESIDENT')")
-        .antMatchers(HttpMethod.POST, "/api/v1/**").access("hasRole('ROLE_ADMIN')")
-        .antMatchers(HttpMethod.DELETE, "/api/v1/**").access("hasRole('ROLE_ADMIN')").and()
-        .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)
-        .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());
-  }
+		// Disable crsf cho đường dẫn /api/v1/**
+		http.csrf().ignoringAntMatchers("/api/v1/**");
+		http.authorizeRequests().antMatchers("/api/v1/users/signin**").permitAll()
+				.antMatchers("/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**").permitAll();
+		http.antMatcher("/api/v1/**").httpBasic().authenticationEntryPoint(restServicesEntryPoint()).and()
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
+				.antMatchers(HttpMethod.GET, "/api/v1/**")
+				.access("hasRole('ROLE_ADMIN') or hasRole('ROLE_RESIDENT') or hasRole('ROLE_MANAGER') or hasRole('ROLE_HOUSEHOLDER')")
+				.antMatchers(HttpMethod.POST, "/api/v1/**")
+				.access("hasRole('ROLE_ADMIN') or hasRole('ROLE_RESIDENT') or hasRole('ROLE_MANAGER') or hasRole('ROLE_HOUSEHOLDER')")
+				.antMatchers(HttpMethod.PUT, "/api/v1/**")
+				.access("hasRole('ROLE_ADMIN') or hasRole('ROLE_RESIDENT') or hasRole('ROLE_MANAGER') or hasRole('ROLE_HOUSEHOLDER')")
+				.antMatchers(HttpMethod.DELETE, "/api/v1/**")
+				.access("hasRole('ROLE_ADMIN') or hasRole('ROLE_RESIDENT') or hasRole('ROLE_MANAGER') or hasRole('ROLE_HOUSEHOLDER')")
+				.and().addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)
+				.exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());
+	}
 }

@@ -19,6 +19,10 @@ import com.manager.dto.PostForLikeDTO;
 import com.manager.dto.PostImageDTO;
 import com.manager.entity.PostImage;
 import com.manager.service.PostImageService;
+
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -41,6 +45,8 @@ public class PostImageControllerAPI {
     PostImageService postImageService;
 
     @GetMapping("/postImages/posts/{postId}")
+    @ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
     public List<PostImageDTO> getPostImageByPostId(@PathVariable(value = "postId") long postId) {
         List<PostImage> listPostImages = postImageService.getPostImageByPostId(postId);
         List<PostImageDTO> imageDTOs = new ArrayList<>();
@@ -60,6 +66,8 @@ public class PostImageControllerAPI {
     }
     
     @GetMapping("/postImages")
+    @ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
     public List<PostImageDTO> getAllPostImage(){
     	List<PostImage> listPostImages = postImageService.getAllPostImage();
         List<PostImageDTO> imageDTOs = new ArrayList<>();
@@ -79,6 +87,8 @@ public class PostImageControllerAPI {
     }
     
     @PostMapping("/postImages")
+    @ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
     public ResponseEntity<?> savePostImage(@Valid @RequestBody PostImage postImage){
     	boolean flag = postImageService.savePostImage(postImage);
 		if (flag == false) {

@@ -10,9 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -35,14 +33,11 @@ public class JwtAuthenticationTokenFilter extends UsernamePasswordAuthentication
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		System.out.println("beenndnnd");
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		String authToken = httpRequest.getHeader(TOKEN_HEADER);
 		if (jwtService.validateTokenLogin(authToken)) {
 			String email = jwtService.getEmailFromToken(authToken);
-			System.out.println("authemail" + email);
 			com.manager.entity.User user = userService.checkUserEmail(email);
-			System.out.println(user.getEmail() + "role");
 			if (user != null) {
 				UserLoginDTO userLoginDTO = new UserLoginDTO();
 				userLoginDTO.setEmail(user.getEmail());
@@ -52,8 +47,8 @@ public class JwtAuthenticationTokenFilter extends UsernamePasswordAuthentication
 				boolean accountNonExpired = true;
 				boolean credentialsNonExpired = true;
 				boolean accountNonLocked = true;
-				UserDetails userDetail = new User(userLoginDTO.getEmail(), userLoginDTO.getPassword(), enabled, accountNonExpired,
-						credentialsNonExpired, accountNonLocked, userLoginDTO.getAuthorities());
+				UserDetails userDetail = new User(userLoginDTO.getEmail(), userLoginDTO.getPassword(), enabled,
+						accountNonExpired, credentialsNonExpired, accountNonLocked, userLoginDTO.getAuthorities());
 				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetail,
 						null, userDetail.getAuthorities());
 				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpRequest));

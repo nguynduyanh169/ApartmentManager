@@ -22,6 +22,9 @@ import com.manager.dto.UserForPollDTO;
 import com.manager.entity.UserAnswerPoll;
 import com.manager.service.UserAnswerPollService;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+
 @RestController
 @RequestMapping("/api/v1")
 @ComponentScan(basePackages = "com.manager.service")
@@ -31,6 +34,8 @@ public class UserAnswerPollControllerAPI {
 	UserAnswerPollService answerPollService;
 	
 	@GetMapping("/userAnswerPolls/polls/{pollId}")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public List<UserAnswerPollDTO> getUserAnswerPollByPollId(@PathVariable(value = "pollId") long pollId){
 		List<UserAnswerPoll> answerPolls = answerPollService.getUserAnswerPollByPollId(pollId);
 		List<UserAnswerPollDTO> answerPollDTOs = new ArrayList<>();
@@ -48,6 +53,8 @@ public class UserAnswerPollControllerAPI {
 	}
 	
 	@PostMapping("/userAnswerPolls")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public ResponseEntity<?> saveAnswer(@Valid @RequestBody UserAnswerPoll answerPoll){
 		boolean flag = answerPollService.saveAnswer(answerPoll);
 		if (flag == false) {

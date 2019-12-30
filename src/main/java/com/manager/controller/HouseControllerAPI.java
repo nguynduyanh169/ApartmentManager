@@ -24,6 +24,9 @@ import com.manager.dto.APIResponse;
 import com.manager.entity.House;
 import com.manager.service.HouseService;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+
 @RestController
 @RequestMapping("/api/v1")
 @ComponentScan(basePackages = "com.manager.service")
@@ -33,16 +36,22 @@ public class HouseControllerAPI {
 	HouseService houseService;
 
 	@GetMapping("/houses/blocks/{blockId}")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public List<House> getHouseByBlockId(@PathVariable(value = "blockId") long blockId) {
 		return houseService.getHouseByBlockId(blockId);
 	}
 
 	@GetMapping("/houses/houseCategories/{typeId}")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public List<House> getHouseByTypeId(@PathVariable(value = "typeId") long typeId) {
 		return houseService.getHouseByTypeId(typeId);
 	}
 
 	@GetMapping("/houses/{houseId}")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public ResponseEntity<House> getHouseById(@PathVariable(value = "houseId") long id) throws Exception {
 		Optional<House> house = houseService.getHouseById(id);
 		if (!house.isPresent()) {
@@ -54,6 +63,8 @@ public class HouseControllerAPI {
 	}
 
 	@PostMapping("/houses")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public ResponseEntity<?> saveHouse(@Valid @RequestBody House house) {
 		boolean flag = houseService.save(house);
 		if (flag == false) {
@@ -64,6 +75,8 @@ public class HouseControllerAPI {
 	}
 
 	@PutMapping("/houses/{houseId}")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public ResponseEntity<?> updateHouse(@PathVariable(value = "houseId") long id,
 			@Valid @RequestBody House updateHouse) throws Exception {
 		Optional<House> opHouse = houseService.getHouseById(id);
@@ -94,6 +107,8 @@ public class HouseControllerAPI {
 	}
 
 	@PutMapping("/houses/{houseId}/currentMoney/{currentMoney}")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public ResponseEntity<?> updateHouseWalletById(@PathVariable(value = "houseId") long id,
 			@PathVariable(value = "currentMoney") long currentMoney) throws Exception {
 		Optional<House> opHouse = houseService.getHouseById(id);
@@ -113,11 +128,15 @@ public class HouseControllerAPI {
 	}
 
 	@GetMapping("/houses/count")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public long countHouse() {
 		return houseService.countHouse();
 	}
 
 	@DeleteMapping("/houses/{houseId}")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public ResponseEntity<String> removeHouse(@PathVariable(value = "houseId") long id) throws Exception {
 		houseService.removeHouse(id);
 		return new ResponseEntity<String>("Deleted!", HttpStatus.OK);

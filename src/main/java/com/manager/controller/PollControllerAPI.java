@@ -21,6 +21,9 @@ import com.manager.dto.UserForPollDTO;
 import com.manager.entity.Poll;
 import com.manager.service.PollService;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+
 @RestController
 @RequestMapping("/api/v1")
 @ComponentScan(basePackages = "com.manager.service")
@@ -30,6 +33,8 @@ public class PollControllerAPI {
 	PollService pollService;
 	
 	@GetMapping("/polls")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public List<PollDTO> getAllPoll(){
 		List<Poll> polls = pollService.getAllPoll();
 		List<PollDTO> pollDTOs = new ArrayList<>();
@@ -52,6 +57,8 @@ public class PollControllerAPI {
 	}
 	
 	@PostMapping("/polls")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public ResponseEntity<?> savePoll(@Valid @RequestBody Poll poll){
 		boolean flag = pollService.savePoll(poll);
 		if (flag == false) {

@@ -37,6 +37,10 @@ import com.manager.entity.User;
 import com.manager.service.FCMService;
 import com.manager.service.JwtService;
 import com.manager.service.UserService;
+
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -49,12 +53,6 @@ import org.springframework.http.MediaType;
 @ComponentScan(basePackages = "com.manager.security")
 public class UserControllerAPI {
 
-	final String FOLDER_PATH = "src/main/resources/images";
-	final String JPEG = "JPEG";
-	final String PNG = "PNG";
-	final String GIF = "GIF";
-	ParseDate parse;
-
 	@Autowired
 	UserService userService;
 
@@ -65,8 +63,9 @@ public class UserControllerAPI {
 	private FCMService fcmService;
 
 	@GetMapping("/users")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public ResponseEntity<List<UserDTO>> getAllUser() {
-		System.out.println("aasbfs");
 		List<UserDTO> userDTOs = new ArrayList<UserDTO>();
 		List<User> users = userService.getAllUser();
 		for (User user : users) {
@@ -75,12 +74,11 @@ public class UserControllerAPI {
 			userDTO.setEmail(user.getEmail());
 			userDTO.setPhoneNo(user.getPhoneNo());
 			House house = user.getHouse();
-			//BlockDTO block = new BlockDTO(house.getBlock().getBlockId(), house.getBlock().getBlockName());
-			//HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId(),
-			//	house.getCurrentMoney(), block);
-			//userDTO.setHouse(houseDTO);
-			parse = new ParseDate();
-			userDTO.setDateOfBirth(parse.parseDateToString(user.getDateOfBirth()));
+			BlockDTO block = new BlockDTO(house.getBlock().getBlockId(), house.getBlock().getBlockName());
+			HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId(),
+					house.getCurrentMoney(), block);
+			userDTO.setHouse(houseDTO);
+			userDTO.setDateOfBirth(user.getDateOfBirth());
 			userDTO.setProfileImage(user.getProfileImage());
 			userDTO.setIdNumber(user.getIdNumber());
 			userDTO.setGender(user.getGender());
@@ -95,6 +93,8 @@ public class UserControllerAPI {
 	}
 
 	@GetMapping("/users/{userId}")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public ResponseEntity<?> findUserById(@PathVariable(value = "userId") long userId) throws Exception {
 		Optional<User> opUser = userService.findUserById(userId);
 		if (!opUser.isPresent()) {
@@ -106,12 +106,11 @@ public class UserControllerAPI {
 			userDTO.setEmail(user.getEmail());
 			userDTO.setPhoneNo(user.getPhoneNo());
 			House house = user.getHouse();
-			//BlockDTO block = new BlockDTO(house.getBlock().getBlockId(), house.getBlock().getBlockName());
-			//HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId(),
-			//	house.getCurrentMoney(), block);
-			//userDTO.setHouse(houseDTO);
-			parse = new ParseDate();
-			userDTO.setDateOfBirth(parse.parseDateToString(user.getDateOfBirth()));
+			BlockDTO block = new BlockDTO(house.getBlock().getBlockId(), house.getBlock().getBlockName());
+			HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId(),
+					house.getCurrentMoney(), block);
+			userDTO.setHouse(houseDTO);
+			userDTO.setDateOfBirth(user.getDateOfBirth());
 			userDTO.setProfileImage(user.getProfileImage());
 			userDTO.setIdNumber(user.getIdNumber());
 			userDTO.setGender(user.getGender());
@@ -125,6 +124,8 @@ public class UserControllerAPI {
 	}
 
 	@GetMapping("/users/houses/{houseId}")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public List<UserDTO> getUserByHouseId(@PathVariable(value = "houseId") long houseId) {
 		List<User> users = userService.getUserByHouseId(houseId);
 		List<UserDTO> userDTOs = new ArrayList<UserDTO>();
@@ -138,8 +139,7 @@ public class UserControllerAPI {
 			HouseDTO houseDTO = new HouseDTO(house.getHouseId(), house.getHouseName(), house.getOwnerId(),
 					house.getCurrentMoney(), block);
 			userDTO.setHouse(houseDTO);
-			parse = new ParseDate();
-			userDTO.setDateOfBirth(parse.parseDateToString(user.getDateOfBirth()));
+			userDTO.setDateOfBirth(user.getDateOfBirth());
 			userDTO.setProfileImage(user.getProfileImage());
 			userDTO.setIdNumber(user.getIdNumber());
 			userDTO.setGender(user.getGender());
@@ -148,13 +148,14 @@ public class UserControllerAPI {
 			userDTO.setFirstName(user.getFirstName());
 			userDTO.setLastName(user.getLastName());
 			userDTO.setFamilyLevel(user.getFamilyLevel());
-
 			userDTOs.add(userDTO);
 		}
 		return userDTOs;
 	}
 
 	@PostMapping("/users")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public ResponseEntity<?> saveUser(@Valid @RequestBody User user) {
 		boolean flag = userService.saveUser(user);
 		if (flag == false) {
@@ -166,11 +167,15 @@ public class UserControllerAPI {
 	}
 
 	@GetMapping("/users/count")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public long countUser() {
 		return userService.countUser();
 	}
 
 	@PutMapping("/users/{userId}")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public ResponseEntity<?> updateUser(@PathVariable(value = "userId") long id, @Valid @RequestBody User editUser)
 			throws Exception {
 		Optional<User> opUser = userService.findUserById(id);
@@ -198,10 +203,11 @@ public class UserControllerAPI {
 	}
 
 	@PostMapping("/users/signin")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public ResponseEntity<String> login(HttpServletRequest request, @Valid @RequestBody User user) {
 		String result = "";
 		HttpStatus httpStatus = null;
-		System.out.println(result + "aaaa");
 		try {
 			if (userService.checkLogin(user.getEmail(), user.getPassword()) != null) {
 				result = jwtService.generateTokenLogin(user.getEmail());
@@ -217,22 +223,4 @@ public class UserControllerAPI {
 		return new ResponseEntity<String>(result, httpStatus);
 	}
 
-	@DeleteMapping("/users/{userId}")
-	public ResponseEntity<String> removeUser(@PathVariable(value = "userId") long id) throws Exception {
-		userService.removeUser(id);
-		return new ResponseEntity<String>("Deleted!", HttpStatus.OK);
-	}
-
-	@GetMapping("/users/email/{email}")
-	public ResponseEntity<?> checkUserEmail(@PathVariable(value = "email") String email) {
-		User user = userService.checkUserEmail(email);
-		if (user == null) {
-			return new ResponseEntity<APIResponse>(new APIResponse(false, "Email not available!"),
-					HttpStatus.BAD_REQUEST);
-		} else {
-			return new ResponseEntity<APIResponse>(new APIResponse(true, "Email has been existed!"), HttpStatus.OK);
-		}
-	}
-
-	
 }

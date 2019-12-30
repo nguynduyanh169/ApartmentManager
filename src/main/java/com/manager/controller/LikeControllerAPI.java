@@ -24,6 +24,9 @@ import com.manager.dto.UserForPostDTO;
 import com.manager.entity.Like;
 import com.manager.service.LikeService;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+
 @RestController
 @RequestMapping("api/v1")
 @ComponentScan(basePackages = "com.manager.service")
@@ -33,6 +36,8 @@ public class LikeControllerAPI {
 	LikeService likeService;
 
 	@GetMapping("/likes/posts/{postId}")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public List<LikeDTO> getLikeByPostId(@PathVariable(value = "postId") long postId) {
 		List<Like> likes = likeService.getLikeByPostId(postId);
 		List<LikeDTO> likeDTOs = new ArrayList<>();

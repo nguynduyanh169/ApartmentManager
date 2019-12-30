@@ -14,6 +14,9 @@ import com.manager.dto.AroundProviderProductListDTO;
 import com.manager.entity.AroundProviderProduct;
 import com.manager.service.AroundProviderProductService;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+
 @RestController
 @RequestMapping("/api/v1")
 @ComponentScan(basePackages = "com.manager.service")
@@ -23,6 +26,8 @@ public class AroundProviderProductControllerAPI {
 	AroundProviderProductService aroundProviderProductService;
 	
 	@GetMapping("/aroundProviderProducts/aroundProviders/{providerId}")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public List<AroundProviderProductListDTO> getAroundProviderByCategoryId(@PathVariable(value = "providerId") long providerId){
 		List<AroundProviderProduct> aroundProviderProducts = aroundProviderProductService.getProviderProductByProviderId(providerId);
 		List<AroundProviderProductListDTO> productListDTOs = new ArrayList<>();

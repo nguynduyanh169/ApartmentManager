@@ -25,6 +25,9 @@ import com.manager.dto.UserForPostDTO;
 import com.manager.entity.Post;
 import com.manager.service.PostService;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+
 @RestController
 @RequestMapping("api/v1")
 @ComponentScan(basePackages = "com.manager.service")
@@ -34,6 +37,8 @@ public class PostControllerAPI {
 	PostService postService;
 
 	@GetMapping("/posts")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public List<PostDTO> getAllPost() {
 		List<Post> posts = postService.getAllPost();
 		List<PostDTO> postDTOs = new ArrayList<>();
@@ -51,6 +56,8 @@ public class PostControllerAPI {
 	}
 
 	@GetMapping("/posts/{postId}")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public ResponseEntity<?> findPostById(@PathVariable(value = "postId") long id) throws Exception {
 		Optional<Post> opPost = postService.findPostById(id);
 		if (!opPost.isPresent()) {
@@ -68,6 +75,8 @@ public class PostControllerAPI {
 	}
 
 	@PostMapping("/posts")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public ResponseEntity<?> savePost(@Valid @RequestBody Post post) {
 		Post returnPost = postService.savePostTest(post);
 		if (returnPost == null) {
@@ -85,6 +94,8 @@ public class PostControllerAPI {
 	}
 
 	@PutMapping("/posts/{postId}")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public ResponseEntity<?> updatePost(@PathVariable(value = "postId") long postId,
 			@Valid @RequestBody Post updatePost) throws Exception {
 		Optional<Post> opPost = postService.findPostById(postId);
@@ -103,6 +114,8 @@ public class PostControllerAPI {
 	}
 
 	@GetMapping("/posts/users/{userId}")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public List<PostDTO> getPostByUserId(@PathVariable(value = "userId") long userId) {
 		List<Post> posts = postService.getPostByUserId(userId);
 		List<PostDTO> postDTOs = new ArrayList<>();
@@ -120,6 +133,8 @@ public class PostControllerAPI {
 	}
 
 	@DeleteMapping("/posts/{postId}")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public ResponseEntity<?> disablePost(@PathVariable(value = "postId") long postId) {
 		postService.disablePost(postId);
 		return new ResponseEntity<APIResponse>(new APIResponse(true, "Disable successful!"), HttpStatus.OK);

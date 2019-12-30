@@ -23,6 +23,9 @@ import com.manager.dto.UserForPostDTO;
 import com.manager.entity.Comment;
 import com.manager.service.CommentService;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+
 @RestController
 @RequestMapping("/api/v1")
 @ComponentScan(basePackages = "com.manager.service")
@@ -32,6 +35,8 @@ public class CommentControllerAPI {
 	CommentService commentService;
 
 	@GetMapping("/comments/posts/{postId}")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public List<CommentDTO> getCommentsByPostId(@PathVariable(name = "postId") long postId) {
 		List<Comment> comments = commentService.getCommentsByPostId(postId);
 		List<CommentDTO> commentDTOs = new ArrayList<>();
@@ -54,6 +59,8 @@ public class CommentControllerAPI {
 	}
 
 	@PostMapping("/comments")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public ResponseEntity<?> saveComment(@Valid @RequestBody Comment comment) {
 		boolean flag = commentService.saveComment(comment);
 		if (flag == false) {
@@ -65,6 +72,8 @@ public class CommentControllerAPI {
 	}
 
 	@GetMapping("/comments")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public List<CommentDTO> getAllComment() {
 		List<Comment> comments = commentService.getAllComment();
 		List<CommentDTO> commentDTOs = new ArrayList<>();
@@ -87,6 +96,8 @@ public class CommentControllerAPI {
 	}
 	
 	@GetMapping("/comments/count/posts/{postId}")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public int countCommentByPostId(@PathVariable(value = "postId") long postId) {
 		return commentService.countComment(postId);
 	}

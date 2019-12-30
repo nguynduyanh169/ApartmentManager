@@ -22,6 +22,9 @@ import com.manager.dto.TransactionDTO;
 import com.manager.entity.Transaction;
 import com.manager.service.TransactionService;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+
 @RestController
 @RequestMapping("/api/v1")
 @ComponentScan(basePackages = "com.manager.service")
@@ -31,10 +34,14 @@ public class TransactionControllerAPI {
 	TransactionService transactionService;
 	
 	@GetMapping("/transactions")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public List<Transaction> getAllTransaction(){
 		return transactionService.getAllTransaction();
 	}
 	@GetMapping("/transactions/houses/{houseId}")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public List<TransactionDTO> getTransactionByHouseId(@PathVariable(value = "houseId") long houseId) {
 		List<Transaction> transactions = transactionService.getTransactionByHouseId(houseId);
 		List<TransactionDTO> transactionDTOs = new ArrayList<>();
@@ -56,6 +63,8 @@ public class TransactionControllerAPI {
 	}
 
 	@PostMapping("/transactions")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public ResponseEntity<?> saveTransaction(@Valid @RequestBody Transaction transaction) {
 		boolean flag = transactionService.saveTransaction(transaction);
 		if (flag == false) {

@@ -13,6 +13,9 @@ import com.manager.entity.ReceiptDetail;
 import com.manager.repository.ReceiptDetailRepository;
 import com.manager.service.ReceiptDetailService;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+
 @RestController
 @RequestMapping("/api/v1")
 @ComponentScan(basePackages = "com.manager.service")
@@ -23,6 +26,8 @@ public class ReceiptDetailControllerAPI {
 	ReceiptDetailRepository a;
 	
 	@GetMapping("/receiptDetails/receipts/{receiptId}")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public List<ReceiptDetail> getReceiptDetailByReceiptId(@PathVariable(value = "receiptId") long receiptId){
 		return receiptDetailService.getReceiptDetailByReceiptId(receiptId);
 	}

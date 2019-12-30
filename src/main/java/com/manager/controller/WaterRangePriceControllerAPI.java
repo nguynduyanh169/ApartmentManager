@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.manager.entity.WaterRangePrice;
 import com.manager.service.WaterRangePriceService;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+
 @RestController
 @RequestMapping("api/v1")
 @ComponentScan(basePackages = "com.manager.service")
@@ -21,6 +24,8 @@ public class WaterRangePriceControllerAPI {
 	
 	
 	@GetMapping("/waterPrices")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public List<WaterRangePrice> getAllWaterRangePrice(){
 		return rangePriceService.getAllWaterRangePrice();
 	}

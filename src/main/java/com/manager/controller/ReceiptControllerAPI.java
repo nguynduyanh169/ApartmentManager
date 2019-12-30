@@ -18,6 +18,9 @@ import com.manager.dto.APIResponse;
 import com.manager.entity.Receipt;
 import com.manager.service.ReceiptService;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+
 @RestController
 @RequestMapping("/api/v1")
 @ComponentScan(basePackages = "com.manager.service")
@@ -27,11 +30,15 @@ public class ReceiptControllerAPI {
 	ReceiptService receiptService;
 
 	@GetMapping("/receipts/houses/{houseId}")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public List<Receipt> getReceiptByHouseId(@PathVariable(value = "houseId") long houseId) {
 		return receiptService.getReceiptByHouseId(houseId);
 	}
 
 	@PutMapping("/receipts/{receiptId}/status/{status}")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public ResponseEntity<?> setStatusForReceiptByReceiptId(@PathVariable(value = "receiptId") long receiptId,
 			@PathVariable(value = "status") int status) throws Exception {
 		Optional<Receipt> opReceipt = receiptService.getReceiptById(receiptId);

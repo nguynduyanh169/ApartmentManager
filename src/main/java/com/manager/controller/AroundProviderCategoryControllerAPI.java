@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.manager.entity.AroundProviderCategory;
 import com.manager.service.AroundProviderCategoryService;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+
 @RestController
 @RequestMapping("/api/v1")
 @ComponentScan(basePackages = "com.manager.service")
@@ -20,6 +23,8 @@ public class AroundProviderCategoryControllerAPI {
 	AroundProviderCategoryService aroundProviderCategoryService;
 	
 	@GetMapping("/AroundProviderCategories")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	public List<AroundProviderCategory> getAllProviderCategory(){
 		return aroundProviderCategoryService.getAllProviderCategory();
 	}
